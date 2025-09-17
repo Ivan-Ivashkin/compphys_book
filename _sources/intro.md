@@ -26,22 +26,22 @@
 
 **Преподаватели курса:**
 
-Аристова Елена Николаевна [Researchgate](https://www.researchgate.net/profile/Elena-Aristova-3)
+* Аристова Елена Николаевна ([Researchgate](https://www.researchgate.net/profile/Elena-Aristova-3)),
 
-Голубев Василий Иванович [Researchgate](https://www.researchgate.net/profile/Vasily-Golubev-2)
+* Голубев Василий Иванович ([Researchgate](https://www.researchgate.net/profile/Vasily-Golubev-2)),
 
-Караваева Наталия Игоревна [Researchgate](https://www.researchgate.net/profile/Nataliia-Karavaeva)
+* Караваева Наталия Игоревна ([Researchgate](https://www.researchgate.net/profile/Nataliia-Karavaeva)),
 
-Устюгова Галина Валентиновна [Researchgate](https://www.researchgate.net/profile/G-Ustyugova)
+* Устюгова Галина Валентиновна ([Researchgate](https://www.researchgate.net/profile/G-Ustyugova)).
 
 
 Данный курс совмещает в себе классические и прогрессивные подходы к изучению 
 предмета, бережно соблюдая традиции кафедры вычислительной физики МФТИ, на 
 которой работали отцы-основатели вычислительной математики 
-В.С. Рябенький [Wikipedia](https://ru.wikipedia.org/wiki/Рябенький,_Виктор_Соломонович), 
-Р.П. Федоренко [Wikipedia](https://ru.wikipedia.org/wiki/Федоренко,_Радий_Петрович), 
-Л.А. Чудов [Wikipedia](https://ru.wikipedia.org/wiki/Чудов,_Лев_Алексеевич), 
-А.С. Холодов [Wikipedia](https://ru.wikipedia.org/wiki/Холодов,_Александр_Сергеевич).
+В.С. Рябенький ([Wikipedia](https://ru.wikipedia.org/wiki/Рябенький,_Виктор_Соломонович)), 
+Р.П. Федоренко ([Wikipedia](https://ru.wikipedia.org/wiki/Федоренко,_Радий_Петрович)), 
+Л.А. Чудов ([Wikipedia](https://ru.wikipedia.org/wiki/Чудов,_Лев_Алексеевич)), 
+А.С. Холодов ([Wikipedia](https://ru.wikipedia.org/wiki/Холодов,_Александр_Сергеевич)).
 
 
 **Авторы материалов:** Караваева Наталия Игоревна, Ивашкин Иван Романович.
