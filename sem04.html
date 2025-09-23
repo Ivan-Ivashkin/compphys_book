@@ -62,6 +62,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'sem04';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Семинар 5. Итерационные методы решения СЛАУ (продолжение). МНК" href="sem05.html" />
     <link rel="prev" title="Семинар 3. Прикладная линейная алгебра. Введение" href="sem03.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -213,6 +214,16 @@
 
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Семинар 4. Итерационные методы решения СЛАУ</a></li>
 
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem05.html">Семинар 5. Итерационные методы решения СЛАУ (продолжение). МНК</a></li>
 
 
 
@@ -798,7 +809,7 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: total: 0 ns
-Wall time: 168 μs
+Wall time: 120 μs
 </pre></div>
 </div>
 </div>
@@ -812,7 +823,7 @@ Wall time: 168 μs
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: total: 0 ns
-Wall time: 52.7 μs
+Wall time: 48.9 μs
 </pre></div>
 </div>
 </div>
@@ -831,7 +842,7 @@ Wall time: 52.7 μs
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: total: 0 ns
-Wall time: 119 μs
+Wall time: 118 μs
 </pre></div>
 </div>
 </div>
@@ -846,7 +857,7 @@ Wall time: 119 μs
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>67.9 μs ± 514 ns per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>64 μs ± 414 ns per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
 </pre></div>
 </div>
 </div>
@@ -859,7 +870,7 @@ Wall time: 119 μs
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>20.7 μs ± 261 ns per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>19.5 μs ± 116 ns per loop (mean ± std. dev. of 7 runs, 100,000 loops each)
 </pre></div>
 </div>
 </div>
@@ -874,7 +885,7 @@ Wall time: 119 μs
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>65.5 μs ± 5.57 μs per loop (mean ± std. dev. of 10 runs, 100 loops each)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>63.7 μs ± 2.11 μs per loop (mean ± std. dev. of 10 runs, 100 loops each)
 </pre></div>
 </div>
 </div>
@@ -887,7 +898,7 @@ Wall time: 119 μs
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>67.8 μs ± 4.7 μs per loop (mean ± std. dev. of 10 runs, 100 loops each)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>66.8 μs ± 7.8 μs per loop (mean ± std. dev. of 10 runs, 100 loops each)
 </pre></div>
 </div>
 </div>
@@ -900,9 +911,9 @@ Wall time: 119 μs
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([6.69550001e-05, 6.39070000e-05, 7.83849999e-05, 6.46930000e-05,
-       6.60380001e-05, 6.39860000e-05, 7.22620000e-05, 6.32020000e-05,
-       6.63190000e-05, 7.25480000e-05])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([6.31720002e-05, 6.39860000e-05, 6.21460000e-05, 6.99830000e-05,
+       6.32620000e-05, 8.93489999e-05, 6.43369998e-05, 6.49939998e-05,
+       6.42969998e-05, 6.24140000e-05])
 </pre></div>
 </div>
 </div>
@@ -924,7 +935,7 @@ Wall time: 119 μs
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1757403311.154965
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1758664092.4083748
 </pre></div>
 </div>
 </div>
@@ -937,7 +948,7 @@ Wall time: 119 μs
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>time.struct_time(tm_year=2025, tm_mon=9, tm_mday=9, tm_hour=7, tm_min=35, tm_sec=11, tm_wday=1, tm_yday=252, tm_isdst=0)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>time.struct_time(tm_year=2025, tm_mon=9, tm_mday=23, tm_hour=21, tm_min=48, tm_sec=12, tm_wday=1, tm_yday=266, tm_isdst=0)
 </pre></div>
 </div>
 </div>
@@ -954,7 +965,7 @@ Wall time: 119 μs
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>193400
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>187700
 </pre></div>
 </div>
 </div>
@@ -991,7 +1002,7 @@ Wall time: 119 μs
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6.770250003319234e-05
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6.694760001846588e-05
 </pre></div>
 </div>
 </div>
@@ -1013,7 +1024,7 @@ Wall time: 119 μs
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>time: 119 μs (started: 2025-09-09 10:35:11 +03:00)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>time: 120 μs (started: 2025-09-24 00:48:12 +03:00)
 </pre></div>
 </div>
 </div>
@@ -1027,7 +1038,7 @@ Wall time: 119 μs
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Hello, world!
-time: 2.08 ms (started: 2025-09-09 10:35:11 +03:00)
+time: 921 μs (started: 2025-09-24 00:48:12 +03:00)
 </pre></div>
 </div>
 </div>
@@ -1088,7 +1099,7 @@ time: 2.08 ms (started: 2025-09-09 10:35:11 +03:00)
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: total: 0 ns
-Wall time: 196 μs
+Wall time: 162 μs
 </pre></div>
 </div>
 </div>
@@ -1102,7 +1113,7 @@ Wall time: 196 μs
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: total: 0 ns
-Wall time: 58.7 μs
+Wall time: 75.1 μs
 </pre></div>
 </div>
 </div>
@@ -1134,7 +1145,7 @@ Wall time: 58.7 μs
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: total: 0 ns
-Wall time: 124 μs
+Wall time: 212 μs
 </pre></div>
 </div>
 </div>
@@ -1147,7 +1158,7 @@ Wall time: 124 μs
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>68.7 μs ± 841 ns per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>65.4 μs ± 1.04 μs per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
 </pre></div>
 </div>
 </div>
@@ -1224,7 +1235,7 @@ Wall time: 124 μs
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: total: 0 ns
-Wall time: 64.1 μs
+Wall time: 67.5 μs
 </pre></div>
 </div>
 </div>
@@ -1345,7 +1356,7 @@ Wall time: 64.1 μs
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6.06 ms ± 516 μs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6.24 ms ± 840 μs per loop (mean ± std. dev. of 7 runs, 100 loops each)
 </pre></div>
 </div>
 </div>
@@ -1358,7 +1369,7 @@ Wall time: 64.1 μs
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6.76 ms ± 49.7 μs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6.61 ms ± 92.1 μs per loop (mean ± std. dev. of 7 runs, 100 loops each)
 </pre></div>
 </div>
 </div>
@@ -1390,8 +1401,8 @@ Wall time: 64.1 μs
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The slowest run took 6.80 times longer than the fastest. This could mean that an intermediate result is being cached.
-7.97 μs ± 8.15 μs per loop (mean ± std. dev. of 7 runs, 1 loop each)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The slowest run took 6.73 times longer than the fastest. This could mean that an intermediate result is being cached.
+7.93 μs ± 8.04 μs per loop (mean ± std. dev. of 7 runs, 1 loop each)
 </pre></div>
 </div>
 </div>
@@ -1692,11 +1703,11 @@ Wall time: 64.1 μs
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: total: 938 ms
-Wall time: 182 ms
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: total: 1.09 s
+Wall time: 178 ms
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5000.04644085392
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5000.365269921262
 </pre></div>
 </div>
 </div>
@@ -2189,7 +2200,9 @@ Wall time: 182 ms
 <ol class="arabic simple">
 <li><p><em>Guide to Lightning-fast JAX.</em> Неплохая статья, подходящая для быстрого освоения библиотеки JAX на элементарном уровне. <a class="reference external" href="https://www.analyticsvidhya.com/blog/2024/10/jax/">Ссылка.</a></p></li>
 <li><p>Персональный сайт преподавателя МФТИ О.А. Пырковой. Содержит много полезных материалов по различным математическим курсам МФТИ. Страница с материалами осеннего семестра по вычислительной математике: <a class="reference external" href="https://www.pyrkovaoa-fizteh.ru/%D0%BA%D0%BE%D0%BD%D1%81%D1%83%D0%BB%D1%8C%D1%82%D0%B0%D1%86%D0%B8%D1%8F-%D0%B2%D1%8B%D1%87%D0%BC-5/">ссылка</a>.</p></li>
+<li><p>Вычислительная линейная алгебра — сайт с учебными материалами для 1 курса бакалавриата ФПМИ МФТИ. Много полезной информации по темам, далеко выходящим за рамки стандартных курсов. Много демонстраций на Python. <a class="reference external" href="https://nla360.fmin.xyz/">Ссылка.</a></p></li>
 <li><p>Scientific Python Lectures. Очень полезный ресурс, представляющий собой учебник по научному программированию на языке Python. Представлено много различных библиотек. Есть pdf-версия. Все материалы на английском языке. <a class="reference external" href="https://lectures.scientific-python.org/">Ссылка.</a></p></li>
+<li><p>Python Programming And Numerical Methods: A Guide For Engineers And Scientists. Прекрасный сайт, представляющий собой электронную версию одноимённой книги по научному программированию на Python. Исключительно подробное изложение с многочисленными примерами. <a class="reference external" href="https://pythonnumericalmethods.studentorg.berkeley.edu/notebooks/Index.html">Ссылка.</a></p></li>
 </ol>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="id16">
@@ -2255,6 +2268,15 @@ Wall time: 182 ms
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title">Семинар 3. Прикладная линейная алгебра. Введение</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="sem05.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Семинар 5. Итерационные методы решения СЛАУ (продолжение). МНК</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
