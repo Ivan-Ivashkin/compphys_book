@@ -1,0 +1,1876 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Семинар 7. Системы нелинейных уравнений &#8212; Вычислительная математика. ЛФИ МФТИ</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'sem07';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Семинар 6. Нелинейные уравнения" href="sem06.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Вычислительная математика. ЛФИ МФТИ - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Вычислительная математика. ЛФИ МФТИ - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Предисловие
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Осенний семестр</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="sem01.html">Семинар 1. Введение. Погрешности вычислений</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem02.html">Семинар 2. Численное дифференцирование</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem03.html">Семинар 3. Прикладная линейная алгебра. Введение</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem04.html">Семинар 4. Итерационные методы решения СЛАУ</a></li>
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem05.html">Семинар 5. Итерационные методы решения СЛАУ (продолжение). МНК</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem06.html">Семинар 6. Нелинейные уравнения</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Семинар 7. Системы нелинейных уравнений</a></li>
+
+
+
+
+
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fsem07.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/sem07.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Семинар 7. Системы нелинейных уравнений</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Семинар 7. Системы нелинейных уравнений</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Введение</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Метод простых итераций</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Задача 1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Задача 2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Задача 3</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Метод Ньютона</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Задача 4</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#python">Решение систем нелинейных уравнений в Python</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Практические задачи</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Задача А</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Литература и другие источники</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">Контрольные вопросы</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>Семинар 7. Системы нелинейных уравнений<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>Перед изучением материалов семинара рекомендуем посетить лекцию или посмотреть видеозапись лекции. Ссылки (YouTube): <a class="reference external" href="https://www.youtube.com/live/0UtUfkqH7v8?si=vQNY8K6XPhPpFYag&amp;amp;t=3311">лекция 7</a> (начало темы), <a class="reference external" href="https://www.youtube.com/live/AfpEHRqNZb8?si=7xUhMmnyyJXUpSKS&amp;amp;t=14">лекция 8</a> (продолжение). Желательно также предварительно изучить материалы шестого семинара.</p>
+<p>Предполагается, что читатель знает</p>
+<ul class="simple">
+<li><p>классификацию методов численного решения нелинейных уравнений,</p></li>
+<li><p>суть метода простых итераций и метода Ньютона решения нелинейных уравнений,</p></li>
+<li><p>понятие метрического пространства и его связь с понятием нормированного пространства,</p></li>
+<li><p>определение полного метрического пространства,</p></li>
+<li><p>определения и примеры векторных и матричных норм,</p></li>
+<li><p>теорему об эквивалентности норм в <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span>,</p></li>
+<li><p>понятие невязки <span class="math notranslate nohighlight">\(\textbf{r}^{(s)}\)</span>.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id2">
+<h1>Введение<a class="headerlink" href="#id2" title="Link to this heading">#</a></h1>
+<p>Предыдущий семинар был посвящён методам численного решения нелинейных уравнений вида</p>
+<div class="math notranslate nohighlight">
+\[f(x)=0.\]</div>
+<p>Непрерывная функция <span class="math notranslate nohighlight">\(f(x)\)</span> <strong>одной переменной</strong> <span class="math notranslate nohighlight">\(x\)</span> предполагалась <strong>скалярной</strong> и <strong>вещественнозначной</strong>. Иначе говоря, предполагалось, что множество значений функции <span class="math notranslate nohighlight">\(f(x)\)</span> есть подмножество числовой прямой <span class="math notranslate nohighlight">\(\mathbb{R}\)</span>.</p>
+<p>В настоящем семинаре мы рассмотрим методы численного решения <strong>систем нелинейных уравнений</strong> вида</p>
+<div class="math notranslate nohighlight">
+\[\textbf{f}(\textbf{x})=\textbf{0}.\]</div>
+<p>Здесь функция <span class="math notranslate nohighlight">\(\textbf{f}(\textbf{x})\)</span> является уже <strong>вектор-функцией векторного аргумента</strong>: <span class="math notranslate nohighlight">\(\textbf{x}\in\mathbb{R}^m\)</span>, <span class="math notranslate nohighlight">\(\textbf{f}\in\mathbb{R}^n\)</span>, — причём каждая из компонент вектора <span class="math notranslate nohighlight">\(\textbf{f}\)</span> представляет собой (непрерывную) нелинейную функцию компонент вектора <span class="math notranslate nohighlight">\(\textbf{x}\)</span>. Число уравнений <span class="math notranslate nohighlight">\(n\)</span> и количество неизвестных <span class="math notranslate nohighlight">\(m\)</span>, вообще говоря, могут и не совпадать. Мы ограничимся рассмотрением наиболее распространённого случая <span class="math notranslate nohighlight">\(n=m\)</span>.</p>
+<p>Как известно из прошлого семинара, методы решения нелинейных уравнений делятся на одноточечные и двухточечные (вообще говоря, многоточечные), причём <strong>большинство двухточечных методов основано на последовательном “стягивании” исходного отрезка</strong> <span class="math notranslate nohighlight">\([a,b]\)</span> <strong>локализации</strong> корня <span class="math notranslate nohighlight">\(x=\xi\)</span>. В многомерном случае понятие отрезка локализации следует заменить более общим понятием <strong>области локализации</strong> <span class="math notranslate nohighlight">\(\Omega\subset\mathbb{R}^m\)</span> решения <span class="math notranslate nohighlight">\(\textbf{x}=\textbf{u}\)</span> системы нелинейных уравнений. Поскольку <span class="math notranslate nohighlight">\(\Omega\)</span> представляет собой множество в многомерном пространстве, построить какой-либо алгоритм его “уменьшения” (в смысле заранее выбранной меры) затруднительно. В связи с этим для численного решения систем нелинейных уравнений, как правило, предлагают только одноточечные методы. Как и в случае одного уравнения, перед применением таких методов требуется предварительно локализовать корень для удачного выбора начального приближения <span class="math notranslate nohighlight">\(\textbf{x}^{(0)}\)</span>.</p>
+<p>Мы рассмотрим два метода решения систем нелинейных уравнений: метод простых итераций (МПИ) и метод Ньютона. Они обобщают соответствующие методы решения одного нелинейного уравнения, изучавшиеся на прошлом семинаре.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id3">
+<h1>Метод простых итераций<a class="headerlink" href="#id3" title="Link to this heading">#</a></h1>
+<p>Суть этого метода — та же, что и в случае МПИ, применяемого для решения одного нелинейного уравнения. Система нелинейных уравнений</p>
+<div class="math notranslate nohighlight">
+\[\textbf{f}(\textbf{x})=\textbf{0}\]</div>
+<p>некоторыми равносильными преобразованиями приводится к виду</p>
+<div class="math notranslate nohighlight">
+\[\textbf{x}=\boldsymbol{\varphi}(\textbf{x}),\]</div>
+<p>после чего организуется итерационный процесс</p>
+<div class="math notranslate nohighlight">
+\[\textbf{x}^{(s+1)}=\boldsymbol{\varphi}\big(\textbf{x}^{(s)}\big),\quad s=0,\,1,\,2,\,\dots\,.\]</div>
+<p>Очевидно, что точное решение <span class="math notranslate nohighlight">\(\textbf{x}=\textbf{u}\)</span> системы <span class="math notranslate nohighlight">\(\textbf{f}(\textbf{x})=\textbf{0}\)</span> представляет собой <strong>неподвижную точку</strong> функции (отображения) <span class="math notranslate nohighlight">\(\boldsymbol{\varphi}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\textbf{u}=\boldsymbol{\varphi}(\textbf{u}).\]</div>
+<p>Произвольное отображение <span class="math notranslate nohighlight">\(\boldsymbol{\varphi}\)</span> может иметь несколько неподвижных точек или не иметь их вовсе. При организации МПИ нас интересуют лишь такие отображения <span class="math notranslate nohighlight">\(\boldsymbol{\varphi}\)</span>, которые имеют <strong>единственную неподвижную точку в области <span class="math notranslate nohighlight">\(\Omega\)</span> локализации решения <span class="math notranslate nohighlight">\(\textbf{x}=\textbf{u}\)</span></strong>  — именно к ней должна сходиться последовательность приближений <span class="math notranslate nohighlight">\(\textbf{x}^{(s)}\)</span>.</p>
+<p>Достаточное условие существования и единственности неподвижной точки отображения <span class="math notranslate nohighlight">\(\boldsymbol{\varphi}\)</span> даётся одной из важнейших теорем функционального анализа — <strong>принципом сжимающих отображений</strong>. Приведём её формулировку и доказательство (в общем виде — для произвольного <strong>полного</strong> метрического пространства). Предварительно напомним определение сжимающего отображения.</p>
+<p><strong>Определение 1.</strong> Отображение <span class="math notranslate nohighlight">\(F\)</span> метрического пространства <span class="math notranslate nohighlight">\((M,\rho)\)</span> в себя называется <em>сжимающим</em>, если для любых <span class="math notranslate nohighlight">\(z_1,z_2\in M\)</span> имеет место неравенство</p>
+<div class="math notranslate nohighlight">
+\[\rho(Fz_1,Fz_2)\leq q\cdot\rho(z_1,z_2),\]</div>
+<p>в котором <span class="math notranslate nohighlight">\(q\in (0,1)\)</span> — фиксированное (для данного отображения <span class="math notranslate nohighlight">\(F\)</span>) число, а через <span class="math notranslate nohighlight">\(Fz\)</span> обозначен образ элемента (точки) <span class="math notranslate nohighlight">\(z\)</span> при действии на него отображения <span class="math notranslate nohighlight">\(F\)</span>.</p>
+<p><strong>Теорема 1 (принцип сжимающих отображений).</strong> <em>Сжимающее</em> отображение <span class="math notranslate nohighlight">\(F\)</span> <em>полного</em> метрического пространства <span class="math notranslate nohighlight">\((M,\rho)\)</span> в себя имеет неподвижную точку, и притом <em>единственную</em>.</p>
+<p><strong>Доказательство.</strong> Пусть <span class="math notranslate nohighlight">\(z_0\in M\)</span> — произвольный элемент (точка) метрического пространства <span class="math notranslate nohighlight">\((M,\rho)\)</span>. Построим последовательность точек</p>
+<div class="math notranslate nohighlight">
+\[z_1=Fz_0,\quad z_2=Fz_1=F^2z_0,\quad\dots,\quad z_s=Fz_{s-1}=F^sz_0,\quad\dots\quad.\]</div>
+<p>Заметим, что в силу определения сжимающего отображения <span class="math notranslate nohighlight">\(F\)</span> имеет место цепочка неравенств</p>
+<div class="math notranslate nohighlight">
+\[\rho(z_s,z_{s+1})=\rho(F^sz_0,F^{s+1}z_{0})\leq q\cdot\rho(F^{s-1}z_0,F^{s}z_{0})\leq\dots\leq q^s\cdot\rho(z_0,z_{1}).\]</div>
+<p>Далее,</p>
+<div class="math notranslate nohighlight">
+\[\rho(z_s,z_{s+r})\leq \sum\limits_{p=0}^{r-1}\rho(z_{s+p},z_{s+p+1})\leq \sum\limits_{p=0}^{r-1}q^{s+p}\cdot \rho(z_{0},z_{1})\leq q^s\cdot\rho(z_{0},z_{1})\cdot\sum\limits_{p=0}^{\infty}q^{p}=\frac{q^s}{1-q}\cdot\rho(z_{0},z_{1}).\]</div>
+<p>Здесь первый переход основан на неравенстве треугольника, второй — на выведенном выше неравенстве <span class="math notranslate nohighlight">\(\rho(z_s,z_{s+1})\leq q^s\cdot\rho(z_0,z_{1})\)</span>.</p>
+<p>Поскольку <span class="math notranslate nohighlight">\(q\in (0,1)\)</span>, <span class="math notranslate nohighlight">\(\lim_\limits{s\to\infty}q^s=0\)</span>, так что <span class="math notranslate nohighlight">\(\lim_\limits{s\to\infty}\rho(z_s,z_{s+r})=0\)</span>, т.е. последовательность точек <span class="math notranslate nohighlight">\(z_s\)</span> фундаментальна. В силу полноты метрического пространства отсюда следует, что существует <span class="math notranslate nohighlight">\(\lim_\limits{s\to\infty} z_s\equiv z\)</span>.</p>
+<p>Покажем, что <span class="math notranslate nohighlight">\(z\)</span> — неподвижная точка отображения <span class="math notranslate nohighlight">\(F\)</span>, т.е. <span class="math notranslate nohighlight">\(Fz=z\)</span>. Для этого заметим, что</p>
+<div class="math notranslate nohighlight">
+\[\rho(Fz,z_s)=\rho(Fz,Fz_{s-1})\leq q\cdot\rho(z,z_{s-1}).\]</div>
+<p>Поскольку <span class="math notranslate nohighlight">\(\lim_\limits{s\to\infty}\rho(z,z_{s-1})=0\)</span> (в силу того, что <span class="math notranslate nohighlight">\(z\)</span> — предел последовательности <span class="math notranslate nohighlight">\(z_s\)</span>), то и <span class="math notranslate nohighlight">\(\lim_\limits{s\to\infty}\rho(Fz,z_{s})=0\)</span>, или, другими словами, <span class="math notranslate nohighlight">\(\lim_\limits{s\to\infty} z_s=Fz\)</span>. Но предел последовательности <span class="math notranslate nohighlight">\(z_s\)</span> единственен, так что действительно <span class="math notranslate nohighlight">\(Fz=z\)</span>, т.е. <span class="math notranslate nohighlight">\(z\)</span> — неподвижная точка отображения <span class="math notranslate nohighlight">\(F\)</span>.</p>
+<p>Остаётся доказать единственность построенной неподвижной точки. Мы предоставляем это читателю.</p>
+<p><strong>Упражнение.</strong> Завершите доказательство теоремы 1, показав единственность неподвижной точки <span class="math notranslate nohighlight">\(z\)</span> сжимающего отображения <span class="math notranslate nohighlight">\(F\)</span> полного метрического пространства <span class="math notranslate nohighlight">\((M,\rho)\)</span> в себя.</p>
+<p><em>Указание.</em> Предположите противное, воспользуйтесь определением сжимающего отображения и придите к противоречию с условием <span class="math notranslate nohighlight">\(q&lt;1\)</span>.</p>
+<p>Отметим, что из неравенства</p>
+<div class="math notranslate nohighlight">
+\[\rho(z_s,z_{s+r})\leq\frac{q^s}{1-q}\cdot\rho(z_{0},z_{1}),\]</div>
+<p>полученного в ходе доказательства теоремы 1, путём предельного перехода при <span class="math notranslate nohighlight">\(r\to\infty\)</span> следует, что</p>
+<div class="math notranslate nohighlight">
+\[\rho(z_s,z)\leq\frac{q^s}{1-q}\cdot\rho(z_{0},z_{1}).\]</div>
+<p><strong>Упражнение</strong>. Последнее утверждение опирается на <strong>свойство непрерывности</strong> метрики <span class="math notranslate nohighlight">\(\rho\)</span>: если <span class="math notranslate nohighlight">\(\lim\limits_{s\to\infty}v_s=v\)</span>, <span class="math notranslate nohighlight">\(\lim\limits_{s\to\infty}w_s=w\)</span>, то и <span class="math notranslate nohighlight">\(\lim\limits_{s\to\infty}\rho(v_s,w_s)=\rho(v,w)\)</span>. Докажите это свойство.</p>
+<p><em>Указание.</em> Воспользуйтесь “неравенством четырёхугольника”</p>
+<div class="math notranslate nohighlight">
+\[|\rho(a,b)-\rho(c,d)|\leq \rho(a,c)+\rho(b,d),\]</div>
+<p>предварительно доказав его (с помощью двух неравенств треугольника для метрики <span class="math notranslate nohighlight">\(\rho\)</span>). Вывод неравенства нагляден, если воспользоваться его геометрической интерпретацией.</p>
+<p>Выше мы вели рассмотрение в общем виде, не конкретизируя метрическое пространство <span class="math notranslate nohighlight">\((M,\rho)\)</span>. При решении систем нелинейных уравнений в роли множества <span class="math notranslate nohighlight">\(M\)</span> выступает пространство <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span>. Выбором произвольной векторной нормы (см. семинар 3) это пространство превращается в <strong>нормированное пространство</strong>, а любое нормированное пространство является, как известно, метрическим пространством с <strong>индуцированной метрикой</strong></p>
+<div class="math notranslate nohighlight">
+\[\rho(\textbf{x},\textbf{y})=||\textbf{x}-\textbf{y}||.\]</div>
+<p>Подчеркнём, что <strong>обратное утверждение неверно: не во всяком метрическом пространстве можно определить норму</strong>.</p>
+<p>Легко доказать, что метрическое пространство <span class="math notranslate nohighlight">\((\mathbb{R}^n,\rho_3)\)</span> с метрикой</p>
+<div class="math notranslate nohighlight">
+\[\rho_3(\textbf{x},\textbf{y})=||\textbf{x}-\textbf{y}||_3=\sqrt{(\textbf{x}-\textbf{y}, \textbf{x}-\textbf{y})}=\bigg(\sum\limits_{i=1}^n(x_i-y_i)^2\bigg)^{1/2},\]</div>
+<p>индуцированной евклидовой нормой, является полным. Очевидно также, что в силу эквивалентности норм в <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span> (см. семинар 3) это пространство будет полным относительно любой другой метрики, <strong>индуцированной некоторой векторной нормой</strong> (например, нормами <span class="math notranslate nohighlight">\(||\cdot||_1\)</span> или <span class="math notranslate nohighlight">\(||\cdot||_2\)</span>). Не следует, однако, думать, что пространство <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span> полно относительно произвольной метрики: полнота может не иметь места, если выбрана метрика, не индуцированная какой-либо векторной нормой. Так, в случае <span class="math notranslate nohighlight">\(n=1\)</span> можно взять в качестве метрики функцию</p>
+<div class="math notranslate nohighlight">
+\[\rho(x,y)=|\text{arctg}\,x-\text{arctg}\,y|.\]</div>
+<p>Пространство <span class="math notranslate nohighlight">\(\mathbb{R}\)</span> с такой метрикой не является полным: например, последовательность <span class="math notranslate nohighlight">\(x_k=k\)</span> фундаментальна по выбранной метрике, но не имеет (по ней же) предела в <span class="math notranslate nohighlight">\(\mathbb{R}\)</span> (т.е. критерий Коши не выполняется — полнота отсутствует).</p>
+<p><strong>Упражнение.</strong> Проверьте последнее утверждение, предварительно доказав, что предложенная функция <span class="math notranslate nohighlight">\(\rho(x,y)\)</span> является метрикой.</p>
+<p><em>Указание.</em> Начните с доказательства того, что любая функция <span class="math notranslate nohighlight">\(\rho(x,y)=|\mathcal{F}(x)-\mathcal{F}(y)|\)</span>, где <span class="math notranslate nohighlight">\(\mathcal{F}\)</span> — <strong>инъективное</strong> отображение <span class="math notranslate nohighlight">\(\mathbb{R}\)</span> в себя, является метрикой на <span class="math notranslate nohighlight">\(\mathbb{R}\)</span>.</p>
+<p>Вообще говоря, все <strong>конечномерные евклидовы</strong> пространства являются полными по метрике, индуцированной евклидовой нормой (т.е. нормой, порождённой заданным в пространстве скалярным произведением). Нормированные пространства, полные по метрике, индуцированной нормой, называются <strong>банаховыми пространствами</strong>, а евклидовы пространства, полные по метрике, порождённой скалярным произведением, называются <strong>гильбертовыми пространствами</strong>. Таким образом, <strong>все конечномерные евклидовы пространства</strong> (в том числе и <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span>) <strong>являются гильбертовыми</strong> (а любое гильбертово пространство банахово).</p>
+<p>Итак, “переводя на язык норм” теорему 1 и ее следствие (см. выше), получаем следующее утверждение.</p>
+<p><strong>Теорема 2.</strong> Пусть вектор-функция <span class="math notranslate nohighlight">\(\boldsymbol{\varphi}:\mathbb{R}^n\to \mathbb{R}^n\)</span> такова, что для любых <span class="math notranslate nohighlight">\(\textbf{x},\textbf{y}\in \mathbb{R}^n\)</span> справедливо неравенство</p>
+<div class="math notranslate nohighlight">
+\[||\boldsymbol{\varphi}(\textbf{x})-\boldsymbol{\varphi}(\textbf{y})||\leq q\cdot||\textbf{x}-\textbf{y}||,\]</div>
+<p>в котором <span class="math notranslate nohighlight">\(q\in(0,1)\)</span>, а <span class="math notranslate nohighlight">\(||\cdot||\)</span> — произвольная векторная норма. Тогда метод простых итераций</p>
+<div class="math notranslate nohighlight">
+\[\textbf{x}^{(s+1)}=\boldsymbol{\varphi}\big(\textbf{x}^{(s)}\big),\quad s=0,\,1,\,2,\,\dots\]</div>
+<p>сходится к решению <span class="math notranslate nohighlight">\(\textbf{x}=\textbf{u}\)</span> системы <span class="math notranslate nohighlight">\(\textbf{x}=\boldsymbol{\varphi}(\textbf{x})\)</span> от любого начального приближения <span class="math notranslate nohighlight">\(\textbf{x}^{(0)}\)</span>, причём справедлива следующая оценка погрешности:</p>
+<div class="math notranslate nohighlight">
+\[||\textbf{u}-\textbf{x}^{(s)}||\leq \frac{q^s}{1-q}\cdot||\textbf{x}^{(0)}-\textbf{x}^{(1)}||.\]</div>
+<p>Эта теорема неконструктивна, поскольку входящее в неё неравенство (многомерный аналог условия Липшица — см. семинар 6) затруднительно проверить на практике. Однако известно, что условие</p>
+<div class="math notranslate nohighlight">
+\[||\boldsymbol{\varphi}(\textbf{x})-\boldsymbol{\varphi}(\textbf{y})||\leq q\cdot||\textbf{x}-\textbf{y}||\]</div>
+<p>следует из ограниченности (с константой <span class="math notranslate nohighlight">\(q\)</span>) нормы матрицы Якоби функции <span class="math notranslate nohighlight">\(\boldsymbol{\varphi}\)</span>. Чтобы сформулировать соответствующую теорему, необходимо вспомнить определение выпуклой области.</p>
+<p><strong>Определение 2.</strong> Область <span class="math notranslate nohighlight">\(\Omega\subset\mathbb{R}^n\)</span> называется <em>выпуклой</em>, если принадлежность этой области любых двух точек <span class="math notranslate nohighlight">\(\textbf{a}\)</span> и <span class="math notranslate nohighlight">\(\textbf{b}\)</span> влечёт принадлежность той же области точек</p>
+<div class="math notranslate nohighlight">
+\[\textbf{c}_\tau=\textbf{a}+\tau(\textbf{b}-\textbf{a}),\quad\tau\in[0,1].\]</div>
+<p>Далее мы предполагаем, что в пространстве <span class="math notranslate nohighlight">\(\text{Mat}_{n\times n}(\mathbb{R})\)</span> зафиксирована норма, подчинённая выбранной в <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span> векторной норме (см. семинар 3).</p>
+<p><strong>Теорема 3.</strong> Пусть компоненты <span class="math notranslate nohighlight">\(\varphi_i=\varphi_i(\textbf{x})\)</span> вектор-функции <span class="math notranslate nohighlight">\(\boldsymbol{\varphi}=\boldsymbol{\varphi}(\textbf{x})\)</span> имеют <em>равномерно непрерывные</em> производные в <em>выпуклой</em> области <span class="math notranslate nohighlight">\(\Omega\subset\mathbb{R}^n\)</span>, а матрица Якоби <span class="math notranslate nohighlight">\(\textbf{J}_\boldsymbol{\varphi}\)</span> функции <span class="math notranslate nohighlight">\(\boldsymbol{\varphi}\)</span> удовлетворяет (в той же области <span class="math notranslate nohighlight">\(\Omega\)</span>) условию</p>
+<div class="math notranslate nohighlight">
+\[||\textbf{J}_\boldsymbol{\varphi}||\leq q&lt;1.\]</div>
+<p>Тогда для любых <span class="math notranslate nohighlight">\(\textbf{x},\textbf{y}\in\Omega\)</span> справедливо неравенство</p>
+<div class="math notranslate nohighlight">
+\[||\boldsymbol{\varphi}(\textbf{x})-\boldsymbol{\varphi}(\textbf{y})||\leq q\cdot||\textbf{x}-\textbf{y}||.\]</div>
+<p>Подчеркнём, что под матрицей Якоби в теореме 3 понимается (как и в курсе анализа) матрица частных производных</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\textbf{J}_\boldsymbol{\varphi}=\begin{pmatrix}
+     \displaystyle\frac{\partial\varphi_i}{\partial x_j}
+  \end{pmatrix}=
+  \begin{pmatrix}
+     \displaystyle\frac{\partial\varphi_1}{\partial x_1} &amp; \displaystyle\frac{\partial\varphi_1}{\partial x_2} &amp; \dots &amp; \displaystyle\frac{\partial\varphi_1}{\partial x_n} \\
+     \displaystyle\frac{\partial\varphi_2}{\partial x_1} &amp; \displaystyle\frac{\partial\varphi_2}{\partial x_2} &amp; \dots &amp; \displaystyle\frac{\partial\varphi_2}{\partial x_n} \\
+     \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+     \displaystyle\frac{\partial\varphi_n}{\partial x_1} &amp; \displaystyle\frac{\partial\varphi_n}{\partial x_2} &amp; \dots &amp; \displaystyle\frac{\partial\varphi_n}{\partial x_n}
+  \end{pmatrix}.\end{split}\]</div>
+<p>Отметим, что не следует называть матрицу <span class="math notranslate nohighlight">\(\textbf{J}_\boldsymbol{\varphi}\)</span> якобианом: якобианом называется её определитель <span class="math notranslate nohighlight">\(\det\textbf{J}_\boldsymbol{\varphi}\)</span>, но не сама матрица.</p>
+<p>Объединяя утверждения теорем 2 и 3, получаем достаточное условие сходимости МПИ.</p>
+<p><strong>Теорема 4 (достаточное условие сходимости МПИ).</strong> Пусть для решения системы нелинейных уравнений <span class="math notranslate nohighlight">\(\textbf{f}(\textbf{x})=\textbf{0}\)</span>, рассматриваемой при <span class="math notranslate nohighlight">\(\textbf{x}\in\Omega\)</span>, где <span class="math notranslate nohighlight">\(\Omega\subset\mathbb{R}^n\)</span> — <em>выпуклая</em> область, предложен метод простых итераций</p>
+<div class="math notranslate nohighlight">
+\[\textbf{x}^{(s+1)}=\boldsymbol{\varphi}\big(\textbf{x}^{(s)}\big),\quad s=0,\,1,\,2,\,\dots\,,\]</div>
+<p>причём компоненты <span class="math notranslate nohighlight">\(\varphi_i=\varphi_i(\textbf{x})\)</span> вектор-функции <span class="math notranslate nohighlight">\(\boldsymbol{\varphi}=\boldsymbol{\varphi}(\textbf{x})\)</span> имеют <em>равномерно непрерывные</em> производные в <span class="math notranslate nohighlight">\(\Omega\)</span>, а матрица Якоби функции <span class="math notranslate nohighlight">\(\boldsymbol{\varphi}\)</span> удовлетворяет неравенству</p>
+<div class="math notranslate nohighlight">
+\[||\textbf{J}_\boldsymbol{\varphi}||\leq q&lt;1.\]</div>
+<p>Тогда предложенный метод простых итераций сходится к точному решению <span class="math notranslate nohighlight">\(\textbf{x}=\textbf{u}\)</span> системы <span class="math notranslate nohighlight">\(\textbf{f}(\textbf{x})=\textbf{0}\)</span> от любого начального приближения <span class="math notranslate nohighlight">\(\textbf{x}^{(0)}\in\Omega\)</span>, а для погрешности приближённого решения <span class="math notranslate nohighlight">\(\textbf{x}^{(s)}\)</span> справедлива оценка</p>
+<div class="math notranslate nohighlight">
+\[||\textbf{u}-\textbf{x}^{(s)}||\leq \frac{q^s}{1-q}\cdot||\textbf{x}^{(0)}-\textbf{x}^{(1)}||.\]</div>
+<section id="id4">
+<h2>Задача 1<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<p>Известно, что одно из решений системы нелинейных уравнений</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \begin{cases}
+    x^3 + y^2 - 6x + 3 = 0,\\
+    x^3 - y^2 - 6y + 2 = 0
+  \end{cases}
+\end{split}\]</div>
+<p>лежит в единичном круге на плоскости <span class="math notranslate nohighlight">\(\mathbb{R}^2\)</span>. Предложить МПИ для приближённого нахождения этого решения.</p>
+<p><strong>Решение.</strong> Перепишем систему в эквивалентном виде</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \begin{cases}
+    x = \displaystyle\frac{x^3 + y^2 + 3}{6},\\[0.2cm]
+    y = \displaystyle\frac{x^3 - y^2 + 2}{6}
+  \end{cases}
+\end{split}\]</div>
+<p>и организуем следующий итерационный процесс:</p>
+<div class="math notranslate nohighlight">
+\[\textbf{x}^{(s+1)}=\boldsymbol{\varphi}\big(\textbf{x}^{(s)}\big),\quad \boldsymbol{\varphi}=
+  \begin{pmatrix}
+     \displaystyle\frac{x_1^3 + x_2^2 + 3}{6} &amp; \displaystyle\frac{x_1^3 - x_2^2 + 2}{6}
+  \end{pmatrix}^\text{T}.\]</div>
+<p>Проверим достаточное условие сходимости предложенного МПИ. Выпишем матрицу Якоби функции <span class="math notranslate nohighlight">\(\boldsymbol{\varphi}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\textbf{J}_\boldsymbol{\varphi}=
+  \begin{pmatrix}
+    \displaystyle\frac{x_1^2}{2} &amp; \displaystyle\frac{x_2}{3}\\[0.1cm]
+    \displaystyle\frac{x_1^2}{2} &amp; -\displaystyle\frac{x_2}{3}
+  \end{pmatrix}.\end{split}\]</div>
+<p>Её норма (подчинённая кубической норме в <span class="math notranslate nohighlight">\(\mathbb{R}^2\)</span>):</p>
+<div class="math notranslate nohighlight">
+\[||\textbf{J}_\boldsymbol{\varphi}||_\text{I}= \frac{x_1^2}{2}+\frac{|x_2|}{3}.\]</div>
+<p>Очевидно, что в (замкнутом) единичном круге справедлива оценка</p>
+<div class="math notranslate nohighlight">
+\[||\textbf{J}_\boldsymbol{\varphi}||_\text{I}\leq\frac{1}{2}+\frac{1}{3}=\frac{5}{6}\equiv q&lt;1.\]</div>
+<p>Таким образом, достаточное условие сходимости МПИ выполнено, а значит, построенный итерационный процесс можно применить для отыскания решения. В качестве начального приближения можно взять любую точку из единичного круга — например, точку с координатами <span class="math notranslate nohighlight">\(x_1^{(0)}=x_2^{(0)}=1/2\)</span>.</p>
+<p>Применим предложенный МПИ для отыскания корня — напишем реализующую его функцию <code class="docutils literal notranslate"><span class="pre">SI_method1_v1</span></code>. Непосредственный расчёт очередного приближения вынесем в функцию <code class="docutils literal notranslate"><span class="pre">phi_1</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">phi_1</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">3</span> <span class="o">+</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">3</span><span class="p">)</span> <span class="o">/</span> <span class="mi">6</span><span class="p">,</span>
+                     <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">6</span><span class="p">])</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">SI_method1_v1</span><span class="p">(</span><span class="n">x0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">q</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+    <span class="n">x1</span> <span class="o">=</span> <span class="n">phi_1</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span> <span class="c1"># первую итерацию выполняем вне цикла,</span>
+                   <span class="c1"># чтобы сделать возможной априорную оценку числа итераций</span>
+
+    <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">eps</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">q</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x0</span> <span class="o">-</span> <span class="n">x1</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+    <span class="c1"># s = np.log(eps) / np.log(q) # другой вариант оценки числа итераций</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">s</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">x1</span> <span class="o">=</span> <span class="n">phi_1</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">x1</span><span class="p">,</span> <span class="n">s</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>В этой программе число итераций метода оценено априорно с помощью неравенства</p>
+<div class="math notranslate nohighlight">
+\[s\geq\ln\bigg(\frac{\varepsilon(1-q)}{||\textbf{x}^{(0)}-\textbf{x}^{(1)}||}\bigg)\Big/\ln{q},\]</div>
+<p>следующего из теоремы 4 (<span class="math notranslate nohighlight">\(\varepsilon\)</span> — заданная погрешность приближённого решения). Первую итерацию приходится выполнять отдельно (до основного цикла), чтобы сделать возможным расчёт величины <span class="math notranslate nohighlight">\(||\textbf{x}^{(0)}-\textbf{x}^{(1)}||\)</span>. Можно положить в основу оценки и другое неравенство:</p>
+<div class="math notranslate nohighlight">
+\[s\geq\ln\frac{1}{\varepsilon}\Big/\ln\frac{1}{q}=\ln\varepsilon\Big/\ln q.\]</div>
+<p>Оно возникает из требования <span class="math notranslate nohighlight">\(q^s\leq\varepsilon\)</span>, означающего, что за <span class="math notranslate nohighlight">\(s\)</span> итераций погрешность уменьшается в <span class="math notranslate nohighlight">\(q^s\)</span> раз (соответственно, если первоначально она была порядка единицы, то через <span class="math notranslate nohighlight">\(s\)</span> итераций оценивается величиной <span class="math notranslate nohighlight">\(q^s\)</span>).</p>
+<p>Для второй оценки не требуется предварительно находить итерационную поправку <span class="math notranslate nohighlight">\(||\textbf{x}^{(0)}-\textbf{x}^{(1)}||\)</span>. Однако и в первом, и во втором неравенствах фигурирует величина <span class="math notranslate nohighlight">\(q\)</span>, вообще говоря, неизвестная. При запуске программы можно положить <span class="math notranslate nohighlight">\(q=5/6\)</span> — это оценка, которую мы установили при решении задачи:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">time</span> res, s = SI_method1_v1(np.array([1/2, 1/2]), q=5/6, eps=1e-3)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: total: 0 ns
+Wall time: 187 μs
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.5466188405905157, 0.341156300201465)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Для нахождения решения потребовалось совершить около 40 итераций:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">s</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>41
+</pre></div>
+</div>
+</div>
+</div>
+<p>Нужно иметь в виду, что оценка <span class="math notranslate nohighlight">\(q\)</span> через норму матрицы Якоби может оказаться сильно завышенной (кроме того, она зависит от рассматриваемой области <span class="math notranslate nohighlight">\(\Omega\)</span> — в данном случае в роли этой области выступает единичный круг). Очевидно, что чем ближе величина <span class="math notranslate nohighlight">\(q\)</span> к единице, тем большей окажется оценка на число итераций <span class="math notranslate nohighlight">\(s\)</span>. Поэтому в некоторых случаях априорное оценивание может давать явно чрезмерное количество итераций.</p>
+<p>В приведённом примере <span class="math notranslate nohighlight">\(q=5/6\)</span>, что ненамного меньше единицы, и число итераций получается сравнительно большим, хотя и приемлемым (при <span class="math notranslate nohighlight">\(0,99&lt;q&lt;1\)</span> оценка на <span class="math notranslate nohighlight">\(s\)</span> может оказаться куда более значительной). Однако можно показать, что в данном случае выполнение сорока итераций избыточно для отыскания решения с точностью <span class="math notranslate nohighlight">\(10^{-3}\)</span>.</p>
+<p>В самом деле, осуществим подстановку найденных <span class="math notranslate nohighlight">\(x\)</span> и <span class="math notranslate nohighlight">\(y\)</span> в исходную систему и проверим равенства <span class="math notranslate nohighlight">\(f_1(x,y)=0\)</span> и <span class="math notranslate nohighlight">\(f_2(x,y)=0\)</span> с помощью уже знакомой нам функции <code class="docutils literal notranslate"><span class="pre">np.allclose</span></code> (см. третий семинар):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">([</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">6</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mi">3</span><span class="p">,</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">6</span><span class="o">*</span><span class="n">y</span> <span class="o">+</span> <span class="mi">2</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<p>Напомним, что по умолчанию равенство проверяется с абсолютной точностью <span class="math notranslate nohighlight">\(10^{-8}\)</span>. Таким образом, в действительности за 40 итераций мы нашли решение не с точностью <span class="math notranslate nohighlight">\(10^{-3}\)</span>, а с гораздо более высокой точностью (не хуже <span class="math notranslate nohighlight">\(10^{-8}\)</span>), чего в постановке задачи не требовалось.</p>
+<p>Для более детального исследования вычислим норму невязки <span class="math notranslate nohighlight">\(\textbf{r}^{(s)}\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rs_norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">([</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">6</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mi">3</span><span class="p">,</span>
+                          <span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">6</span><span class="o">*</span><span class="n">y</span> <span class="o">+</span> <span class="mi">2</span><span class="p">],</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">float</span><span class="p">(</span><span class="n">rs_norm</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.220446049250313e-16
+</pre></div>
+</div>
+</div>
+</div>
+<p>Получившаяся величина имеет порядок ошибок округления. Для сравнения вычислим норму невязки <span class="math notranslate nohighlight">\(\textbf{r}^{(0)}\)</span> (учитываем, что выше в качестве начального приближения мы выбрали вектор с координатами <span class="math notranslate nohighlight">\(x^{(0)}_1=x^{(0)}_2=1/2\)</span>):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r0_norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">([</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">6</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span>
+                          <span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">6</span><span class="o">*</span><span class="n">y</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">],</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">float</span><span class="p">(</span><span class="n">r0_norm</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9999999999999998
+</pre></div>
+</div>
+</div>
+</div>
+<p>Как видим, за 41 итерацию норма невязки уменьшилась примерно на 16 порядков. Ясно, что достигнутая при этом точность существенно лучше точности <span class="math notranslate nohighlight">\(10^{-3}\)</span>, которая требовалось при запуске программы. Отметим, что для корректного анализа точности важно вычислять именно отношение норм невязок. На прошлом семинаре мы уже подчёркивали, что критерий остановки итераций, основанный на проверке малости величины <span class="math notranslate nohighlight">\(||\textbf{f}||\)</span> (в одномерном случае — величины <span class="math notranslate nohighlight">\(|f|\)</span>), не может считаться надёжным.</p>
+<p>На практике для более точного определения числа итераций оценку на <span class="math notranslate nohighlight">\(q\)</span> устанавливают численно (по ходу расчёта) с помощью формулы</p>
+<div class="math notranslate nohighlight">
+\[q=\frac{||\textbf{x}^{(s+1)}-\textbf{x}^{(s)}||}{||\textbf{x}^{(s)}-\textbf{x}^{(s-1)}||}.\]</div>
+<p>Нужно только помнить, что этой формулой можно пользоваться <strong>в достаточно малой окрестности решения</strong>. Соответствующий вариант программы (для наглядности включим в него возврат величины <span class="math notranslate nohighlight">\(q\)</span> для вывода её на печать):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">SI_method1_v2</span><span class="p">(</span><span class="n">x0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+    <span class="c1"># первые две итерации выполняем вне цикла,</span>
+    <span class="c1"># чтобы сделать возможной оценку q</span>
+    <span class="n">x1</span> <span class="o">=</span> <span class="n">phi_1</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span>
+    <span class="n">x2</span> <span class="o">=</span> <span class="n">phi_1</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x2</span> <span class="o">-</span> <span class="n">x1</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x1</span> <span class="o">-</span> <span class="n">x0</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">eps</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">q</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x0</span> <span class="o">-</span> <span class="n">x1</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+    <span class="c1"># s = np.log(eps) / np.log(q) # другой вариант оценки числа итераций</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+    <span class="c1"># s = int(np.ceil(s)) + 1 # после округления лучше увеличить число итераций на единицу</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">s</span> <span class="o">-</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="n">x2</span> <span class="o">=</span> <span class="n">phi_1</span><span class="p">(</span><span class="n">x2</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">x2</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">q</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">time</span> res, s, q = SI_method1_v2(np.array([1/2, 1/2]), eps=1e-3)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: total: 0 ns
+Wall time: 83.2 μs
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.5466150837587066, 0.34132051030744753)
+</pre></div>
+</div>
+</div>
+</div>
+<p>На этот раз нам понадобилось всего четыре итерации:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">s</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4
+</pre></div>
+</div>
+</div>
+</div>
+<p>Столь резкое сокращение числа итераций (по сравнению с предыдущим вариантом программы) объясняется тем, что в действительности <span class="math notranslate nohighlight">\(q &lt; 5/6\)</span>; более точная численная оценка дала:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">float</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.20312500000000022
+</pre></div>
+</div>
+</div>
+</div>
+<p>Отметим, что при организации МПИ лучше не только округлять найденное <span class="math notranslate nohighlight">\(s\)</span> вверх до ближайшего целого, но и увеличивать его на единицу (как в комментированной строке), иначе можно “не дойти” до требуемой точности:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">([</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">6</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mi">3</span><span class="p">,</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">6</span><span class="o">*</span><span class="n">y</span> <span class="o">+</span> <span class="mi">2</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>False
+</pre></div>
+</div>
+</div>
+</div>
+<p>Если в функции <code class="docutils literal notranslate"><span class="pre">SI_method1_v2</span></code> раскомментировать строку с увеличением <span class="math notranslate nohighlight">\(s\)</span> на единицу, то последняя проверка даст положительный результат — приближённое решение будет удовлетворять системе с требуемой точностью <span class="math notranslate nohighlight">\(10^{-3}\)</span>.</p>
+</section>
+<section id="id5">
+<h2>Задача 2<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<p>Предложить МПИ для отыскания решения системы уравнений</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \begin{cases}
+    x^2 + y^2  = 25,\\
+    (x+1)^3 - y + 1 = 0,
+  \end{cases}
+\end{split}\]</div>
+<p>принадлежащего <strong>первому квадранту</strong>.</p>
+<p><strong>Решение.</strong> Из формулировки теоремы 4 ясно, что предлагать какой-либо вариант МПИ следует, вообще говоря, лишь после того, как решение системы локализовано в некоторой области <span class="math notranslate nohighlight">\(\Omega\)</span>: только после локализации можно проверить выполнение достаточного условия сходимости. Однако на практике удобнее действовать иначе. Поскольку вид области <span class="math notranslate nohighlight">\(\Omega\)</span> нас не интересует, значительно легче получить для предложенного МПИ матрицу Якоби <span class="math notranslate nohighlight">\(\textbf{J}_\boldsymbol{\varphi}\)</span>, а потом попытаться удовлетворить условию <span class="math notranslate nohighlight">\(||\textbf{J}_\boldsymbol{\varphi}||\leq q&lt;1\)</span>, подобрав (если это возможно) соответствующую область <span class="math notranslate nohighlight">\(\Omega\)</span> (разумеется, она должна выбираться так, чтобы ей принадлежало искомое решение). Проиллюстрируем описанный подход.</p>
+<p>Перепишем исходную систему следующим образом (знак <span class="math notranslate nohighlight">\(y\)</span> выбираем с учётом того, что ищем решение в первом квадранте):</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{cases}
+      x=(y-1)^{1/3}-1,\\
+      y=(25-x^2)^{1/2}.
+  \end{cases}\end{split}\]</div>
+<p>Соответствующий МПИ имеет вид</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\textbf{x}^{(s+1)}=\boldsymbol{\varphi}\big(\textbf{x}^{(s)}\big),\quad \boldsymbol{\varphi}=
+  \begin{pmatrix}
+     (x_2-1)^{1/3}-1 \\
+     (25-x_1^2)^{1/2}
+  \end{pmatrix}.\end{split}\]</div>
+<p>Матрица Якоби функции <span class="math notranslate nohighlight">\(\boldsymbol{\varphi}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\textbf{J}_\boldsymbol{\varphi}=
+  \begin{pmatrix}
+    0 &amp; \displaystyle\frac{1}{3}(x_2-1)^{-2/3}\\[0.1cm]
+    -x_1(25-x_1^2)^{-1/2} &amp; 0
+  \end{pmatrix}.\end{split}\]</div>
+<p>Заметим, что ненулевые элементы этой матрицы оказались функциями одного аргумента: либо аргумента <span class="math notranslate nohighlight">\(x_2\)</span>, либо аргумента <span class="math notranslate nohighlight">\(x_1\)</span> (два аргумента сразу ни в одну функцию не входят). Для удобства введём обозначения:</p>
+<div class="math notranslate nohighlight">
+\[\alpha(x_2)=\frac{1}{3}(x_2-1)^{-2/3},\quad \beta(x_1)=-x_1(25-x_1^2)^{-1/2}.\]</div>
+<p>Очевидно, что</p>
+<div class="math notranslate nohighlight">
+\[\lim_\limits{x_2\to 1}\alpha(x_2)=+\infty,\quad \lim_\limits{x_2\to +\infty}\alpha(x_2)=+0.\]</div>
+<p>Далее, при <span class="math notranslate nohighlight">\(x_2&gt;1\)</span> функция <span class="math notranslate nohighlight">\(\alpha\)</span> принимает положительные значения и является убывающей, так как</p>
+<div class="math notranslate nohighlight">
+\[\alpha'(x_2)=-\frac{2}{9}(x_2-1)^{-5/3}&lt;0,\quad\text{если}\quad x_2&gt;1.\]</div>
+<p>Кроме того, <span class="math notranslate nohighlight">\(\alpha(2)=1/3\)</span>. Поэтому можно гарантировать, что</p>
+<div class="math notranslate nohighlight">
+\[0&lt;\alpha(x_2)&lt;1\quad\text{при}\quad x_2&gt;2.\]</div>
+<p>Аналогичным образом анализируем функцию <span class="math notranslate nohighlight">\(\beta\)</span>. Прежде всего, замечаем, что при <span class="math notranslate nohighlight">\(x_1&gt;0\)</span> (т.е. в первом квадранте — см. условие задачи) она принимает отрицательные значения, причём</p>
+<div class="math notranslate nohighlight">
+\[\lim_\limits{x_1\to 5}\beta(x_1)=-\infty.\]</div>
+<p>Как и функция <span class="math notranslate nohighlight">\(\alpha\)</span>, функция <span class="math notranslate nohighlight">\(\beta\)</span> является убывающей (на всём первом квадранте), поскольку</p>
+<div class="math notranslate nohighlight">
+\[\beta'(x_1)=-(25-x_1^2)^{-1/2}-x_1^2(25-x_1^2)^{-3/2}&lt;0\quad\text{при}\quad x_1&gt;0.\]</div>
+<p>Наконец, <span class="math notranslate nohighlight">\(\beta(3)=-3/4\)</span>, поэтому</p>
+<div class="math notranslate nohighlight">
+\[-\frac{3}{4}&lt;\beta(x_1)&lt;0,\quad\text{если}\quad 0&lt;x_1&lt;3.\]</div>
+<p>Установленные неравенства для функций <span class="math notranslate nohighlight">\(\alpha\)</span> и <span class="math notranslate nohighlight">\(\beta\)</span> позволяют утверждать, что в бесконечной полосе</p>
+<div class="math notranslate nohighlight">
+\[U=\big\{\textbf{x}\in\mathbb{R}^2:\phantom{-}0&lt;x_1&lt;3,\phantom{-}x_2&gt;2\big\}\]</div>
+<p>выполнено условие <span class="math notranslate nohighlight">\(||\textbf{J}_\boldsymbol{\varphi}||_\text{I}&lt;1\)</span>. Перед тем как приступать к вычислениям на компьютере, эту полосу надо “обрезать”. Легко видеть, что первое уравнение исходной системы представляет собой уравнение окружности с радиусом <span class="math notranslate nohighlight">\(5\)</span> и центром в начале координат. Эта окружность вписана в (замкнутый) квадрат</p>
+<div class="math notranslate nohighlight">
+\[C=\big\{\textbf{x}\in\mathbb{R}^2:\phantom{-}|x_1|\leq5,\phantom{-}|x_2|\leq5\big\},\]</div>
+<p>так что искать решение рассматриваемой системы во внешности <span class="math notranslate nohighlight">\(\mathbb{R}^2\,\backslash\, C\)</span> этого квадрата явно не имеет смысла (вместе с тем очевидно, что ни одна из четырёх точек, в которых окружность касается сторон квадрата, не является решением системы). Поэтому окончательно требующуюся для реализации МПИ (выпуклую) область <span class="math notranslate nohighlight">\(\Omega\)</span> можно определить следующим образом:</p>
+<div class="math notranslate nohighlight">
+\[\Omega=U\cap C=\big\{\textbf{x}\in\mathbb{R}^2:\phantom{-}0&lt;x_1&lt;3,\phantom{-}2&lt;x_2&lt;5\big\}.\]</div>
+<p>Итак, для предложенного МПИ нам удалось подобрать выпуклую область <span class="math notranslate nohighlight">\(\Omega\)</span> (она представляет собой открытый квадрат со стороной <span class="math notranslate nohighlight">\(3\)</span>), в которой выполнено условие <span class="math notranslate nohighlight">\(||\textbf{J}_\boldsymbol{\varphi}||_\text{I}&lt;1\)</span>. Таким образом, этот МПИ сходится к искомому решению (если, конечно, оно принадлежит <span class="math notranslate nohighlight">\(\Omega\)</span>). В качестве начального приближения <span class="math notranslate nohighlight">\(\textbf{x}^{(0)}\)</span> можно взять любую точку из множества <span class="math notranslate nohighlight">\(\Omega\)</span> — например, точку с координатами <span class="math notranslate nohighlight">\(x_1^{(0)}=3/2\)</span>, <span class="math notranslate nohighlight">\(x_2^{(0)}=7/2\)</span> (это центр квадрата <span class="math notranslate nohighlight">\(\Omega\)</span>).</p>
+<p>Чтобы завершить обоснование предложенного МПИ, нам осталось убедиться, что найденная область <span class="math notranslate nohighlight">\(\Omega\)</span> содержит решение системы. В данном случае это проще всего сделать графически. Отобразим на графике область <span class="math notranslate nohighlight">\(\Omega\)</span> и кривые, заданные уравнениями системы (здесь это сделать легко, поскольку переходом к равносильной системе нам удалось выразить <span class="math notranslate nohighlight">\(x\)</span> как <strong>явную</strong> функцию <span class="math notranslate nohighlight">\(y\)</span> и <span class="math notranslate nohighlight">\(y\)</span> как <strong>явную</strong> функцию <span class="math notranslate nohighlight">\(x\)</span>, что возможно не всегда):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">graph</span><span class="p">():</span>
+    <span class="n">x_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+    <span class="n">y_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+
+    <span class="n">x_sys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="k">lambda</span> <span class="n">y</span><span class="p">:</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">y_sys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="mi">25</span> <span class="o">-</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x_sys</span><span class="p">(</span><span class="n">y_grid</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">y_sys</span><span class="p">(</span><span class="n">x_grid</span><span class="p">)</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_grid</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_grid</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Область $</span><span class="se">\\</span><span class="s2">Omega$&quot;</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x$&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$y$&quot;</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">graph</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/0aa60e2f747a9f79e36d0f1fcbbc466da25625fa28c3d1d8c7bb5fc6beb2a0a2.png" src="_images/0aa60e2f747a9f79e36d0f1fcbbc466da25625fa28c3d1d8c7bb5fc6beb2a0a2.png" />
+</div>
+</div>
+<p>Как видим, область <span class="math notranslate nohighlight">\(\Omega\)</span> содержит точку пересечения кривых, т.е. является областью локализации искомого решения системы. Значит, рассматриваемый МПИ можно применять для нахождения решения — сходимость последовательности приближений обеспечивается теоремой 4.</p>
+<p>Программа, реализующая метод (учитываем все замечания, высказанные при написании программы для предыдущей задачи):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">phi_2</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+                     <span class="p">(</span><span class="mi">25</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">)])</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">SI_method2</span><span class="p">(</span><span class="n">x0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+    <span class="n">x1</span> <span class="o">=</span> <span class="n">phi_2</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span>
+    <span class="n">x2</span> <span class="o">=</span> <span class="n">phi_2</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span>
+
+    <span class="n">q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x2</span> <span class="o">-</span> <span class="n">x1</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x1</span> <span class="o">-</span> <span class="n">x0</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">eps</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">q</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x0</span> <span class="o">-</span> <span class="n">x1</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+    <span class="c1">#s = np.log(1 / eps) / np.log(1 / q) # другой вариант оценки числа итераций</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">s</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">s</span> <span class="o">-</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="n">x2</span> <span class="o">=</span> <span class="n">phi_2</span><span class="p">(</span><span class="n">x2</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">x2</span><span class="p">,</span> <span class="n">s</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">time</span> res, s = SI_method2(np.array([3/2, 7/2]), eps=1e-16)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: total: 0 ns
+Wall time: 132 μs
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.5828785112061401, 4.9659090447947305)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Для достижения точности <span class="math notranslate nohighlight">\(10^{-16}\)</span> потребовалось всего около 20 итераций:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">s</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>23
+</pre></div>
+</div>
+</div>
+</div>
+<p>Проверка:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">([</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="n">y</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">25</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-16</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<p>В заключение разбора этой задачи подчеркнём, что обоснование предложенного МПИ <strong>обязательно</strong> должно включать два этапа:</p>
+<ul class="simple">
+<li><p>подбор при помощи <strong>аналитического</strong> (или полуаналитического) <strong>анализа</strong> выпуклой области, в которой выполняется условие <span class="math notranslate nohighlight">\(||\textbf{J}_\boldsymbol{\varphi}||&lt;1\)</span>,</p></li>
+<li><p>проверку того, что найденная область является <strong>областью локализации решения</strong> (в случае системы из двух уравнений проверку проще всего осуществить графически).</p></li>
+</ul>
+<p>В некоторых задачах удобнее выполнять эти этапы в обратном порядке, отталкиваясь от примерной локализации решения (установленной визуально по графику) и “подгоняя” границы области так, чтобы в ней выполнялось условие <span class="math notranslate nohighlight">\(||\textbf{J}_\boldsymbol{\varphi}||&lt;1\)</span>. Так или иначе, оба этапа должны присутствовать. Нельзя считать, как это иногда делают, что достаточное условие сходимости МПИ выполнено и гарантирует сходимость метода, если в какой-то одной точке вблизи корня (подобранной случайно из графика) норма матрицы Якоби оказалась строго меньше единицы — это условие, рассматриваемое без дополнительного анализа, ещё ничего не даёт. Его можно использовать на практике для подбора начального приближения, если планируется запускать МПИ <strong>наудачу</strong>, без строгой проверки достаточного условия сходимости. Однако <strong>обоснование</strong> МПИ должно осуществляться так, как это было показано выше.</p>
+</section>
+<section id="id6">
+<h2>Задача 3<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<p>Предложить МПИ для отыскания решения системы уравнений</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \begin{cases}
+    x + 3 \lg x - y^2 = 0,\\
+    2x^2 -xy - 5x + 1=0,
+  \end{cases}
+\end{split}\]</div>
+<p>принадлежащего <strong>первому квадранту</strong>.</p>
+<p><strong>Решение.</strong> Будем действовать так же, как и при решении предыдущей задачи. Рассмотрим два варианта МПИ.</p>
+<p><em>Вариант A.</em> Проще всего выразить <span class="math notranslate nohighlight">\(x\)</span> из первого уравнения системы, а <span class="math notranslate nohighlight">\(y\)</span> — из второго:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \begin{cases}
+    x = -3 \lg x + y^2,\\[0.2cm]
+    y = 2x - 5 + \dfrac{1}{x}.
+  \end{cases}
+\end{split}\]</div>
+<p>Организуем МПИ:</p>
+<div class="math notranslate nohighlight">
+\[\textbf{x}^{(s+1)}=\boldsymbol{\varphi}_\text{A}\big(\textbf{x}^{(s)}\big),\quad \boldsymbol{\varphi}_\text{A}=
+  \begin{pmatrix}
+     -3\lg x_1 + x_2^2 &amp; \displaystyle 2x_1-5+\frac{1}{x_1}
+  \end{pmatrix}^\text{T}.\]</div>
+<p>Матрица Якоби функции <span class="math notranslate nohighlight">\(\boldsymbol{\varphi}_\text{A}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\textbf{J}_{\boldsymbol{\varphi}_\text{A}}=
+  \begin{pmatrix}
+  -\displaystyle\frac{3}{x_1\ln 10} &amp; 2x_2 \\[0.2cm]
+  2-\displaystyle\frac{1}{x_1^2} &amp; 0
+  \end{pmatrix}.\end{split}\]</div>
+<p>Как и в предыдущей задаче, каждый из ненулевых элементов матрицы Якоби оказался функцией одной переменной:</p>
+<div class="math notranslate nohighlight">
+\[\alpha(x_1)=-\frac{3}{x_1\ln 10},\quad \beta(x_1)=2-\frac{1}{x_1^2},\quad \gamma(x_2)=2x_2.\]</div>
+<p>В данном случае представляется удобным использовать вторую матричную норму <span class="math notranslate nohighlight">\(||\cdot||_\text{II}\)</span>, поскольку</p>
+<div class="math notranslate nohighlight">
+\[||\textbf{J}_{\boldsymbol{\varphi}_\text{A}}||_\text{II}=\max\Big[\big|\alpha(x_1)\big|+\big|\beta(x_1)\big|,\big|\gamma(x_2)\big|\Big],\]</div>
+<p>т.е. функции одного аргумента “собираются” в одну сумму, а функция другого аргумента остаётся обособленной. В первом квадранте</p>
+<div class="math notranslate nohighlight">
+\[\big|\alpha(x_1)\big|+\big|\beta(x_1)\big|=\frac{3}{x_1\ln 10}+\sqrt{\bigg(2-\displaystyle\frac{1}{x_1^2}\bigg)^2}\equiv\eta(x_1),\]</div>
+<p>причём</p>
+<div class="math notranslate nohighlight">
+\[\eta'(x_1)=\frac{2\cdot\text{sign}\big(2-x_1^{-2}\big)}{x_1^3}-\frac{3}{x_1^2\cdot\ln{10}}.\]</div>
+<p>Очевидно, что при <span class="math notranslate nohighlight">\(0&lt;x_1&lt;1/\sqrt{2}\)</span> каждое из слагаемых, входящих в <span class="math notranslate nohighlight">\(\eta'\)</span>, оказывается отрицательным. Далее, модуль второго слагаемого больше модуля первого слагаемого при <span class="math notranslate nohighlight">\(x_1&gt;2\ln(10)/3\)</span>. Поэтому <span class="math notranslate nohighlight">\(\eta'&lt;0\)</span> при <span class="math notranslate nohighlight">\(0&lt;x_1&lt;1/\sqrt{2}\)</span> и <span class="math notranslate nohighlight">\(x_1&gt;2\ln(10)/3\)</span>, а значит, при тех же <span class="math notranslate nohighlight">\(x_1\)</span> функция <span class="math notranslate nohighlight">\(\eta\)</span> убывает. Так как</p>
+<div class="math notranslate nohighlight">
+\[\lim\limits_{x_1\to\infty}\eta(x_1)=2,\quad \eta\bigg(\frac{1}{\sqrt{2}}\bigg)=\frac{3\sqrt{2}}{\ln{10}}&gt;1,\]</div>
+<p>можно гарантировать, что вне интервала <span class="math notranslate nohighlight">\(1/\sqrt{2}&lt;x_1&lt;2\ln{10}/3\)</span> выполнено условие <span class="math notranslate nohighlight">\(\eta&gt;1\)</span>. При <span class="math notranslate nohighlight">\(x_1\)</span>, принадлежащих этому интервалу, первое слагаемое в <span class="math notranslate nohighlight">\(\eta'\)</span> положительно, а его модуль больше модуля второго слагаемого, так что <span class="math notranslate nohighlight">\(\eta'&gt;0\)</span> и функция <span class="math notranslate nohighlight">\(\eta\)</span> возрастает. В силу того, что, как уже отмечалось, <span class="math notranslate nohighlight">\(\eta(1/\sqrt{2})&gt;1\)</span>, внутри указанного интервала тоже имеет место неравенство <span class="math notranslate nohighlight">\(\eta&gt;1\)</span>.</p>
+<p>Таким образом, <span class="math notranslate nohighlight">\(\eta&gt;1\)</span> при всех <span class="math notranslate nohighlight">\(x_1&gt;0\)</span>, откуда следует, что в первом квадранте условию <span class="math notranslate nohighlight">\(||\textbf{J}_{\boldsymbol{\varphi}_\text{A}}||_\text{II}&lt;1\)</span> удовлетворить нельзя. К тому же выводу можно было бы прийти и без изложенных выкладок, просто построив график функции <span class="math notranslate nohighlight">\(\eta\)</span>.</p>
+<p>Если же вместо “удобной” нормы <span class="math notranslate nohighlight">\(||\cdot||_\text{II}\)</span> выбрать всё-таки норму <span class="math notranslate nohighlight">\(||\cdot||_\text{I}\)</span>, то и в этом случае окажется, что условие  <span class="math notranslate nohighlight">\(||\textbf{J}_{\boldsymbol{\varphi}_\text{A}}||_\text{I}&lt;1\)</span> невыполнимо. В самом деле,</p>
+<div class="math notranslate nohighlight">
+\[||\textbf{J}_{\boldsymbol{\varphi}_\text{A}}||_\text{I}=\max\Big[\big|\alpha(x_1)\big|+\big|\gamma(x_2)\big|,\big|\beta(x_1)\big|\Big].\]</div>
+<p>Решая неравенство <span class="math notranslate nohighlight">\(|\beta(x_1)|&lt;1\)</span>, получаем условие на <span class="math notranslate nohighlight">\(x_1\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\frac{1}{\sqrt{3}}&lt;x_1&lt;1.\]</div>
+<p>Для удобства снова обозначим</p>
+<div class="math notranslate nohighlight">
+\[\eta(x_1,x_2)=\big|\alpha(x_1)\big|+\big|\gamma(x_2)\big|=\frac{3}{x_1\ln 10}+2x_2&gt;0\]</div>
+<p>(мы вновь учли, что рассматривается первый квадрант). Заметим, что на интервале <span class="math notranslate nohighlight">\(1/\sqrt{3}&lt;x_1&lt;1\)</span> первое из двух входящих в <span class="math notranslate nohighlight">\(\eta\)</span> слагаемых строго больше единицы, поскольку <span class="math notranslate nohighlight">\(3/\ln10&gt;1\)</span> (а само это слагаемое убывает при положительных <span class="math notranslate nohighlight">\(x_1\)</span>). Значит, при любых положительных <span class="math notranslate nohighlight">\(x_2\)</span> будем иметь <span class="math notranslate nohighlight">\(\eta&gt;1\)</span>. Отсюда следует, что совместить требования <span class="math notranslate nohighlight">\(\eta&lt;1\)</span> и <span class="math notranslate nohighlight">\(|\beta|&lt;1\)</span> в первом квадранте не удаётся, т.е. условию <span class="math notranslate nohighlight">\(||\textbf{J}_{\boldsymbol{\varphi}_\text{A}}||_\text{I}&lt;1\)</span> удовлетворить нельзя.</p>
+<p>Очевидно, что попытки аналитически рассмотреть условие <span class="math notranslate nohighlight">\(||\textbf{J}_{\boldsymbol{\varphi}_\text{A}}||_\text{III}&lt;1\)</span>, в котором фигурирует третья из основных матричных норм, приведут к очень сложным выкладкам (понадобится рассматривать спектр матрицы <span class="math notranslate nohighlight">\(\textbf{J}_{\boldsymbol{\varphi}_\text{A}}^\dagger\textbf{J}_{\boldsymbol{\varphi}_\text{A}}\)</span> в зависимости от параметров <span class="math notranslate nohighlight">\(x_1\)</span> и <span class="math notranslate nohighlight">\(x_2\)</span>). Эту норму, как правило, лучше вообще не использовать в подобных задачах. Неудача с первыми двумя нормами заставляет отказаться от предложенного варианта МПИ.</p>
+<p><em>Вариант B.</em> Преобразуем исходную систему более сложным способом: выразим <span class="math notranslate nohighlight">\(y\)</span> из первого уравнения, а <span class="math notranslate nohighlight">\(x\)</span> — из второго (знаки снова выбираем с учётом того, что ищем решение из первого квадранта):</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \begin{cases}
+    x =\bigg[\displaystyle\frac{1}{2}(xy+5x-1)\bigg]^{1/2},\\[0.2cm]
+    y = (x + 3 \lg x)^{1/2}.
+  \end{cases}
+\end{split}\]</div>
+<p>Имеем МПИ:</p>
+<div class="math notranslate nohighlight">
+\[
+  \textbf{x}^{(s+1)}=\boldsymbol{\varphi}_\text{B}\big(\textbf{x}^{(s)}\big),\quad \boldsymbol{\varphi}_\text{B}=
+  \begin{pmatrix}
+     \bigg[\displaystyle\frac{1}{2}(x_1x_2+5x_1-1)\bigg]^{1/2} &amp; (x_1 + 3 \lg x_1)^{1/2}
+  \end{pmatrix}^\text{T}.
+\]</div>
+<p>До сих пор мы выписывали матрицы Якоби, предполагая, что они находятся вручную. Покажем на примере матрицы <span class="math notranslate nohighlight">\(\textbf{J}_{\boldsymbol{\varphi}_\text{B}}\)</span>, как их можно находить с помощью уже знакомой нам библиотеки <code class="docutils literal notranslate"><span class="pre">sympy</span></code>. Для этого в классе <code class="docutils literal notranslate"><span class="pre">Matrix</span></code> (<a class="reference external" href="https://docs.sympy.org/latest/tutorials/intro-tutorial/matrices.html">документация</a>) данной библиотеки существует метод <code class="docutils literal notranslate"><span class="pre">jacobian</span></code> (<a class="reference external" href="https://docs.sympy.org/latest/modules/matrices/matrices.html#sympy.matrices.matrixbase.MatrixBase.jacobian">документация</a>; название метода следует понимать как сокращение английского термина “Jacobian matrix”, а не как буквальный перевод русского термина “якобиан”, служащего названием <strong>определителя</strong> матрицы Якоби):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sympy</span><span class="w"> </span><span class="kn">import</span> <span class="n">symbols</span><span class="p">,</span> <span class="n">Matrix</span><span class="p">,</span> <span class="n">log</span>
+
+<span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">phi</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;x_1, x_2, phi&#39;</span><span class="p">)</span>
+
+<span class="n">phi</span> <span class="o">=</span> <span class="n">Matrix</span><span class="p">([</span><span class="s1">&#39;((x1 * x2 + 5 * x1 - 1) / 2) ** (1/2)&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;(x1 + 3 * log(x1)/log(10)) ** (1/2)&#39;</span><span class="p">])</span>
+
+<span class="n">J</span> <span class="o">=</span> <span class="n">phi</span><span class="o">.</span><span class="n">jacobian</span><span class="p">([</span><span class="s1">&#39;x1&#39;</span><span class="p">,</span> <span class="s1">&#39;x2&#39;</span><span class="p">])</span>
+<span class="n">J</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\begin{split}\displaystyle \left[\begin{matrix}\frac{\frac{x_{2}}{4} + \frac{5}{4}}{\sqrt{\frac{x_{1} x_{2}}{2} + \frac{5 x_{1}}{2} - \frac{1}{2}}} &amp; \frac{x_{1}}{4 \sqrt{\frac{x_{1} x_{2}}{2} + \frac{5 x_{1}}{2} - \frac{1}{2}}}\\\frac{\frac{1}{2} + \frac{3}{2 x_{1} \log{\left(10 \right)}}}{\sqrt{x_{1} + \frac{3 \log{\left(x_{1} \right)}}{\log{\left(10 \right)}}}} &amp; 0\end{matrix}\right]\end{split}\]</div>
+</div>
+</div>
+<p>Как мы знаем из второго семинара, символьные выражения можно упрощать с помощью функции <code class="docutils literal notranslate"><span class="pre">simplify</span></code> (<a class="reference external" href="https://docs.sympy.org/latest/modules/simplify/simplify.html">документация</a>):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sympy</span><span class="w"> </span><span class="kn">import</span> <span class="n">simplify</span>
+
+<span class="n">simplify</span><span class="p">(</span><span class="n">J</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\begin{split}\displaystyle \left[\begin{matrix}\frac{\sqrt{2} \left(x_{2} + 5\right)}{4 \sqrt{x_{1} x_{2} + 5 x_{1} - 1}} &amp; \frac{\sqrt{2} x_{1}}{4 \sqrt{x_{1} x_{2} + 5 x_{1} - 1}}\\\frac{x_{1} \log{\left(10 \right)} + 3}{2 x_{1} \sqrt{x_{1} \log{\left(10 \right)} + 3 \log{\left(x_{1} \right)}} \sqrt{\log{\left(10 \right)}}} &amp; 0\end{matrix}\right]\end{split}\]</div>
+</div>
+</div>
+<p>Таким образом,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\textbf{J}_{\boldsymbol{\varphi}_\text{B}}=
+  \begin{pmatrix}
+  \displaystyle\frac{1}{2\sqrt{2}}\cdot\frac{x_2+5}{\sqrt{x_1x_2+5x_1-1}} &amp; \displaystyle\frac{1}{2\sqrt{2}}\cdot\frac{x_1}{\sqrt{x_1x_2+5x_1-1}} \\[0.2cm]
+  \displaystyle\frac{x_1+3/\ln{10}}{2x_1\sqrt{x_1+3\lg{x_1}}} &amp; 0
+  \end{pmatrix}.\end{split}\]</div>
+<p>Вводим обозначения:</p>
+<div class="math notranslate nohighlight">
+\[\alpha(x_1,x_2)=\frac{1}{2\sqrt{2}}\cdot\frac{x_2+5}{\sqrt{x_1x_2+5x_1-1}},\quad \beta(x_1,x_2)=\displaystyle\frac{1}{2\sqrt{2}}\cdot\frac{x_1}{\sqrt{x_1x_2+5x_1-1}},\quad\gamma(x_1)=\displaystyle\frac{x_1+3/\ln{10}}{2x_1\sqrt{x_1+3\lg{x_1}}}.\]</div>
+<p>Очевидно, что здесь удобнее взять норму <span class="math notranslate nohighlight">\(||\cdot||_\text{I}\)</span>, поскольку</p>
+<div class="math notranslate nohighlight">
+\[||\textbf{J}_{\boldsymbol{\varphi}_\text{B}}||_\text{I}=\max\Big[\big|\alpha(x_1,x_2)\big|+\big|\beta(x_1,x_2)\big|,\big|\gamma(x_1)\big|\Big],\]</div>
+<p>причём</p>
+<div class="math notranslate nohighlight">
+\[\big|\alpha(x_1,x_2)\big|+\big|\beta(x_1,x_2)\big|=\frac{1}{2\sqrt{2}}\cdot\frac{x_1+x_2+5}{\sqrt{x_1x_2+5x_1-1}}\equiv\eta(x_1,x_2).\]</div>
+<p>Аналитический анализ условия <span class="math notranslate nohighlight">\(|\gamma|&lt;1\)</span> в данном случае оказывается довольно громоздким, в чём легко убедиться, рассмотрев, например, выражение для <span class="math notranslate nohighlight">\(\gamma'\)</span>, которое понадобилось бы при таком анализе (используем функцию <code class="docutils literal notranslate"><span class="pre">diff</span></code> из библиотеки <code class="docutils literal notranslate"><span class="pre">sympy</span></code>, знакомую нам по второму семинару):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sympy</span><span class="w"> </span><span class="kn">import</span> <span class="n">diff</span><span class="p">,</span> <span class="n">sqrt</span>
+
+<span class="n">gamma</span> <span class="o">=</span> <span class="p">(</span> <span class="n">x1</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">/</span> <span class="n">log</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="p">)</span> <span class="o">/</span> <span class="p">(</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">x1</span> <span class="o">*</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">x1</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">log</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span><span class="o">/</span><span class="n">log</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span> <span class="p">)</span>
+<span class="n">diff</span><span class="p">(</span><span class="n">gamma</span><span class="p">,</span> <span class="n">x1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle \frac{\left(- \frac{1}{2} - \frac{3}{2 x_{1} \log{\left(10 \right)}}\right) \left(x_{1} + \frac{3}{\log{\left(10 \right)}}\right)}{2 x_{1} \left(x_{1} + \frac{3 \log{\left(x_{1} \right)}}{\log{\left(10 \right)}}\right)^{\frac{3}{2}}} + \frac{1}{2 x_{1} \sqrt{x_{1} + \frac{3 \log{\left(x_{1} \right)}}{\log{\left(10 \right)}}}} - \frac{x_{1} + \frac{3}{\log{\left(10 \right)}}}{2 x_{1}^{2} \sqrt{x_{1} + \frac{3 \log{\left(x_{1} \right)}}{\log{\left(10 \right)}}}}\]</div>
+</div>
+</div>
+<p>Значительно проще вместо аналитических выкладок построить график функции <span class="math notranslate nohighlight">\(\gamma\)</span>. Для этого предварительно решим численно нелинейное уравнение <span class="math notranslate nohighlight">\(x_1+3\lg{x_1}=0\)</span>, чтобы понять, при каких <span class="math notranslate nohighlight">\(x_1\)</span> подкоренное выражение из функции <span class="math notranslate nohighlight">\(\gamma\)</span> становится отрицательным. Применим функцию <code class="docutils literal notranslate"><span class="pre">root_scalar</span></code> (см. шестой семинар):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.optimize</span><span class="w"> </span><span class="kn">import</span> <span class="n">root_scalar</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">eps</span> <span class="o">=</span> <span class="mf">1e-8</span> <span class="c1"># для избежания сингулярности логарифма в нуле</span>
+<span class="n">root_scalar</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">bracket</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span> <span class="o">+</span> <span class="n">eps</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      converged: True
+           flag: converged
+ function_calls: 9
+     iterations: 8
+           root: 0.6209113029036658
+         method: brentq
+</pre></div>
+</div>
+</div>
+</div>
+<p>Итак, график функции <span class="math notranslate nohighlight">\(\gamma\)</span> имеет смысл рассматривать при <span class="math notranslate nohighlight">\(x_1\gtrsim0,63\)</span>. Выясним сначала, каков его общий вид:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">graph_gamma</span><span class="p">(</span><span class="n">L</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+    <span class="n">x_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.63</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+    <span class="n">gamma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span>
+                         <span class="p">(</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="p">)</span> <span class="o">/</span> <span class="p">(</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="p">))</span>
+
+    <span class="n">y</span> <span class="o">=</span> <span class="n">gamma</span><span class="p">(</span><span class="n">x_grid</span><span class="p">)</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_grid</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;График функции $</span><span class="se">\\</span><span class="s2">gamma=</span><span class="se">\\</span><span class="s2">gamma(x_1)$&quot;</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$y$&quot;</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">graph_gamma</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/44a40386ecfa8a665fc71f9479d94791c920178a4b4edf92d8989d1dc057dc2a.png" src="_images/44a40386ecfa8a665fc71f9479d94791c920178a4b4edf92d8989d1dc057dc2a.png" />
+</div>
+</div>
+<p>“Присмотримся” к графику на отрезке <span class="math notranslate nohighlight">\([0,5]\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">graph_gamma</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/9e4b66f75a259d25741e05820a1831a119afe907efa8cfe2066b8ea15be29da7.png" src="_images/9e4b66f75a259d25741e05820a1831a119afe907efa8cfe2066b8ea15be29da7.png" />
+</div>
+</div>
+<p>Принимая во внимание эти графики, а также то, что</p>
+<div class="math notranslate nohighlight">
+\[\lim_\limits{x_1\to\infty}\gamma(x_1)=\lim_\limits{x_1\to\infty}\frac{1+3/(x_1\ln10)}{2\sqrt{x_1+3\lg x_1}}=0,\]</div>
+<p>приходим к выводу: <span class="math notranslate nohighlight">\(|\gamma|&lt;1\)</span> при <span class="math notranslate nohighlight">\(x_1&gt;2\)</span>.</p>
+<p>Аналитический подбор области, в которой <span class="math notranslate nohighlight">\(\eta(x_1,x_2)&lt;1\)</span>, тоже затруднителен и в силу громоздкого вида функции <span class="math notranslate nohighlight">\(\eta\)</span>, и в силу её зависимости от двух переменных сразу. Поэтому здесь мы тоже воспользуемся графиком, правда, в виде <strong>тепловой карты</strong> (на таком графике значения <span class="math notranslate nohighlight">\(\eta\)</span> в точках плоскости <span class="math notranslate nohighlight">\((x_1,x_2)\)</span> отображаются цветом):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">graph_eta</span><span class="p">(</span><span class="n">L1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">L2</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+    <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">L1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span>
+                         <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">L2</span><span class="p">,</span> <span class="mi">1000</span><span class="p">))</span>
+    <span class="n">eta</span> <span class="o">=</span> <span class="p">(</span><span class="n">x1</span> <span class="o">+</span> <span class="n">x2</span> <span class="o">+</span> <span class="mi">5</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x1</span><span class="o">*</span><span class="n">x2</span> <span class="o">+</span> <span class="mi">5</span><span class="o">*</span><span class="n">x1</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+    <span class="n">eta_min</span><span class="p">,</span> <span class="n">eta_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">eta</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">eta</span><span class="p">)</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+    <span class="n">pcolormesh</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">eta</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;tab20b&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">eta_min</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">eta_max</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">([</span><span class="n">x1</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">x1</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">x2</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">x2</span><span class="o">.</span><span class="n">max</span><span class="p">()])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">pcolormesh</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Тепловая карта функции $</span><span class="se">\\</span><span class="s2">eta=</span><span class="se">\\</span><span class="s2">eta(x_1,x_2)$&quot;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">graph_eta</span><span class="p">(</span><span class="n">L1</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">L2</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/1e518c616e30ffc7756f68993c9fbe6047ade530d171290a44dc0e1bb415e360.png" src="_images/1e518c616e30ffc7756f68993c9fbe6047ade530d171290a44dc0e1bb415e360.png" />
+</div>
+</div>
+<p>“Присмотримся” к области вблизи начала отсчёта:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">graph_eta</span><span class="p">(</span><span class="n">L1</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">L2</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/3b1554dd3c7df329c532763a8772eea98bc85a97b45dd33fd09b02c72dc84d98.png" src="_images/3b1554dd3c7df329c532763a8772eea98bc85a97b45dd33fd09b02c72dc84d98.png" />
+</div>
+</div>
+<p>Здесь уже учтено, что <span class="math notranslate nohighlight">\(x_1&gt;2\)</span> для выполнения условия <span class="math notranslate nohighlight">\(|\gamma|&lt;1\)</span>. Из тепловых карт видно, что <span class="math notranslate nohighlight">\(\eta&lt;1\)</span>, скажем, при <span class="math notranslate nohighlight">\(2&lt;x_1&lt;10\)</span> и <span class="math notranslate nohighlight">\(0&lt;x_2&lt;4\)</span>. Другими словами, в качестве искомой области можно взять множество</p>
+<div class="math notranslate nohighlight">
+\[\Omega=\big\{\textbf{x}\in\mathbb{R}^2:\phantom{-}2&lt;x_1&lt;10,\phantom{-}0&lt;x_2&lt;4\big\}.\]</div>
+<p>Итак, в (выпуклой) области <span class="math notranslate nohighlight">\(\Omega\)</span> выполняется условие <span class="math notranslate nohighlight">\(||\textbf{J}_{\boldsymbol{\varphi}_\text{B}}||_\text{I}&lt;1\)</span>. Остаётся только проверить, что эта область содержит корень. Снова прибегаем к графику — отображаем область и кривые, задаваемые уравнениями рассматриваемой системы. В отличие от предыдущей задачи, в данном случае получить <strong>явные</strong> функции <span class="math notranslate nohighlight">\(x=x(y)\)</span> и <span class="math notranslate nohighlight">\(y=y(x)\)</span> для построения графиков не удаётся и приходится прибегать к искусственным приёмам:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.utils.extmath</span><span class="w"> </span><span class="kn">import</span> <span class="n">cartesian</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">curve</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x_lim</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">,</span> <span class="n">y_lim</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">x_lim</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x_lim</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1000</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">y_lim</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y_lim</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1000</span><span class="p">)</span>
+    <span class="n">points</span> <span class="o">=</span> <span class="n">cartesian</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">])</span>
+
+    <span class="n">eps</span> <span class="o">=</span> <span class="mf">1e-2</span> <span class="c1"># регулирует толщину контура</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">apply_along_axis</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">points</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="o">+</span> <span class="n">eps</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">apply_along_axis</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">points</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">-</span> <span class="n">eps</span><span class="p">)</span>
+    <span class="n">filtered_points</span> <span class="o">=</span> <span class="n">points</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">filtered_points</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">filtered_points</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Функция <code class="docutils literal notranslate"><span class="pre">curve</span></code>, принимая на вход левую часть уравнения кривой вида <span class="math notranslate nohighlight">\(f(\textbf{x})=0\)</span>, создаёт сетки по координатам <span class="math notranslate nohighlight">\(x\)</span> и <span class="math notranslate nohighlight">\(y\)</span> (<span class="math notranslate nohighlight">\(10^3\)</span> узлов в каждой), а затем составляет <strong>декартово произведение</strong> из их узлов (с помощью функции <code class="docutils literal notranslate"><span class="pre">cartesian</span></code> из модуля <code class="docutils literal notranslate"><span class="pre">utils.extmath</span></code> библиотеки <code class="docutils literal notranslate"><span class="pre">sklearn</span></code>; к сожалению, в официальной документации эта функция не значится). Так получается массив из координат точек (в количестве <span class="math notranslate nohighlight">\(10^3\cdot10^3=10^6\)</span>), равномерно покрывающих заданную область. Далее этот массив <strong>отфильтровывается с допуском</strong> <code class="docutils literal notranslate"><span class="pre">eps</span></code>, причём в роли <strong>маски для фильтрации</strong> выступает функция, определяющая кривую. Иначе говоря, из всех точек выбираются лишь те, которые удовлетворяют равенству <span class="math notranslate nohighlight">\(f(\textbf{x})=0\)</span> с погрешностью, задаваемой параметром <code class="docutils literal notranslate"><span class="pre">eps</span></code> (визуально это влияет на толщину контура). Похожую идею мы уже реализовывали на третьем семинаре, когда строили единичные сферы на плоскости в различных <span class="math notranslate nohighlight">\(p\)</span>-нормах. Правда, в прошлой демонстрации точки выбирались случайным образом; здесь же воспользоваться генератором случайных чисел нельзя — на графике не получится линий (вместо этого отобразятся лишь отдельные точки) из-за того, что вероятность удовлетворить произвольному нелинейному уравнению <span class="math notranslate nohighlight">\(f(\textbf{x})=0\)</span> окажется слишком малой.</p>
+<p>Функция для непосредственного построения графика:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">graph_sys</span><span class="p">(</span><span class="n">f1</span><span class="p">,</span> <span class="n">f2</span><span class="p">,</span> <span class="n">x_lim</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">,</span> <span class="n">y_lim</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">):</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+    <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span> <span class="o">=</span> <span class="n">curve</span><span class="p">(</span><span class="n">f1</span><span class="p">,</span> <span class="n">x_lim</span><span class="p">,</span> <span class="n">y_lim</span><span class="p">)</span>
+    <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span> <span class="o">=</span> <span class="n">curve</span><span class="p">(</span><span class="n">f2</span><span class="p">,</span> <span class="n">x_lim</span><span class="p">,</span> <span class="n">y_lim</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x$&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$y$&quot;</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="n">x_lim</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x_lim</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="n">y_lim</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y_lim</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Область $</span><span class="se">\\</span><span class="s2">Omega$&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Задаём функции из рассматриваемой системы и строим график:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">f1</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">f2</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="n">graph_sys</span><span class="p">(</span><span class="n">f1</span><span class="p">,</span> <span class="n">f2</span><span class="p">,</span> <span class="n">x_lim</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">y_lim</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span> <span class="c1"># исполняется 17 секунд</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/e1d2b31e1377f30fec9575b309b431ac4e5e1cbc0f1392f5ac5bd562ad559c62.png" src="_images/e1d2b31e1377f30fec9575b309b431ac4e5e1cbc0f1392f5ac5bd562ad559c62.png" />
+</div>
+</div>
+<p>Как видим, подобранная область содержит корень. Значит, предложенный МПИ можно применять — он гарантированно сойдётся к корню в силу теоремы 4. В качестве начального приближения можно взять любой вектор <span class="math notranslate nohighlight">\(\textbf{x}^{(0)}\in\Omega\)</span>. Например, можно положить <span class="math notranslate nohighlight">\(x_1^{(0)}=6\)</span>, а <span class="math notranslate nohighlight">\(x_2^{(0)}=2\)</span>.</p>
+<p>Программную реализацию МПИ составим, не пользуясь априорной оценкой числа итераций. Вместо этого на каждой итерации (начиная с третьей), будем проверять малость итерационной поправки:</p>
+<div class="math notranslate nohighlight">
+\[||\textbf{x}^{(s)}-\textbf{x}^{(s-1)}||\leq \varepsilon(1-q).\]</div>
+<p>О таком условии остановки итераций мы уже упоминали на третьем семинаре.</p>
+<p>Результаты расчёта:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">phi_3</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span>
+                     <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]))])</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">SI_method3</span><span class="p">(</span><span class="n">x0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">maxiter</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">100</span><span class="p">):</span>
+    <span class="n">x1</span> <span class="o">=</span> <span class="n">phi_3</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span>
+    <span class="n">x2</span> <span class="o">=</span> <span class="n">phi_3</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span>
+
+    <span class="n">q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x2</span> <span class="o">-</span> <span class="n">x1</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x1</span> <span class="o">-</span> <span class="n">x0</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">maxiter</span> <span class="o">-</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="n">x1</span> <span class="o">=</span> <span class="n">x2</span>
+        <span class="n">x2</span> <span class="o">=</span> <span class="n">phi_3</span><span class="p">(</span><span class="n">x2</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x2</span> <span class="o">-</span> <span class="n">x1</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">eps</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">q</span><span class="p">):</span> <span class="k">break</span>
+
+    <span class="k">return</span> <span class="n">x2</span><span class="p">,</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">time</span> res, s = SI_method3(np.array([6, 2]), eps=1e-16)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: total: 0 ns
+Wall time: 875 μs
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(3.4874427876429537, 2.261628630553594)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">s</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>81
+</pre></div>
+</div>
+</div>
+</div>
+<p>Проверка решения:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">([</span><span class="n">x</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span> <span class="o">-</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-15</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<p>Можно заметить, что в данном случае МПИ сходится в окрестности корня довольно медленно. Об этом свидетельствует не только сравнительно большое число выполненных итераций, но и следующее обстоятельство: если при последнем вызове функции <code class="docutils literal notranslate"><span class="pre">np.allclose</span></code> заменить значение <code class="docutils literal notranslate"><span class="pre">atol=1e-15</span></code> на <code class="docutils literal notranslate"><span class="pre">atol=1e-16</span></code> (точность, установленная при запуске процесса), то проверка не будет пройдена. Потеря точности объясняется приближённостью оценки величины <span class="math notranslate nohighlight">\(q\)</span>, которая в предложенной программе принимается одинаковой для всех итераций и рассчитывается в начале процесса. Вообще говоря, следует всегда помнить, что при решении нелинейных уравнений и их систем с помощью любых итерационных процессах типа МПИ <strong>скорость сходимости невозможно вычислить — её можно только оценить</strong>.</p>
+<p>На примере рассмотренной задачи легко убедиться в том, что выкладки, направленные на обоснование сходимости МПИ, даже в сравнительно простых случаях могут оказаться очень пространными и трудоёмкими. Поэтому <strong>на практике сходимость МПИ обычно и не обосновывают</strong>. Вместо этого его запускают от случайно выбранной точки из окрестности решения и проверяют сходимость апостериорно. Таким образом, можно сказать, что теорема 4 представляет в основном теоретический интерес.</p>
+<p>В связи со сказанным необходимо также отметить, что с системами нелинейных уравнений часто приходится сталкиваться при решении более сложных задач. Например, в следующем семестре мы будем рассматривать дифференциальные уравнения в частных производных, содержащие нелинейные члены (а также системы таких уравнений). При численном решении соответствующих начальных и краевых задач приходится многократно (на каждом шаге по времени) решать систему нелинейных уравнений. В подобных случаях провести теоретический анализ и проверку условий сходимости используемого метода затруднительно. Во-первых, размерность системы может оказаться довольно большой (<span class="math notranslate nohighlight">\(\sim 10^2\div10^6\)</span>). Во-вторых, система нелинейных уравнений решается на каждом шаге (т.е. порядка <span class="math notranslate nohighlight">\(\sim 10^2\div10^6\)</span> раз) и изменяется при переходе от одного шага к другому. В-третьих, теоретическое исследование сходимости используемого метода в описанных условиях пришлось бы проводить с учётом зависимости от параметров сетки (например, шагов по времени и пространству), поскольку в сложных задачах они могут меняться по ходу расчёта. Всё это делает апостериорную проверку сходимости метода решения системы нелинейных уравнений единственно возможной.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id7">
+<h1>Метод Ньютона<a class="headerlink" href="#id7" title="Link to this heading">#</a></h1>
+<p>Этот метод, как и метод Ньютона для решения одного нелинейного уравнения, получается линеаризацией левой части системы <span class="math notranslate nohighlight">\(\textbf{f}(\textbf{x})=\textbf{0}\)</span>. Мы выпишем сразу его расчётную формулу:</p>
+<div class="math notranslate nohighlight">
+\[\textbf{x}^{(s+1)}=\textbf{x}^{(s)}-\textbf{J}_\textbf{f}^{-1}\big|^{(s)}\cdot\textbf{f}(\textbf{x}^{(s)}).\]</div>
+<p>Подчеркнём, что в этой формуле фигурирует матрица Якоби <span class="math notranslate nohighlight">\(\textbf{J}_\textbf{f}\)</span> <strong>исходной</strong> функции <span class="math notranslate nohighlight">\(\textbf{f}\)</span> из левой части системы (в отличие от МПИ, для проверки сходимости которого требуется строить не матрицу Якоби <span class="math notranslate nohighlight">\(\textbf{J}_\textbf{f}\)</span>, а матрицу Якоби <span class="math notranslate nohighlight">\(\textbf{J}_\boldsymbol{\varphi}\)</span>).</p>
+<p>Существует теорема, дающая достаточное условие сходимости метода Ньютона в случае систем нелинейных уравнений. Однако соответствующее условие имеет довольно сложный вид, и поэтому обычно сходимость метода проверяют расчётом, не пользуясь теоремой.</p>
+<section id="id8">
+<h2>Задача 4<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<p>Записать расчётную формулу метода Ньютона для численного решения системы уравнений</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \begin{cases}
+   x^{10} + y^{10} = 1024,\\
+    e^x - e^y = 1.
+  \end{cases}
+\end{split}\]</div>
+<p><strong>Решение.</strong> Перепишем систему в виде <span class="math notranslate nohighlight">\(\textbf{f}(\textbf{x})=\textbf{0}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \begin{cases}
+   x_1^{10} + x_2^{10} - 1024 =0,\\[0.1cm]
+    e^{x_1} - e^{x_2} - 1 =0.
+  \end{cases}
+\end{split}\]</div>
+<p>Средствами библиотеки <code class="docutils literal notranslate"><span class="pre">sympy</span></code> найдём матрицу Якоби <span class="math notranslate nohighlight">\(\textbf{J}_\textbf{f}\)</span>, обратную к ней и составим произведение <span class="math notranslate nohighlight">\(\textbf{J}^{-1}_\textbf{f}\cdot\textbf{f}(\textbf{x})\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sympy</span><span class="w"> </span><span class="kn">import</span> <span class="n">symbols</span><span class="p">,</span> <span class="n">Matrix</span><span class="p">,</span> <span class="n">exp</span><span class="p">,</span> <span class="n">simplify</span>
+
+<span class="n">x1</span><span class="p">,</span> <span class="n">x2</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;x_1, x_2&#39;</span><span class="p">)</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="n">Matrix</span><span class="p">([</span><span class="s1">&#39;x1**10 + x2**10 - 1024&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;exp(x1) - exp(x2) - 1&#39;</span><span class="p">])</span>
+
+<span class="n">J</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">jacobian</span><span class="p">([</span><span class="s1">&#39;x1&#39;</span><span class="p">,</span> <span class="s1">&#39;x2&#39;</span><span class="p">])</span>
+<span class="n">J</span><span class="o">.</span><span class="n">inv</span><span class="p">()</span> <span class="o">*</span> <span class="n">f</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\begin{split}\displaystyle \left[\begin{matrix}\frac{x_{2}^{9} \left(e^{x_{1}} - e^{x_{2}} - 1\right) e^{x_{1}}}{x_{1}^{9} e^{x_{1}} e^{x_{2}} + x_{2}^{9} e^{2 x_{1}}} + \frac{\left(x_{1}^{10} + x_{2}^{10} - 1024\right) e^{x_{1}} e^{x_{2}}}{10 x_{1}^{9} e^{x_{1}} e^{x_{2}} + 10 x_{2}^{9} e^{2 x_{1}}}\\- \frac{x_{1}^{9} \left(e^{x_{1}} - e^{x_{2}} - 1\right)}{x_{1}^{9} e^{x_{2}} + x_{2}^{9} e^{x_{1}}} + \frac{\left(x_{1}^{10} + x_{2}^{10} - 1024\right) e^{x_{1}}}{10 x_{1}^{9} e^{x_{2}} + 10 x_{2}^{9} e^{x_{1}}}\end{matrix}\right]\end{split}\]</div>
+</div>
+</div>
+<p>Таким образом, расчётная формула метода Ньютона (в покомпонентном виде) выглядит так:</p>
+<div class="math notranslate nohighlight">
+\[x_1^{(s+1)}=\bigg[x_1-\frac{x_2^9\cdot a(x_1,x_2)}{b(x_1,x_2)}-\frac{e^{x_2}\cdot c(x_1,x_2)}{d(x_1,x_2)}\bigg]^{(s)},\]</div>
+<div class="math notranslate nohighlight">
+\[x_2^{(s+1)}=\bigg[x_2-\frac{x_1^9\cdot a(x_1,x_2)}{b(x_1,x_2)}-\frac{e^{x_1}\cdot c(x_1,x_2)}{d(x_1,x_2)}\bigg]^{(s)},\]</div>
+<p>где</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{gather}
+  a(x_1,x_2)=e^{x_1}-e^{x_2}-1,\quad b(x_1,x_2)=x_1^9\cdot e^{x_2}+x_2^9\cdot e^{x_1},\\
+  c(x_1,x_2)=x_1^{10}+x_2^{10}-1024,\quad d(x_1,x_2)=10x_1^9\cdot e^{{x_2}}+10x_2^9\cdot e^{x_1}.
+ \end{gather}\end{split}\]</div>
+<p>Читатель может самостоятельно убедиться (с помощью графика) в том, что рассматриваемая система имеет два решения:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\textbf{u}_\text{A}\simeq
+  \begin{pmatrix}
+    1,930 \\
+    1,773
+  \end{pmatrix},\quad
+  \textbf{u}_\text{B}\simeq
+  \begin{pmatrix}
+    0,127 \\
+    -1,999
+  \end{pmatrix}.\end{split}\]</div>
+<p>Найдём, например, второе из них с помощью программы:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">Newton_kernel</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+    <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">x1</span><span class="o">**</span><span class="mi">9</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x2</span><span class="p">)</span> <span class="o">+</span> <span class="n">x2</span><span class="o">**</span><span class="mi">9</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">x1</span><span class="o">**</span><span class="mi">10</span> <span class="o">+</span> <span class="n">x2</span><span class="o">**</span><span class="mi">10</span> <span class="o">-</span> <span class="mi">1024</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="mi">10</span><span class="o">*</span><span class="n">x1</span><span class="o">**</span><span class="mi">9</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">10</span><span class="o">*</span><span class="n">x2</span><span class="o">**</span><span class="mi">9</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span>
+
+    <span class="n">x1_new</span> <span class="o">=</span> <span class="n">x1</span> <span class="o">-</span> <span class="n">x2</span><span class="o">**</span><span class="mi">9</span> <span class="o">*</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x2</span><span class="p">)</span> <span class="o">*</span> <span class="n">c</span> <span class="o">/</span> <span class="n">d</span>
+    <span class="n">x2_new</span> <span class="o">=</span> <span class="n">x2</span> <span class="o">-</span> <span class="n">x1</span><span class="o">**</span><span class="mi">9</span> <span class="o">*</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span> <span class="o">*</span> <span class="n">c</span> <span class="o">/</span> <span class="n">d</span>
+
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x1_new</span><span class="p">,</span> <span class="n">x2_new</span><span class="p">])</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">Newton_method</span><span class="p">(</span><span class="n">x0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">maxiter</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">100</span><span class="p">):</span>
+    <span class="n">x1</span> <span class="o">=</span> <span class="n">Newton_kernel</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span>
+    <span class="n">x2</span> <span class="o">=</span> <span class="n">Newton_kernel</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span>
+
+    <span class="n">q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x2</span> <span class="o">-</span> <span class="n">x1</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x1</span> <span class="o">-</span> <span class="n">x0</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">maxiter</span> <span class="o">-</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="n">x1</span> <span class="o">=</span> <span class="n">x2</span>
+        <span class="n">x2</span> <span class="o">=</span> <span class="n">Newton_kernel</span><span class="p">(</span><span class="n">x2</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x2</span> <span class="o">-</span> <span class="n">x1</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">eps</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">q</span><span class="p">):</span> <span class="k">break</span>
+
+    <span class="k">return</span> <span class="n">x2</span><span class="p">,</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">time</span> res, s = Newton_method(np.array([0.127, -1.999]), eps=1e-8)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: total: 0 ns
+Wall time: 126 μs
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.12692801104299783, -1.999999999999788)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">s</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3
+</pre></div>
+</div>
+</div>
+</div>
+<p>Проверка найденного решения:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">([</span><span class="n">x</span><span class="o">**</span><span class="mi">10</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">10</span> <span class="o">-</span> <span class="mi">1024</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="python">
+<h1>Решение систем нелинейных уравнений в Python<a class="headerlink" href="#python" title="Link to this heading">#</a></h1>
+<p>Модуль <code class="docutils literal notranslate"><span class="pre">optimize</span></code> библиотеки <code class="docutils literal notranslate"><span class="pre">scipy</span></code> (<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/optimize.html#root-finding">документация</a>) предлагет несколько средств для решения систем нелинейных уравнений. Наиболее удобным из них является функция <code class="docutils literal notranslate"><span class="pre">root</span></code> (<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.root.html">документация</a>). Мы не будем останавливаться на её подробном описании. Приведём только пример использования (берём систему из задачи 3):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.optimize</span><span class="w"> </span><span class="kn">import</span> <span class="n">root</span>
+
+<span class="c1"># функция левой части</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span>
+            <span class="mi">2</span> <span class="o">*</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="c1"># её матрица Якоби</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">jac</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span> <span class="p">[</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">/</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">10</span><span class="p">)),</span> <span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
+             <span class="p">[</span><span class="mi">4</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="p">]</span>
+
+<span class="o">%</span><span class="k">time</span> res = root(f, x0=[6, 2], jac=jac)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: total: 0 ns
+Wall time: 241 μs
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> message: The solution converged.
+ success: True
+  status: 1
+     fun: [ 1.771e-12 -1.051e-11]
+       x: [ 3.487e+00  2.262e+00]
+  method: hybr
+    nfev: 12
+    njev: 1
+    fjac: [[-1.499e-01 -9.887e-01]
+           [ 9.887e-01 -1.499e-01]]
+       r: [-7.899e+00  6.334e+00 -3.223e+00]
+     qtf: [-1.203e-07 -3.958e-08]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">x</span>
+<span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(3.487442787640844, 2.2616286305525617)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id9">
+<h1>Практические задачи<a class="headerlink" href="#id9" title="Link to this heading">#</a></h1>
+<section id="id10">
+<h2>Задача А<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
+<p>Численно решить систему нелинейных уравнений</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \begin{cases}
+    20x+y^2+2z^3=6,0420,\\
+    x^3+20y+3z^4=4,0273,\\
+    x^2+5y^3+20z=2,1300\\
+  \end{cases}
+\end{split}\]</div>
+<p>с помощью двух методов, <strong>аналогичных методам Якоби и Зейделя решения СЛАУ</strong> (см. пятый семинар). Считать известным, что решение системы принадлежит области</p>
+<div class="math notranslate nohighlight">
+\[\Omega=\big\{\textbf{x}\in\mathbb{R}^3:\phantom{-}0&lt;x_i&lt;1,\phantom{-}i=1,\,2,\,3\big\}.\]</div>
+<p>Какой из методов сходится быстрее? Почему?</p>
+<p><em>Указание.</em> О методах решения систем нелинейных уравнений, построенных по аналогии с итерационными методами решения СЛАУ, можно прочитать в книге А.А. Самарского и А.В. Гулина (см. список рекомендованной литературы).</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id11">
+<h1>Литература и другие источники<a class="headerlink" href="#id11" title="Link to this heading">#</a></h1>
+<p><strong>Видеозаписи:</strong></p>
+<ol class="arabic simple">
+<li><p>Вычислительная математика — лекция 7. Лектор — Е.Н. Аристова. <a class="reference external" href="https://www.youtube.com/live/0UtUfkqH7v8?si=vQNY8K6XPhPpFYag&amp;amp;t=3311">Ссылка</a> (YouTube).</p></li>
+<li><p>Вычислительная математика — лекция 8. Лектор — Е.Н. Аристова. <a class="reference external" href="https://www.youtube.com/live/AfpEHRqNZb8?si=7xUhMmnyyJXUpSKS&amp;amp;t=14">Ссылка</a> (YouTube).</p></li>
+<li><p>Вычислительная математика — лекция 12. Лектор — А.В. Чикиткин. <a class="reference external" href="https://m.youtube.com/watch?v=t0biwmkGZzg">Ссылка</a> (YouTube).</p></li>
+</ol>
+<p><strong>Рекомендуемая литература (с комментариями):</strong></p>
+<ol class="arabic simple">
+<li><p><em>В.И. Косарев. 12 лекций по вычислительной математике</em> — лекция 4, стр. 51—61.</p></li>
+<li><p><em>В.М. Вержбицкий. Численные методы. Линейная алгебра и нелинейные уравнения</em> — глава 6, стр. 212—244.</p></li>
+<li><p><em>А.А. Амосов, Ю.А. Дубинский, Н.В. Копченова. Вычислительные методы для инженеров</em> — глава 7, стр. 191—210.</p></li>
+<li><p><em>Б.П. Демидович, И.А. Марон. Основы вычислительной математики</em> — глава XIII, стр. 450—496.</p></li>
+<li><p><em>Дж. Дэннис, Р. Шнабель. Численные методы безусловной оптимизации и решения нелинейных уравнений.</em></p></li>
+<li><p><em>Н.Н. Калиткин, Е.А. Альшина. Численный анализ.</em> Первый том учебника “Численные методы” (в двух книгах). К теме семинара относится пункт 2.3 главы 2 (стр. 55—59). Разобран только метод Ньютона и его обобщение.</p></li>
+<li><p><em>А.А. Самарский, А.В. Гулин. Численные методы</em> — четвёртый параграф главы 5 (стр. 207—213). Предложено много примеров различных итерационных процессов, редко встречающихся в других источниках.</p></li>
+<li><p><em>В.И. Крылов, В.В. Бобков, П.И. Монастырный. Начала теории вычислительных методов. Линейная алгебра и нелинейные уравнения</em> — пункты 18.4—18.6 (стр. 233—241) и 19.3—19.4 (стр. 266—273).</p></li>
+<li><p><em>И.С. Березин, Н.П. Жидков. Методы вычислений. Том второй</em> — глава 7, параграф 5, стр. 150—162.</p></li>
+</ol>
+<p>Дополнительная литература:</p>
+<ol class="arabic simple" start="10">
+<li><p><em>И.О. Арушанян. Избранные задачи для семинарских занятий по численным методам решения нелинейных уравнений и систем.</em> <a class="reference external" href="https://num-anal.srcc.msu.ru/prac_pos/poslist/posobie19.pdf">Ссылка.</a></p></li>
+<li><p><em>Р.С. Пастушков. Задачи и упражнения по вычислительной математике. V семестр. Решения, указания, ответы.</em> Напомним, что это пособие есть в библиотеке МФТИ. В электронном виде его легче всего скачать с сайта О.А. Пырковой (см. ниже).</p></li>
+</ol>
+<p><strong>Сайты и другие электронные ресурсы:</strong></p>
+<ol class="arabic simple">
+<li><p>Персональный сайт преподавателя МФТИ О.А. Пырковой. Содержит много полезных материалов по различным математическим курсам МФТИ. Страница с материалами осеннего семестра по вычислительной математике: <a class="reference external" href="https://www.pyrkovaoa-fizteh.ru/%D0%BA%D0%BE%D0%BD%D1%81%D1%83%D0%BB%D1%8C%D1%82%D0%B0%D1%86%D0%B8%D1%8F-%D0%B2%D1%8B%D1%87%D0%BC-5/">ссылка</a>.</p></li>
+<li><p>Scientific Python Lectures. Очень полезный ресурс, представляющий собой учебник по научному программированию на языке Python. Представлено много различных библиотек. Есть pdf-версия. Все материалы на английском языке. <a class="reference external" href="https://lectures.scientific-python.org/">Ссылка.</a></p></li>
+<li><p>Python Programming And Numerical Methods: A Guide For Engineers And Scientists. Прекрасный сайт, представляющий собой электронную версию одноимённой книги по научному программированию на Python. Исключительно подробное изложение с многочисленными примерами. <a class="reference external" href="https://pythonnumericalmethods.studentorg.berkeley.edu/notebooks/Index.html">Ссылка.</a></p></li>
+</ol>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id12">
+<h1>Контрольные вопросы<a class="headerlink" href="#id12" title="Link to this heading">#</a></h1>
+<ol class="arabic simple">
+<li><p>Какое отображение метрического пространства <span class="math notranslate nohighlight">\((M,\rho)\)</span> в себя называется сжимающим?</p></li>
+<li><p>Сформулируйте принцип сжимающих отображений. Объясните идею его доказательства.</p></li>
+<li><p>Всякое ли нормированное пространство является метрическим? Наоборот: всякое ли метрическое пространство является нормированным?</p></li>
+<li><p>Можно ли говорить о полноте пространства <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span>, не конкретизируя метрику <span class="math notranslate nohighlight">\(\rho\)</span>? Почему?</p></li>
+<li><p>Приведите пример метрики, по которой пространство <span class="math notranslate nohighlight">\(\mathbb{R}\)</span> не является полным.</p></li>
+<li><p>Что такое банахово пространство? гильбертово пространство?</p></li>
+<li><p>Какая область в <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span> называется выпуклой?</p></li>
+<li><p>В чём заключается сущность метода простых итераций (МПИ) численного решения систем нелинейных уравнений?</p></li>
+<li><p>Сформулируйте достаточное условие сходимости МПИ.</p></li>
+<li><p>Раскройте суть метода Ньютона численного решения систем нелинейных уравнений.</p></li>
+</ol>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="sem06.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Семинар 6. Нелинейные уравнения</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Семинар 7. Системы нелинейных уравнений</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Введение</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Метод простых итераций</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Задача 1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Задача 2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Задача 3</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Метод Ньютона</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Задача 4</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#python">Решение систем нелинейных уравнений в Python</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Практические задачи</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Задача А</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Литература и другие источники</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">Контрольные вопросы</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Кафедра вычислительной физики МФТИ
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
