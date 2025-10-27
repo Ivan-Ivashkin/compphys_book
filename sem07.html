@@ -62,6 +62,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'sem07';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Семинар 8. Глобальная интерполяция" href="sem08.html" />
     <link rel="prev" title="Семинар 6. Нелинейные уравнения" href="sem06.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -241,6 +242,14 @@
 
 
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Семинар 7. Системы нелинейных уравнений</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem08.html">Семинар 8. Глобальная интерполяция</a></li>
 
 
 
@@ -691,7 +700,7 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: total: 0 ns
-Wall time: 187 μs
+Wall time: 196 μs
 </pre></div>
 </div>
 </div>
@@ -804,7 +813,7 @@ Wall time: 187 μs
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: total: 0 ns
-Wall time: 83.2 μs
+Wall time: 139 μs
 </pre></div>
 </div>
 </div>
@@ -998,7 +1007,7 @@ Wall time: 83.2 μs
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: total: 0 ns
-Wall time: 132 μs
+Wall time: 113 μs
 </pre></div>
 </div>
 </div>
@@ -1305,7 +1314,7 @@ Wall time: 132 μs
 <p>Здесь уже учтено, что <span class="math notranslate nohighlight">\(x_1&gt;2\)</span> для выполнения условия <span class="math notranslate nohighlight">\(|\gamma|&lt;1\)</span>. Из тепловых карт видно, что <span class="math notranslate nohighlight">\(\eta&lt;1\)</span>, скажем, при <span class="math notranslate nohighlight">\(2&lt;x_1&lt;10\)</span> и <span class="math notranslate nohighlight">\(0&lt;x_2&lt;4\)</span>. Другими словами, в качестве искомой области можно взять множество</p>
 <div class="math notranslate nohighlight">
 \[\Omega=\big\{\textbf{x}\in\mathbb{R}^2:\phantom{-}2&lt;x_1&lt;10,\phantom{-}0&lt;x_2&lt;4\big\}.\]</div>
-<p>Итак, в (выпуклой) области <span class="math notranslate nohighlight">\(\Omega\)</span> выполняется условие <span class="math notranslate nohighlight">\(||\textbf{J}_{\boldsymbol{\varphi}_\text{B}}||_\text{I}&lt;1\)</span>. Остаётся только проверить, что эта область содержит корень. Снова прибегаем к графику — отображаем область и кривые, задаваемые уравнениями рассматриваемой системы. В отличие от предыдущей задачи, в данном случае получить <strong>явные</strong> функции <span class="math notranslate nohighlight">\(x=x(y)\)</span> и <span class="math notranslate nohighlight">\(y=y(x)\)</span> для построения графиков не удаётся и приходится прибегать к искусственным приёмам:</p>
+<p>Итак, в (выпуклой) области <span class="math notranslate nohighlight">\(\Omega\)</span> выполняется условие <span class="math notranslate nohighlight">\(||\textbf{J}_{\boldsymbol{\varphi}_\text{B}}||_\text{I}&lt;1\)</span>. Остаётся только проверить, что эта область содержит корень. Снова прибегаем к графику — отображаем область и кривые, задаваемые уравнениями рассматриваемой системы. Можно было бы для каждой кривой записать уравнение в виде <span class="math notranslate nohighlight">\(y=y(x)\)</span> и построить графики полученных <strong>явных</strong> функций обычным способом. Однако на практике уравнение кривой не всегда удаётся преобразовать так, чтобы одна переменная выражалась через другую, и поэтому мы проиллюстрируем один искусственный приём построения кривых:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.utils.extmath</span><span class="w"> </span><span class="kn">import</span> <span class="n">cartesian</span>
@@ -1403,7 +1412,7 @@ Wall time: 132 μs
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: total: 0 ns
-Wall time: 875 μs
+Wall time: 932 μs
 </pre></div>
 </div>
 </div>
@@ -1564,7 +1573,7 @@ Wall time: 875 μs
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: total: 0 ns
-Wall time: 126 μs
+Wall time: 115 μs
 </pre></div>
 </div>
 </div>
@@ -1634,7 +1643,7 @@ Wall time: 126 μs
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: total: 0 ns
-Wall time: 241 μs
+Wall time: 234 μs
 </pre></div>
 </div>
 </div>
@@ -1742,6 +1751,7 @@ Wall time: 241 μs
 <li><p>Сформулируйте достаточное условие сходимости МПИ.</p></li>
 <li><p>Раскройте суть метода Ньютона численного решения систем нелинейных уравнений.</p></li>
 </ol>
+<p><em>Версия от 28.10.2025</em></p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1782,6 +1792,15 @@ Wall time: 241 μs
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title">Семинар 6. Нелинейные уравнения</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="sem08.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Семинар 8. Глобальная интерполяция</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
