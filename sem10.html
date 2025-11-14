@@ -1,0 +1,953 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Семинар 10. Сплайны. Численное интегрирование &#8212; Вычислительная математика. ЛФИ МФТИ</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'sem10';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Семинар 9. Глобальная интерполяция (продолжение)" href="sem09.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Вычислительная математика. ЛФИ МФТИ - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Вычислительная математика. ЛФИ МФТИ - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Предисловие
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Осенний семестр</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="sem01.html">Семинар 1. Введение. Погрешности вычислений</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem02.html">Семинар 2. Численное дифференцирование</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem03.html">Семинар 3. Прикладная линейная алгебра. Введение</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem04.html">Семинар 4. Итерационные методы решения СЛАУ</a></li>
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem05.html">Семинар 5. Итерационные методы решения СЛАУ (продолжение). МНК</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem06.html">Семинар 6. Нелинейные уравнения</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem07.html">Семинар 7. Системы нелинейных уравнений</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem08.html">Семинар 8. Глобальная интерполяция</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem09.html">Семинар 9. Глобальная интерполяция (продолжение)</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Семинар 10. Сплайны. Численное интегрирование</a></li>
+
+
+
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fsem10.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/sem10.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Семинар 10. Сплайны. Численное интегрирование</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Семинар 10. Сплайны. Численное интегрирование</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Введение</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Построение кубического сплайна дефекта 1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Задача 1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Задача 2</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Практические задачи</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a">Задача A</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Литература и другие источники</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Контрольные вопросы</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>Семинар 10. Сплайны. Численное интегрирование<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p><em>Внимание! Страница содержит первую часть семинара. Вторая часть (посвящённая численному интегрированию) будет опубликована позднее.</em></p>
+<p>Перед изучением материалов семинара рекомендуем посетить лекцию или посмотреть видеозапись лекции. Ссылки (YouTube): <a class="reference external" href="https://www.youtube.com/live/Kt2tcbBvudA?si=AzjMvzA-LbyRxWkN&amp;amp;t=101">лекция 11</a>.</p>
+<p>Предполагается, что читатель знает</p>
+<ul class="simple">
+<li><p>определение кривизны кривой.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id2">
+<h1>Введение<a class="headerlink" href="#id2" title="Link to this heading">#</a></h1>
+<p>На прошлых двух семинарах мы говорили о глобальной интерполяции. Один из выводов, к которому мы пришли, состоит в том, что увеличение числа узлов интерполяции на отрезке далеко не всегда приводит к уменьшению ошибки метода, более того, чем более подробная сетка, тем больше могут оказаться ошибки округления. Поэтому строить глобальный интерполянт на отрезке с использованием большого числа точек бессмысленно. Решением задачи в таком случае является использование локальной интерполяции, которую еще называют интерполяцией сплайнами. В таком случае на каждом отрезке между узлами сплайна строится своя функция, а в узлах производится по возможности гладкая сшивка.</p>
+<p><strong>Определение.</strong>
+Сплайном <span class="math notranslate nohighlight">\(S_m(x) \in C^{l}[a, b]\)</span> называется функция
+$<span class="math notranslate nohighlight">\(
+S_m(x) = P_m(x) \quad \text{на } [x_k, x_{k+1}],
+\)</span><span class="math notranslate nohighlight">\(
+где \)</span>m-l$ — дефект сплайна.</p>
+<div class="math notranslate nohighlight">
+\[
+\{x_k\} \text{ — узлы сплайна}, \qquad \{x_i\} \text{ — узлы интерполяции}
+\]</div>
+<p>Если <span class="math notranslate nohighlight">\(S_m(x_i) = f(x_i)\)</span>, то сплайн называют интерполяционным.</p>
+<p>Есть разные виды сплайнов, мы рассмотрим один из них - кубический сплайн дефекта 1.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id3">
+<h1>Построение кубического сплайна дефекта 1<a class="headerlink" href="#id3" title="Link to this heading">#</a></h1>
+<p>Пусть узлы сплайна и узлы интерполяции совпадают
+$<span class="math notranslate nohighlight">\(
+\{x_k\} = \{x_i\}, \quad a \equiv x_0 &lt; x_1 &lt; \ldots &lt; x_n \equiv b
+\)</span>$</p>
+<p>На каждом отрезке <span class="math notranslate nohighlight">\([x_k, x_{k+1}]\)</span> зададим функцию:</p>
+<div class="math notranslate nohighlight">
+\[
+\varphi_k(x) = S_3(x_{k},k) = a_k + b_k (x - x_k) + c_k (x - x_k)^2 + d_k (x - x_k)^3
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+h_k = x_{k+1} - x_k
+\]</div>
+<p>Всего введено <span class="math notranslate nohighlight">\(4n\)</span> неизвестных.</p>
+<p>Потребуем в первую очередь, чтобы сплайн был интерполяционным. В узлах интерполяции:</p>
+<div class="math notranslate nohighlight">
+\[
+S_3(x_k, k) = f_k, \quad k = 0, \ldots, n-1,
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+S_3(x_{k+1}, k) = f_{k+1}, \quad k = 0, \ldots, n-1,
+\]</div>
+<p>Всего <span class="math notranslate nohighlight">\(2n\)</span> уравнений. Есть возможность задать еще <span class="math notranslate nohighlight">\(2n\)</span> условий. Сделаем гладкую сшивку в узлах интерполяции. В точке  <span class="math notranslate nohighlight">\(x_k\)</span> :</p>
+<div class="math notranslate nohighlight">
+\[
+{S_3}'(x_k, k) = {S_3}'(x_k, k-1), \quad k = 1, \ldots, n-1,
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+{S_3}''(x_k, k) = {S_3}''(x_k, k-1), \quad k = 1, \ldots, n-1,
+\]</div>
+<p>Мы задали еще  <span class="math notranslate nohighlight">\(2n - 2\)</span> уравнения. Запишем полученные уравнения в виде системы</p>
+<p>\begin{cases}
+a_k = f_k, &amp; k = 0, \ldots, n-1, \[6pt]
+a_k + b_k h_k + c_k h_k^2 + d_k h_k^3 = f_{k+1}, &amp; k = 0, \ldots, n-1, \[6pt]
+b_k = b_{k-1} + 2 c_{k-1} h_{k-1} + 3 d_{k-1} h_{k-1}^2, &amp; k = 1, \ldots, n-1, \[6pt]
+2 c_k = 2 c_{k-1} + 6 d_{k-1} h_{k-1}, &amp; k = 1, \ldots, n-1.
+\end{cases}</p>
+<p>Всего записано <span class="math notranslate nohighlight">\(4n - 2\)</span>  уравнения, нужно ещё 2. Есть различные варианты, как их задать</p>
+<ul class="simple">
+<li><p>свободный сплайн
+$<span class="math notranslate nohighlight">\( S_3''(x_0, 0) = S_3''(x_n, n-1) = 0,\)</span><span class="math notranslate nohighlight">\(  
+\)</span><span class="math notranslate nohighlight">\( c_0 = 0, \quad c_n = 0.\)</span>$</p></li>
+</ul>
+<p>При таком задании дополнительных условий полученный сплайн имеет физическую интерпретацию. Если взять упругую рейку, поставить на ребро и закрепить так, чтобы она проходила через заданные точки, получится кривая, задаваемая именно свободным сплайном.</p>
+<ul class="simple">
+<li><p>сплайн Шонберга</p></li>
+<li><p>эмпирический сплайн</p></li>
+<li><p>естественный сплайн</p></li>
+</ul>
+<p>Информацию о других способах задания двух недостающих условий можно найти в литературе.</p>
+<p><img alt="image" src="_images/sem10.jpg" /></p>
+<p><em>Сплайн чертёжника и чертёжник Boeing, работающий с ней.</em> <a class="reference external" href="https://pages.cs.wisc.edu/~deboor/draftspline.html">Ссылка</a></p>
+<p>Закончим построение свободного кубического сплайна. Укажем эффективный способ решения выписанной системы, дополненной условиями <span class="math notranslate nohighlight">\( c_0 = 0, \quad c_n = 0\)</span>. Коэффициенты <span class="math notranslate nohighlight">\(a_k = f_k\)</span> уже известны. Исключим  <span class="math notranslate nohighlight">\(b_k\)</span> и <span class="math notranslate nohighlight">\(d_k\)</span>, получим систему уравнений относительно <span class="math notranslate nohighlight">\(c_k\)</span>, которая решается методом скалярной трехточечной прогонки, имеющим линейную вычислительню сложность</p>
+<div class="math notranslate nohighlight">
+\[
+d_{k} = \frac{c_{k+1} - c_{k}}{3h_{k}}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+b_k = \frac{f_{k+1} - f_k}{h_k} - \frac{2}{3} c_k h_k - \frac{1}{3} c_{k+1} h_k
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\frac{h_{k-1}}{h_{k-1} + h_k} c_{k-1} + 2c_k + \frac{h_k}{h_{k-1} + h_k} c_{k+1} = 3f(x_{k-1}, x_k, x_{k+1})
+\]</div>
+<p>где <span class="math notranslate nohighlight">\(f(x_{k-1}, x_k, x_{k+1})\)</span> — разделённая разность второго порядка:</p>
+<div class="math notranslate nohighlight">
+\[
+f(x_{k-1}, x_k, x_{k+1}) =
+\frac{\dfrac{f_{k+1} - f_k}{h_k} - \dfrac{f_k - f_{k-1}}{h_{k-1}}}{h_k + h_{k-1}}
+\]</div>
+<p>Если <span class="math notranslate nohighlight">\(h_k = h_{k-1} = h\)</span>, то:</p>
+<div class="math notranslate nohighlight">
+\[
+f(x_{k-1}, x_k, x_{k+1}) = \frac{f_{k+1} - 2f_k + f_{k-1}}{2h^2}
+\]</div>
+<section id="id4">
+<h2>Задача 1<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<p>Построить кубический сплайн для функции, заданной в узлах интерполяции, предполагая, что сплайн имеет нулевую кривизну при <span class="math notranslate nohighlight">\(x= x_0\)</span>, <span class="math notranslate nohighlight">\(x= x_n\)</span>. Вычислить приближенное значение функции в точке <span class="math notranslate nohighlight">\(x=1.5\)</span>. Сравнить с точным значением.</p>
+<p>\begin{array}{|c|c|c|c|c|c|}
+\hline
+x &amp; 0 &amp; 1 &amp; 2 &amp; 3 &amp; 4 \
+\hline
+\cos\left(\frac{\pi x}{6}\right) &amp; 1.000 &amp; 0.866 &amp; 0.500 &amp; 0.000 &amp; -0.500 \
+\hline
+\end{array}</p>
+<p><strong>Решение.</strong> По таблице определим <span class="math notranslate nohighlight">\(h = 1\)</span>, по условию <span class="math notranslate nohighlight">\(c_0 = c_4 = 0\)</span>. Запишем систему уравнений относиельно коэффициентов <span class="math notranslate nohighlight">\(c_k\)</span></p>
+<div class="math notranslate nohighlight">
+\[
+\frac{1}{2}c_{k-1} + 2c_k + \frac{1}{2}c_{k+1} = \frac{3}{2}(f_{k+1} - 2f_k + f_{k-1})
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+c_{k-1} + 4c_k + c_{k+1} = 3(f_{k+1} - 2f_k + f_{k-1})
+\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{cases}
+c_0 = 0, \\
+c_0 + 4c_1 + c_2 = 3(0.5 - 2 \cdot 0.866 + 1), \\
+c_1 + 4c_2 + c_3 = 3(0 - 2 \cdot 0.5 + 0.866), \\
+c_2 + 4c_3 + c_4 = 3(-0.5 - 2 \cdot 0 + 0.5), \\
+c_4 = 0.
+\end{cases}
+\end{split}\]</div>
+<p>Её решение
+$<span class="math notranslate nohighlight">\(
+c_0 = 0, \quad c_4 = 0
+\)</span>$</p>
+<div class="math notranslate nohighlight">
+\[
+c_1 = -0.158, \quad c_2 = -0.065, \quad c_3 = 0.016
+\]</div>
+<p>Так как в условии требуется найти значение при <span class="math notranslate nohighlight">\(x = 1.5\)</span>, потребуется найти значения по <span class="math notranslate nohighlight">\(S_3(x,1)\)</span></p>
+<div class="math notranslate nohighlight">
+\[
+S_3(x,1) = a_1 + b_1(x - 1) + c_1(x - 1)^2 + d_1(x - 1)^3
+\]</div>
+<p>Найдем недостающие коэффициенты
+$<span class="math notranslate nohighlight">\(
+a_1 = f_1 = 0.866
+\)</span>$</p>
+<div class="math notranslate nohighlight">
+\[
+b_1 = \frac{f_2 - f_1}{1} - \frac{2}{3}c_1 - \frac{1}{3}c_2 = 0.5 - 0.866 + \frac{2}{3}\cdot(-0.158) + \frac{1}{3}\cdot(-0.065) = -0.239
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+d_1 = \frac{c_2 - c_1}{3 \cdot 1} = \frac{-0.065 + 0.158}{3} = 0.031
+\]</div>
+<p>Запишем <span class="math notranslate nohighlight">\(S_3(x,1)\)</span>:
+$<span class="math notranslate nohighlight">\(
+S_3(x,1) = 0.866 - 0.239(x - 1) - 0.158(x - 1)^2 + 0.031(x - 1)^3
+\)</span><span class="math notranslate nohighlight">\(
+Найдем требуемое значение
+\)</span><span class="math notranslate nohighlight">\(
+S_3(1.5,1) = 0.866 - 0.239 \cdot \frac{1}{2} - 0.158 \cdot \frac{1}{4} + 0.031 \cdot \frac{1}{8} = 0.711
+\)</span><span class="math notranslate nohighlight">\(
+Сравним с точным значением
+\)</span><span class="math notranslate nohighlight">\(
+\cos\left(\frac{\pi \cdot 1.5}{6}\right) = \cos\left(\frac{\pi}{4}\right) = 0.707
+\)</span><span class="math notranslate nohighlight">\(
+Ошибка \)</span>0.6%$.</p>
+</section>
+<section id="id5">
+<h2>Задача 2<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Найти производную <span class="math notranslate nohighlight">\(f'(1.5)\)</span>, построив интерпояционный многочлен, проходящий через все точки таблицы.</p></li>
+<li><p>Найти производную <span class="math notranslate nohighlight">\(f'(1.5)\)</span>, построив свободный кубический сплайн дефекта 1.
+\begin{array}{c|cccc}
+x_i &amp; 0 &amp; 1 &amp; 2 &amp; 3 \
+\hline
+f_i &amp; 0 &amp; 1 &amp; 0 &amp; -1
+\end{array}</p></li>
+</ol>
+<p><strong>Решение.</strong></p>
+<ol class="arabic simple">
+<li><p>Построим таблицу разделённых разностей:</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{array}{c|c|c|c|c}
+x &amp; y &amp; \Delta^1 &amp; \Delta^2 &amp; \Delta^3 \\ \hline
+0 &amp; 0 &amp; 1 &amp;   &amp;   \\
+1 &amp; 1 &amp; -1 &amp; -1 &amp; \tfrac{1}{3} \\
+2 &amp; 0 &amp; -1 &amp; 0 &amp;   \\
+3 &amp; -1 &amp;   &amp;   &amp;
+\end{array}
+\end{split}\]</div>
+<p>Запишем интерполяционный многочлен в форме Ньютона
+$<span class="math notranslate nohighlight">\(
+P(x) = 0 + 1(x - 0) - 1(x - 0)(x - 1) + \tfrac{1}{3}(x - 0)(x - 1)(x - 2)
+\)</span>$</p>
+<p>Раскроем скобки и приведем подобные
+$<span class="math notranslate nohighlight">\(
+P(x) = \tfrac{1}{3}x^3 - 2x^2 + \tfrac{8}{3}x
+\)</span><span class="math notranslate nohighlight">\(
+Найдем производную интерполянта
+\)</span><span class="math notranslate nohighlight">\(
+P'(x) = x^2 - 4x + \tfrac{8}{3}
+\)</span>$</p>
+<div class="math notranslate nohighlight">
+\[
+P'(1.5) = 2.25 - 6 + \tfrac{8}{3} = -1.083
+\]</div>
+<p>В таблице приведены значения функции <span class="math notranslate nohighlight">\(y=\sin \frac{\pi x}{2}\)</span>. Вычислим точное знаечние производной в указанной точке
+$<span class="math notranslate nohighlight">\(
+\left(\sin \frac{\pi x}{2}\right)'_{x=1.5} = \frac{\pi}{2}\cos\frac{\pi x}{2}\bigg|_{x=1.5}
+= \frac{\pi}{2}\cos\frac{3\pi}{4} = -1.11072
+\)</span>$</p>
+<p>Погрешность нахождения производной составляет <span class="math notranslate nohighlight">\(\approx 3\%\)</span>.</p>
+<ol class="arabic simple" start="2">
+<li><p>Построим свободный кубический сплайн дефекта 1, тогда <span class="math notranslate nohighlight">\(c_0 = c_3 = 0\)</span></p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+\frac{1}{2}c_{k-1} + 2c_k + \frac{1}{2}c_{k+1}
+= 3\,f(x_{k-1}, x_k, x_{k+1})
+\]</div>
+<p>Система относительно коэффициентов <span class="math notranslate nohighlight">\(c_k\)</span> примет вид</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{pmatrix}
+1 &amp; 0 &amp; 0 &amp; 0\\
+\frac12 &amp; 2 &amp; \frac12 &amp; 0\\
+0 &amp; \frac12 &amp; 2 &amp; \frac12\\
+0 &amp; 0 &amp; 0 &amp; 1
+\end{pmatrix}
+\begin{pmatrix}
+c_0\\ c_1\\ c_2\\ c_3
+\end{pmatrix}
+=
+\begin{pmatrix}
+0\\ -3\\ 0\\ 0
+\end{pmatrix}
+\end{split}\]</div>
+<p>Найдем ее решение</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{cases}
+2c_1 + \tfrac12 c_2 = -3,\\[2pt]
+\tfrac12 c_1 + 2c_2 = 0
+\end{cases}
+\qquad\Rightarrow\qquad
+c_1 = -\tfrac{8}{5},\;\; c_2 = \tfrac{2}{5}.
+\end{split}\]</div>
+<p>Найдем недостающие коэффициенты <span class="math notranslate nohighlight">\(a_1\)</span>, <span class="math notranslate nohighlight">\(b_1\)</span>, <span class="math notranslate nohighlight">\(d_1\)</span>
+$<span class="math notranslate nohighlight">\(
+a_1 = f_1 = 1
+\)</span>$</p>
+<div class="math notranslate nohighlight">
+\[
+b_1 = \frac{f_2 - f_1}{1} - \frac{2}{3}c_1 - \frac{1}{3}c_2
+= -1 - \frac{1}{3}\left(\frac{2}{5} - \frac{8}{5}\right) = -\frac{7}{15}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+d_1 = \frac{c_2 - c_1}{3 \cdot 1}
+= \frac{\frac{2}{5} - \left(-\frac{8}{5}\right)}{3} = \frac{2}{3}
+\]</div>
+<p>Многочлен третьей степени, задающий сплайн на отрезке <span class="math notranslate nohighlight">\([1,2]\)</span> имеет вид
+$<span class="math notranslate nohighlight">\(
+S_3(x,1) = a_1 + b_1(x - 1) + c_1(x - 1)^2 + d_1(x - 1)^3
+\)</span>$</p>
+<div class="math notranslate nohighlight">
+\[
+S_3(x,1) = 1 - \frac{7}{15}(x - 1) - \frac{8}{5}(x - 1)^2 + \frac{2}{3}(x - 1)^3
+\]</div>
+<p>Найдем производную многочлена</p>
+<div class="math notranslate nohighlight">
+\[
+S_3'(x,1) = -\frac{7}{15} - \frac{16}{5}(x - 1) + 2(x - 1)^2
+\]</div>
+<p>И вычислм значение производной в интересующей нас точке
+$<span class="math notranslate nohighlight">\(
+S_3'(1.5,1) = -\frac{7}{6} = -1.17
+\)</span>$</p>
+<p>Погрешность составляет <span class="math notranslate nohighlight">\(\approx 5\%\)</span>.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id6">
+<h1>Практические задачи<a class="headerlink" href="#id6" title="Link to this heading">#</a></h1>
+<section id="a">
+<h2>Задача A<a class="headerlink" href="#a" title="Link to this heading">#</a></h2>
+<ol class="arabic">
+<li><p>Напишите программу, которая строит интерполяционный кубический сплайн дефекта 1 на равномерной сетке из <span class="math notranslate nohighlight">\(N=n+1\)</span> узлов на отрезке <span class="math notranslate nohighlight">\([a,b]\)</span>. Сплайн имеет нулевую кривизну в точках <span class="math notranslate nohighlight">\(x_0\)</span> и <span class="math notranslate nohighlight">\(x_N\)</span>.</p></li>
+<li><p>Применить написанную программу для построения сплайнов для следующих функций:</p>
+<div class="math notranslate nohighlight">
+\[f(x)=e^{x},\quad f(x)=x^{4},\quad f(x)=\frac{1}{1+25x^{2}}.\]</div>
+<p>Во всех трёх случаях использовать равномерную сетку из <span class="math notranslate nohighlight">\(N=n+1\)</span> узлов на отрезке <span class="math notranslate nohighlight">\([-1,1]\)</span>.</p>
+</li>
+<li><p>Сравните результаты интерполяции сплайнами с результатами кусочно-линейной интерполяции на той же сетке (Задача А из семинара 8). Воспроизведет ли построенный кубический сплайн многочлен третьей степени?</p></li>
+</ol>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id7">
+<h1>Литература и другие источники<a class="headerlink" href="#id7" title="Link to this heading">#</a></h1>
+<p><strong>Видеозаписи:</strong></p>
+<ol class="arabic simple">
+<li><p>Вычислительная математика — лекция 11. Лектор — Е.Н. Аристова. <a class="reference external" href="https://www.youtube.com/live/Kt2tcbBvudA?si=AzjMvzA-LbyRxWkN&amp;amp;t=101">Ссылка</a> (YouTube).</p></li>
+<li><p>Вычислительная математика — лекция 10. Лектор — А.В. Чикиткин. <a class="reference external" href="https://youtu.be/7bcn_braq4g?si=OXLPB3sgyD88Gvue">Ссылка</a> (YouTube).</p></li>
+</ol>
+<p><strong>Рекомендуемая литература (с комментариями):</strong></p>
+<ol class="arabic simple">
+<li><p><em>А.А. Самарский, А.В. Гулин. Численные методы</em> — параграф 4 главы 3 (стр. 140—148), параграфы 1, 2 главы 4 (стр. 161—172).</p></li>
+<li><p><em>В.И. Крылов, В.В. Бобков, П.И. Монастырный. Начала теории вычислительных методов. Интерполирование и интегрирование.</em></p></li>
+<li><p><em>В.И. Косарев. 12 лекций по вычислительной математике</em> — лекция 6, стр. 76—90.</p></li>
+</ol>
+<p><strong>Сайты и другие электронные ресурсы:</strong></p>
+<ol class="arabic simple">
+<li><p>Персональный сайт преподавателя МФТИ О.А. Пырковой. Содержит много полезных материалов по различным математическим курсам МФТИ. Страница с материалами осеннего семестра по вычислительной математике: <a class="reference external" href="https://www.pyrkovaoa-fizteh.ru/%D0%BA%D0%BE%D0%BD%D1%81%D1%83%D0%BB%D1%8C%D1%82%D0%B0%D1%86%D0%B8%D1%8F-%D0%B2%D1%8B%D1%87%D0%BC-5/">ссылка</a>.</p></li>
+<li><p>Scientific Python Lectures. Очень полезный ресурс, представляющий собой учебник по научному программированию на языке Python. Представлено много различных библиотек. Есть pdf-версия. Все материалы на английском языке. <a class="reference external" href="https://lectures.scientific-python.org/">Ссылка.</a></p></li>
+<li><p>Python Programming And Numerical Methods: A Guide For Engineers And Scientists. Прекрасный сайт, представляющий собой электронную версию одноимённой книги по научному программированию на Python. Исключительно подробное изложение с многочисленными примерами. <a class="reference external" href="https://pythonnumericalmethods.studentorg.berkeley.edu/notebooks/Index.html">Ссылка.</a></p></li>
+</ol>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id8">
+<h1>Контрольные вопросы<a class="headerlink" href="#id8" title="Link to this heading">#</a></h1>
+<ol class="arabic simple">
+<li><p>В чем преимущество интерполяции сплайнами перед глобальной интепроляцией?</p></li>
+<li><p>Что такое интерполяционный сплайн?</p></li>
+<li><p>Что такое дефект сплайна?</p></li>
+<li><p>Сколько условий требуется дополнительно задать, чтобы СЛАУ относительно коэффициентов сплайна была замкнутой. Считать, что условие интерполяционности и условия, обеспечивающие гладкую сшивку вплоть до второй производной уже выписаны.</p></li>
+<li><p>Какие есть варианты задания недостающих условий в кубическом сплайне дефекта 1?</p></li>
+<li><p>Какой сплайн называют свободным? Какова его физическая интерпретация?</p></li>
+<li><p>Каким методом эффективно решать СЛАУ для нахождения коэффициентов сплайна?</p></li>
+</ol>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="sem09.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Семинар 9. Глобальная интерполяция (продолжение)</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Семинар 10. Сплайны. Численное интегрирование</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Введение</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Построение кубического сплайна дефекта 1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Задача 1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Задача 2</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Практические задачи</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a">Задача A</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Литература и другие источники</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Контрольные вопросы</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Кафедра вычислительной физики МФТИ
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
