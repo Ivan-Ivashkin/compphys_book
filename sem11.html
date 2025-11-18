@@ -1,0 +1,1069 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Семинар 11. Численное интегрирование (продолжение) &#8212; Вычислительная математика. ЛФИ МФТИ</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'sem11';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Семинар 10. Сплайны. Численное интегрирование" href="sem10.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Вычислительная математика. ЛФИ МФТИ - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Вычислительная математика. ЛФИ МФТИ - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Предисловие
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Осенний семестр</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="sem01.html">Семинар 1. Введение. Погрешности вычислений</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem02.html">Семинар 2. Численное дифференцирование</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem03.html">Семинар 3. Прикладная линейная алгебра. Введение</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem04.html">Семинар 4. Итерационные методы решения СЛАУ</a></li>
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem05.html">Семинар 5. Итерационные методы решения СЛАУ (продолжение). МНК</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem06.html">Семинар 6. Нелинейные уравнения</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem07.html">Семинар 7. Системы нелинейных уравнений</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem08.html">Семинар 8. Глобальная интерполяция</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem09.html">Семинар 9. Глобальная интерполяция (продолжение)</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem10.html">Семинар 10. Сплайны. Численное интегрирование</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Семинар 11. Численное интегрирование (продолжение)</a></li>
+
+
+
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fsem11.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/sem11.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Семинар 11. Численное интегрирование (продолжение)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Семинар 11. Численное интегрирование (продолжение)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Введение</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Ошибка интегрирования по квадратурным формулам Ньютона-Котеса</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Связь квадратурных формул</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Повышение порядка точности квадратурных формул</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">1) Экстраполяция Ричардсона</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">2) Процесс Эйткена</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">3) Формула Эйлера–Маклорена</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Задача 1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Задача 2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Задача 3</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">Практические задачи</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a">Задача A</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">Литература и другие источники</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">Контрольные вопросы</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>Семинар 11. Численное интегрирование (продолжение)<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>Перед изучением материалов семинара рекомендуем посетить лекцию или посмотреть видеозапись лекции. Ссылки (YouTube): <a class="reference external" href="https://www.youtube.com/live/DcfqfHfYVSQ?si=HuSmTFdR5nRQ2fOW&amp;amp;t=551">лекция 12</a>. Желательно также предварительно изучить материалы десятого семинара.</p>
+<p>Предполагается, что читатель знает</p>
+<ul class="simple">
+<li><p>формулу для ошибки метода при замене функции на алгебраический интерполянт,</p></li>
+<li><p>отличие между понятиями порядок аппроксимации и порядок сходимости.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id2">
+<h1>Введение<a class="headerlink" href="#id2" title="Link to this heading">#</a></h1>
+<p>В прошлом семинаре мы начали изучать квадратурные формулы Ньютона-Котеса и уже научились прмиенять их для вычисления интегралов. В этом семинаре мы уделим время обсуждению ошибок численного дифференцирования, а также способов уточнения квадратурных формул. Мы по-прежнему будем говорить о вычислении интеграла
+$<span class="math notranslate nohighlight">\(
+I = \int \limits_a^b f(x)\,dx,
+\)</span><span class="math notranslate nohighlight">\(
+где \)</span>a<span class="math notranslate nohighlight">\(, \)</span>b<span class="math notranslate nohighlight">\( - конечные пределы интегрирования, а у функции \)</span>f(x)$ нет особенностей на заданном интервале.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id3">
+<h1>Ошибка интегрирования по квадратурным формулам Ньютона-Котеса<a class="headerlink" href="#id3" title="Link to this heading">#</a></h1>
+<p>Напомним способ построения квадратурных формул Ньютона-Котеса. На каждом элементарном интервале функция заменается на интерполянт и вычисляется интеграл от интерполянта. Из этого размышления понятно, что ошибка численного интегрирования по таким формулам определяется ошибкой интерополяции. Напомним, что при замене <span class="math notranslate nohighlight">\(f(x)\)</span> на интерполянт <span class="math notranslate nohighlight">\(P_n(x)\)</span> ошибка метода определяется остаточным членом интерполяции <span class="math notranslate nohighlight">\(R_n(x)\)</span></p>
+<div class="math notranslate nohighlight">
+\[
+R_n(x) = f(x) - P_n(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!} \omega_{n+1}(x), \quad a &lt; \xi &lt; b
+\]</div>
+<p>Тогда на каждом элементарном интервале <span class="math notranslate nohighlight">\([x_i; x_{i+1}]\)</span>
+$<span class="math notranslate nohighlight">\(
+f(x) = P_n(x) + R_n(x)
+\)</span>$</p>
+<div class="math notranslate nohighlight">
+\[
+\int \limits_{x_i}^{x_{i+1}} f(x)\,dx = \int\limits_{x_i}^{x_{i+1}}  P_n(x)\,dx + \int\limits _{x_i}^{x_{i+1}}  R_n(x)\,dx.
+\]</div>
+<p>Слева в формуле точное значение интеграла, первое слагаемое справа - приближенное значение инетеграла, а оставшееся слагаемое определеет ошибку метода при чсиленном инетгрировании. Окончательно</p>
+<div class="math notranslate nohighlight">
+\[
+\Delta_{\text{мет}} = \sum_{i=0}^{n-1} \int_{x_i}^{x_{i+1}} R_n(x)\,dx
+\]</div>
+<p>Применяя эту формулу, мы можем получить ошибку метода для формул, которые мы обсуждали на прошлом семинаре. БУдем полагать, что шаг сетки постоянен и равен <span class="math notranslate nohighlight">\(h\)</span></p>
+<ol class="arabic simple">
+<li><p>Формула прямоугольников
+$<span class="math notranslate nohighlight">\(
+\frac{1}{2} \max |f'(x)| (b - a) h
+\)</span>$</p></li>
+</ol>
+<p>Формула прямоугольников с центральной точкой
+$<span class="math notranslate nohighlight">\(
+\frac{1}{24} \max |f''(x)| (b - a) h^2
+\)</span>$</p>
+<ol class="arabic simple" start="2">
+<li><p>Формула трапеций
+$<span class="math notranslate nohighlight">\(
+\frac{1}{12} \max |f''(x)| (b - a) h^2
+\)</span>$</p></li>
+<li><p>Формула Симпсона
+$<span class="math notranslate nohighlight">\(
+\frac{1}{2880} \max |f^{(4)}(x)| (b - a) h^4
+\)</span>$</p></li>
+</ol>
+<p>Формула Симпсона с целыми узлами
+$<span class="math notranslate nohighlight">\(
+\frac{1}{180} \max |f^{(4)}(x)| (b - a) h^4
+\)</span>$</p>
+<ol class="arabic simple" start="4">
+<li><p>Правило 3/8
+$<span class="math notranslate nohighlight">\(
+\frac{1}{6480} \max |f^{(4)}(x)| (b - a) h^4
+\)</span>$</p></li>
+</ol>
+<section id="id4">
+<h2>Связь квадратурных формул<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<p>Приведем простой пример, показывающий, что вычисление интеграла по формуле более низкого порядка ппроксимации на сетках с шагами <span class="math notranslate nohighlight">\(h\)</span> и <span class="math notranslate nohighlight">\(2h\)</span> может давать тот же результат, что и однократное вычисление интеграла по формуле более высокого порядка аппроксимации.</p>
+<p>Рассмотрим сетку, состоящую из всего трех узлов <span class="math notranslate nohighlight">\({x_{i-1}, \space x_{i}, \space x_{i+1}}\)</span>. Вычислим интеграл по формуле трапеций с шагами <span class="math notranslate nohighlight">\(h\)</span> и <span class="math notranslate nohighlight">\(2h\)</span></p>
+<div class="math notranslate nohighlight">
+\[
+I_h^{\text{тр}} = \frac{h}{2}(f_i + f_{i+1}) + \frac{h}{2}(f_{i-1} + f_i)
+= \frac{h}{2}(f_{i+1} + 2f_i + f_{i-1}),
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+I_{2h}^{\text{тр}} = \frac{2h}{2}(f_{i-1} + f_{i+1}) = h(f_{i-1} + f_{i+1}),
+\]</div>
+<p>а также интеграл по формуле Симпсона с целыми узлами
+$<span class="math notranslate nohighlight">\(
+I^c = \frac{h}{3}(f_{i-1} + 4f_i + f_{i+1}).
+\)</span><span class="math notranslate nohighlight">\(
+Заметим, что
+\)</span><span class="math notranslate nohighlight">\(
+I^c = I_h^{\text{пр}} + \frac{I_h^{\text{пр}} - I_{2h}^{\text{пр}}}{3}
+\)</span>$
+Последнее слагаемое в формуле называется поправка Ричардсона. В этом примере мы увидели частный случай, в следующем разделе обсудим общие подходы</p>
+</section>
+<section id="id5">
+<h2>Повышение порядка точности квадратурных формул<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<section id="id6">
+<h3>1) Экстраполяция Ричардсона<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<p>Пусть вычисление интеграла <span class="math notranslate nohighlight">\(I\)</span> производится по некоторой квадратурной формуле с известным порядком аппроксимации <span class="math notranslate nohighlight">\(p\)</span>. При вычислении с шагом <span class="math notranslate nohighlight">\(h\)</span> получится</p>
+<div class="math notranslate nohighlight">
+\[
+I = I_h + C h^p.
+\]</div>
+<p>При вычислении с шагом <span class="math notranslate nohighlight">\(h/2\)</span> получится
+$<span class="math notranslate nohighlight">\(
+I = I_{h/2} + C_1 ( \frac{h}{2} )^p.
+\)</span>$</p>
+<p>В предположении, что <span class="math notranslate nohighlight">\(C=C_1\)</span> можно получить, что
+$<span class="math notranslate nohighlight">\(
+I^R = I_{h/2} + \frac{I_{h/2} - I_h}{2^p - 1}.
+\)</span>$</p>
+<p>где <span class="math notranslate nohighlight">\(I^R\)</span> — уточнённое значение интеграла в соответствии с экстраполяцией Ричардсона. Такой подход обеспечивает повышение порядка точности на единицу, если <span class="math notranslate nohighlight">\(p\)</span> — нечётное, а если <span class="math notranslate nohighlight">\(p\)</span> — чётное, то повышение порядка на две единицы. Этим и объясняется полученный выше результат, когда вычисление интеграла по формуле трапеций второго порядка аппроксимации на разных сетках позволило в итоге получить результат, совпадающий с вычислением по формуле Симпсона четвертого порядка аппроксимации.</p>
+<p>Слагаемое <span class="math notranslate nohighlight">\(\Delta = \dfrac{I_{h/2} - I_h}{2^p - 1}\)</span> можно использовать для оценки погрешности вычисления по квадратурной формуле на практике. В реальных задачах редко известны константы <span class="math notranslate nohighlight">\(M_1\)</span>, <span class="math notranslate nohighlight">\(M_2\)</span> или <span class="math notranslate nohighlight">\(M_4\)</span>, входящие в оценки погрешностей, выписанные выше. Поэтому для оценки точности результата проделывают вычислени на двух разных сетках  и вычисляют величну <span class="math notranslate nohighlight">\(\Delta\)</span>. Такой подход называют правилом Рунге</p>
+</section>
+<section id="id7">
+<h3>2) Процесс Эйткена<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<p>Пусть вычисление интеграла <span class="math notranslate nohighlight">\(I\)</span> производится по некоторой квадратурной формуле, однако порядок сходимости <span class="math notranslate nohighlight">\(p\)</span> неизвестен. В таком случае также есть возможность найти уточненное значение интеграла, а также можно определить порядок сходимости. Пусть интеграл теперь вычислен на сетках с шагами <span class="math notranslate nohighlight">\(h\)</span>, <span class="math notranslate nohighlight">\(h/2\)</span>, <span class="math notranslate nohighlight">\(h/4\)</span>. Пренебрежем отличием констант, входящих в ошибку метода, получим</p>
+<div class="math notranslate nohighlight">
+\[
+I = I_h + C h^p \quad \text{(1)}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+I = I_{h/2} + C ( \frac{h}{2} )^p \quad \text{(2)}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+I = I_{h/4} + C ( \frac{h}{4} )^p \quad \text{(3)}
+\]</div>
+<p>Вычтем друг из друга уравнения
+$<span class="math notranslate nohighlight">\(
+(2) - (1): \quad I_h - I_{h/2} = C h^p (2^{-p} - 1)
+\)</span>$</p>
+<div class="math notranslate nohighlight">
+\[
+(3) - (2): \quad I_{h/2} - I_{h/4} = 2^{-p} C h^p (2^{-p} - 1)
+\]</div>
+<p>и получим
+$<span class="math notranslate nohighlight">\(
+2^p = \frac{I_h - I_{h/2}}{I_{h/2} - I_{h/4}}.
+\)</span>$</p>
+<p>Из этой формулы можно получить порядок сходимости. Найдем далее слагаемое
+$<span class="math notranslate nohighlight">\(
+C h^p = \frac{(I_{h/2} - I_h)^2}{2 I_{h/2} - I_h - I_{h/4}}.
+\)</span><span class="math notranslate nohighlight">\(
+Тогда уточненное значение инетграла в соответствии с процессом Эйткена может быть найдено в виде
+\)</span><span class="math notranslate nohighlight">\(
+I^{\text{Эйт}} = I_h + \frac{(I_{h/2} - I_h)^2}{2 I_{h/2} - I_h - I_{h/4}}.
+\)</span>$</p>
+</section>
+<section id="id8">
+<h3>3) Формула Эйлера–Маклорена<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<p>Уточнить значение интеграла можно не только за счет проведения вычислений на разных сетках, но и за счет информации о производных. Например, значение интеграла, полученное по формуле трапеций можно уточнить в соответствии с формулой Эйлера-Маклорена
+$<span class="math notranslate nohighlight">\(
+I_{\text{ЭМ}} = I_h^{\text{пр}} - \frac{h^2}{12} \left( f'(b) - f'(a) \right).
+\)</span>$</p>
+<p>Формула обладает четвертым порядком аппроксимации, то есть ошибка составит <span class="math notranslate nohighlight">\(O(h^4)\)</span>.</p>
+</section>
+</section>
+<section id="id9">
+<h2>Задача 1<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
+<p>Вычислите интеграл от таблично заданной функции при помощи метода трапеций. Оцените погрешность вычисления. Уточните результат при помощи экстраполяции Ричардсона. Уточните результат при помощи формулы Эйлера-Маклорена. Сравните результат с вычислением по формуле Симпсона?</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{array}{|c|c|c|c|c|c|c|c|c|c|}
+    \hline
+    x &amp; 0.00 &amp; 0.125 &amp; 0.250 &amp; 0.375 &amp; 0.500 &amp; 0.625 &amp; 0.750 &amp; 0.875 &amp; 1.000 \\ \hline
+    f(x) &amp; 1.000000 &amp; 0.984615 &amp; 0.941176 &amp; 0.876712 &amp; 0.800000 &amp; 0.719101 &amp; 0.640000 &amp; 0.566372 &amp; 0.500000 \\ \hline
+  \end{array}\end{split}\]</div>
+<p><strong>Решение.</strong> Эта задача является продолжением задачи 3 из прошлого семинара. Выпишем ответы, полученые при ее решении.</p>
+<div class="math notranslate nohighlight">
+\[
+I_h^{\text{тр}} = 0.784747
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+I_{2h}^{\text{тр}} = 0.782794
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+I^c = 0.785398
+\]</div>
+<p>Теперь приступим к решению данной задачи. Начнем с оценки погрешности. Если считать, что аналитическое выражение для подынтегральной функции неизвестно, то необходимо воспользоваться правилом Рунге и вычислить
+$<span class="math notranslate nohighlight">\(
+\Delta = \frac{I_h^{\text{тр}} - I_{2h}^{\text{тр}}}{3} = 0{,}000651
+\)</span><span class="math notranslate nohighlight">\(
+Тогда \)</span>\Delta_{\text{мет}}=|\Delta |=0{,}000651$.</p>
+<p>Если вспомнить, что в таблице даны значения функции <span class="math notranslate nohighlight">\(f(x)=\dfrac{1}{1+x^2}\)</span>, то можно найти погрешность следующим образом</p>
+<div class="math notranslate nohighlight">
+\[
+\Delta_{\text{мет}}=\frac{1}{12} \max |f''(x)| (b - a) h^2=\frac{1}{12} \cdot 4 \cdot 1 \cdot (\frac{1}{8})^2=0,0052
+\]</div>
+<p>Уточним значение интеграла в соответствии с экстраполяцией Ричардсона
+$<span class="math notranslate nohighlight">\(
+I^R = I_{2h}^{\text{тр}} + \Delta = I_{2h}^{\text{тр}} + \frac{I_h^{\text{тр}} - I_{2h}^{\text{тр}}}{3} = 0{,}785398
+\)</span>$</p>
+<p>Результат совпадает с вычислением по формуле Симпсона.
+$<span class="math notranslate nohighlight">\(
+I^C = I^R = 0{,}785398.
+\)</span>$</p>
+<p>Подчеркнем, что это не случайность, это было доказано нами выше. Напомним также, что интеграл их увлояи может быть вычислен аналитически
+$<span class="math notranslate nohighlight">\(
+\int_0^1 \frac{1}{1 + x^2} \, dx = \frac{\pi}{4} = 0{,}785398,
+\)</span><span class="math notranslate nohighlight">\(
+и что это значение совпало с вычислением по формуле Симпсона.
+\)</span>$</p>
+<p>Чтобы уточнить знаечние интеграла по формуле Эйлера–Маклорена нам потребуются производные функции
+<span class="math notranslate nohighlight">\(f(x) = \dfrac{1}{1 + x^2}\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[
+I^{\text{ЭМ}} = I_h^{\text{тр}} - \frac{h^2}{12} \left( f'(1) - f'(0) \right)
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+I^{\text{ЭМ}} = I_h^{\text{тр}} - \frac{(1/8)^2}{12} \left( -\frac{2x}{(1 + x^2)^2} \Big|_0^1 \right) = 0{,}785398.
+\]</div>
+<p>Полученный результат снова совпал с точным значением интеграла с точностью до 6 знаков после запятой</p>
+</section>
+<section id="id10">
+<h2>Задача 2<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
+<p>Для вычисления определенного интеграла <span class="math notranslate nohighlight">\(\int_0^1 \dfrac{e^x - 1}{\sqrt{x}} \, dx\)</span> задана таблица значений функции</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{array}{|c|c|c|c|c|c|c|c|c|c|}
+    \hline
+    x &amp; 0.00 &amp; 0.125 &amp; 0.250 &amp; 0.375 &amp; 0.500 &amp; 0.625 &amp; 0.750 &amp; 0.875 &amp; 1.000 \\
+    \hline
+    f(x) &amp; 0.000000 &amp; 0.376601 &amp; 0.568051 &amp; 0.742998 &amp; 0.917430 &amp; 1.098254 &amp; 1.289801 &amp; 1.495461 &amp; 1.718282 \\
+    \hline
+\end{array}\end{split}\]</div>
+<p>По этой таблице вычислены значения интеграла по составной формуле трапеций с шагами <span class="math notranslate nohighlight">\(h=1/8\)</span>, <span class="math notranslate nohighlight">\(2h\)</span> и <span class="math notranslate nohighlight">\(4h\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+I_T(h) = 0.918467125, \quad I_T(2h) = 0.908605750, \quad I_T(4h) = 0.888285500
+\]</div>
+<p>С помощью процесса Эйткена определить реальный порядок сходимости метода трапеций и сравнить с теоретическим. Объяснить, почему он отличается от теоретического. Уточнить результат в соответствии с процессом Эйткена.</p>
+<p><strong>Решение.</strong> Для оценки порядка сходимости в соответствии с процессом Эйткена вычислим</p>
+<div class="math notranslate nohighlight">
+\[
+2^p = \frac{I^{тр}_{4h} - I^{тр}_{2h}}{I^{тр}_{2h} - I^{тр}_{h}} \approx 2.0605 \ne 4,
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+p^* \approx 1.04,
+\]</div>
+<p>Уточненное значение найдем по формуле
+$<span class="math notranslate nohighlight">\(
+I_{\text{Эйт}} = I^{тр}_{4h} + \frac{(I^{тр}_{2h} - I^{тр}_{4h})^2}{2I^{тр}_{2h} - I^{тр}_{4h} - I^{тр}_{h}} = 0.9277651341.
+\)</span><span class="math notranslate nohighlight">\(
+Для объяснения причин отличия порядка сходимости и порядка аппроксимации обратим внимание на повдеение функции близи нуля
+\)</span><span class="math notranslate nohighlight">\(
+f(x) = \frac{e^x - 1}{\sqrt{x}}, \qquad f \sim \sqrt{x}
+\)</span>$</p>
+<div class="math notranslate nohighlight">
+\[
+f'(x) = \frac{2xe^x - e^x + 1}{2x^{3/2}}, \qquad f' \sim \frac{1}{\sqrt{x}}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+f'(x) \to \infty \quad \text{при } x \to 0
+\]</div>
+<p>Особенность в 0, поэтому порядок сходимости ниже порядка аппроксимации.</p>
+</section>
+<section id="id11">
+<h2>Задача 3<a class="headerlink" href="#id11" title="Link to this heading">#</a></h2>
+<p>Оцените число узлов для расчета интеграла <span class="math notranslate nohighlight">\(\int \limits_{-1}^{1} \ln(1 + x^2)\,dx\)</span>
+с точностью <span class="math notranslate nohighlight">\(\varepsilon=6\cdot10^{-3}\)</span> по:</p>
+<ol class="arabic simple">
+<li><p>формуле прямоугольников с центральной точкой</p></li>
+<li><p>формуле трапеций</p></li>
+<li><p>формуле Симпсона</p></li>
+</ol>
+<p><strong>Решение.</strong> В данной задаче нам известна подынтегральная функция, поэтому можем использовать имеющиеся теоретические оценки. Чтобы сделать расчет потребуются значения <span class="math notranslate nohighlight">\(M_2\)</span> и <span class="math notranslate nohighlight">\(M_4\)</span>. Можно найти их вычислив соответствующие производные и построив график. Но в этой задаче получится их найти аналитически. Пусть
+$<span class="math notranslate nohighlight">\(
+f(x)=\ln(1+x^2).
+\)</span><span class="math notranslate nohighlight">\(
+Вычислим первую производную и представим ее в виде, удобном для нахождения следующих производных
+\)</span><span class="math notranslate nohighlight">\(
+f'(x)=\frac{2x}{1+x^2}=\frac{1}{x+i}+\frac{1}{x-i}.
+\)</span><span class="math notranslate nohighlight">\(
+Найдем еще несколько производных и определим закономерность
+\)</span><span class="math notranslate nohighlight">\(
+f''(x)=-(x+i)^{-2}-(x-i)^{-2},
+\)</span>$</p>
+<div class="math notranslate nohighlight">
+\[
+f^{(3)}(x)=2(x+i)^{-3}+2(x-i)^{-3},
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+f^{(4)}(x)=-6(x+i)^{-4}-6(x-i)^{-4}.
+\]</div>
+<p>Очевидно, что
+$<span class="math notranslate nohighlight">\(
+\bigl|f^{(n)}(x)\bigr|\le 2\,(n-1)!
+\)</span><span class="math notranslate nohighlight">\(
+Также можно сделать и более общий вывод
+\)</span><span class="math notranslate nohighlight">\(
+f(x)=\ln\!\left(1+\frac{x^2}{a^2}\right),\qquad
+\bigl|f^{(n)}(x)\bigr|\le \frac{2\,(n-1)!}{a^{\,n}}
+\)</span>$</p>
+<ol class="arabic simple">
+<li><p><em>Формула прямоугольников с центральной точкой</em></p></li>
+</ol>
+<p>Оценка имеет вид</p>
+<div class="math notranslate nohighlight">
+\[
+\Delta \le \frac{1}{24}\,\max|f''(x)|\,(b-a)\,h^2 \le \varepsilon.
+\]</div>
+<p>Подставим в нее все известное
+$<span class="math notranslate nohighlight">\(
+\frac{1}{24}\cdot 2 \cdot 2 \cdot h^2 \le 6\cdot 10^{-3}.
+\)</span><span class="math notranslate nohighlight">\(
+Получим
+\)</span><span class="math notranslate nohighlight">\(
+h^2 \le 3.6\cdot 10^{-2}, \qquad h \le 0.190
+\)</span>$</p>
+<p>Определим шаг равномерной сетки на выбранном отрезке, для этого вычислим
+$<span class="math notranslate nohighlight">\(
+\frac{b-a}{h} = \frac{2}{0.190} \approx 10.5
+\)</span><span class="math notranslate nohighlight">\(
+Округляем вверх до целого
+\)</span><span class="math notranslate nohighlight">\(
+N = 11
+\)</span><span class="math notranslate nohighlight">\(
+В итоге
+\)</span><span class="math notranslate nohighlight">\(
+h = \frac{2}{11}
+\)</span>$
+Для вычисления потребуется 12 значений функции.</p>
+<ol class="arabic simple" start="2">
+<li><p><em>Формула трапеций</em></p></li>
+</ol>
+<p>Выпишем аналогичную оценку
+$<span class="math notranslate nohighlight">\(
+\Delta \le \frac{1}{12} \max |f''(x)| \,(b-a)\, h^2 \le \varepsilon
+\)</span>$</p>
+<p>Подставим все известное
+$<span class="math notranslate nohighlight">\(
+\frac{1}{12} \cdot 2 \cdot 2 \cdot h^2 \le 6 \cdot 10^{-3}.
+\)</span><span class="math notranslate nohighlight">\(
+Решая уравнение, получим
+\)</span><span class="math notranslate nohighlight">\(
+h^2 \le 1.8 \cdot 10^{-2}, \qquad h \le 0.134.
+\)</span><span class="math notranslate nohighlight">\(
+Найдем количество точек на отрезке
+\)</span><span class="math notranslate nohighlight">\(
+\frac{b-a}{h} = \frac{2}{0.134} = 14.9, \qquad N = 15.
+\)</span><span class="math notranslate nohighlight">\(
+Окончательно
+\)</span><span class="math notranslate nohighlight">\(
+h = \frac{2}{15}
+\)</span>$
+Для вычисления интеграла потребуется 16 значений функции на отрезке.</p>
+<ol class="arabic simple" start="3">
+<li><p><em>Формула Симпсона с целыми узлами</em></p></li>
+</ol>
+<p>Снова выпишем оценку</p>
+<div class="math notranslate nohighlight">
+\[
+\Delta \le \frac{1}{180} \max |f^{(4)}(x)| (b - a) h^4 \le \varepsilon
+\]</div>
+<p>и подставим в нее все известное
+$<span class="math notranslate nohighlight">\(
+\frac{1}{180} \cdot 12 \cdot 2 \cdot h^4 \le 6 \cdot 10^{-3}.
+\)</span><span class="math notranslate nohighlight">\(
+Решим уравнение
+\)</span><span class="math notranslate nohighlight">\(
+h^4 \le 4.5 \cdot 10^{-2}, \quad h \le 0.461.
+\)</span><span class="math notranslate nohighlight">\(
+Оценим количество точек на отрезке
+\)</span><span class="math notranslate nohighlight">\(
+\frac{b - a}{h} = \frac{2}{0.461} = 4.3, \quad N = 5
+\)</span><span class="math notranslate nohighlight">\(
+Так как планируется использовать формулу Симпсона с целыми узлами, то необходимо разделить отрезок на четное количество интервалов, тогда окончательно
+\)</span><span class="math notranslate nohighlight">\(
+N = 6, \quad h = \frac{2}{6} = \frac{1}{3}.
+\)</span>$
+Для вычисления интеграла потребуется 7 значений функции на отрезке.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id12">
+<h1>Практические задачи<a class="headerlink" href="#id12" title="Link to this heading">#</a></h1>
+<section id="a">
+<h2>Задача A<a class="headerlink" href="#a" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Напишите программу, которая вычисляет значение интеграла <span class="math notranslate nohighlight">\(I = \int \limits_a^b f(x)\,dx,\)</span> по формуле Симпсона по значениям функции <span class="math notranslate nohighlight">\(f(x)\)</span> на равномерной сетке <span class="math notranslate nohighlight">\(x_0, x_1, ... , x_n\)</span>.</p></li>
+<li><p>Примените программу для вычисления интеграла функций</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[f(x)=\sin x, \quad f(x)=x^2, \quad  f(x)=x^{3/2}.\]</div>
+<p>на отрезке <span class="math notranslate nohighlight">\([0,1]\)</span>.</p>
+<ol class="arabic simple" start="3">
+<li><p>Сравните результат с точным значением интеграла. Исследуйте порядок сходимости при помощи тестов на сгущающихся сетках.</p></li>
+</ol>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id13">
+<h1>Литература и другие источники<a class="headerlink" href="#id13" title="Link to this heading">#</a></h1>
+<p><strong>Видеозаписи:</strong></p>
+<ol class="arabic simple">
+<li><p>Вычислительная математика — лекция 12. Лектор — Е.Н. Аристова. <a class="reference external" href="https://www.youtube.com/live/DcfqfHfYVSQ?si=HuSmTFdR5nRQ2fOW&amp;amp;t=551">Ссылка</a> (YouTube).</p></li>
+<li><p>Вычислительная математика — лекция 10. Лектор — А.В. Чикиткин. <a class="reference external" href="https://youtu.be/7bcn_braq4g?si=OXLPB3sgyD88Gvue">Ссылка</a> (YouTube).</p></li>
+</ol>
+<p><strong>Рекомендуемая литература (с комментариями):</strong></p>
+<ol class="arabic simple">
+<li><p><em>А.А. Самарский, А.В. Гулин. Численные методы</em> — параграфы 1, 2 главы 4 (стр. 161—172).</p></li>
+<li><p><em>В.И. Крылов, В.В. Бобков, П.И. Монастырный. Начала теории вычислительных методов. Интерполирование и интегрирование.</em></p></li>
+<li><p><em>В.И. Косарев. 12 лекций по вычислительной математике</em> — лекция 6, стр. 76—90.</p></li>
+</ol>
+<p><strong>Сайты и другие электронные ресурсы:</strong></p>
+<ol class="arabic simple">
+<li><p>Персональный сайт преподавателя МФТИ О.А. Пырковой. Содержит много полезных материалов по различным математическим курсам МФТИ. Страница с материалами осеннего семестра по вычислительной математике: <a class="reference external" href="https://www.pyrkovaoa-fizteh.ru/%D0%BA%D0%BE%D0%BD%D1%81%D1%83%D0%BB%D1%8C%D1%82%D0%B0%D1%86%D0%B8%D1%8F-%D0%B2%D1%8B%D1%87%D0%BC-5/">ссылка</a>.</p></li>
+<li><p>Scientific Python Lectures. Очень полезный ресурс, представляющий собой учебник по научному программированию на языке Python. Представлено много различных библиотек. Есть pdf-версия. Все материалы на английском языке. <a class="reference external" href="https://lectures.scientific-python.org/">Ссылка.</a></p></li>
+<li><p>Python Programming And Numerical Methods: A Guide For Engineers And Scientists. Прекрасный сайт, представляющий собой электронную версию одноимённой книги по научному программированию на Python. Исключительно подробное изложение с многочисленными примерами. <a class="reference external" href="https://pythonnumericalmethods.studentorg.berkeley.edu/notebooks/Index.html">Ссылка.</a></p></li>
+</ol>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id14">
+<h1>Контрольные вопросы<a class="headerlink" href="#id14" title="Link to this heading">#</a></h1>
+<ol class="arabic simple">
+<li><p>Как оценить ошибку метода при численном интегрировании по квадратурным формулам Ньютона-Котеса</p></li>
+<li><p>Как оценить ошибку метода по формуле прямоугольников? По формуле прямоугольников с центральной точкой?</p></li>
+<li><p>Как оценить ошибку метода по формуле трапеций?</p></li>
+<li><p>Как оценить ошибку метода по формуле Симпсона?</p></li>
+<li><p>Как уточнить результат численного интегрирования при помощи экстраполяции Ричардсона?</p></li>
+<li><p>Каким будет порядок точности формулы, если применить экстраполяцию Ричардсона при вычислении интеграла по формуле прямоугольников?</p></li>
+<li><p>Каким будет порядок точности формулы, если применить экстраполяцию Ричардсона при вычислении интеграла по формуле Симпсона?</p></li>
+<li><p>Как уточнить результат численного интегрирования при помощи процесса Эйткена?</p></li>
+<li><p>Как оценить порядок сходимости при помощи процесса Эйткена?</p></li>
+<li><p>Как уточнить результат численного интегрирования при помощи формулы Эйлера-Маклорена?</p></li>
+<li><p>Какие могут быть причины отличия реального порядка сходимост от порядка аппроксимации при численном интегрировании?</p></li>
+</ol>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="sem10.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Семинар 10. Сплайны. Численное интегрирование</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Семинар 11. Численное интегрирование (продолжение)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Введение</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Ошибка интегрирования по квадратурным формулам Ньютона-Котеса</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Связь квадратурных формул</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Повышение порядка точности квадратурных формул</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">1) Экстраполяция Ричардсона</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">2) Процесс Эйткена</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">3) Формула Эйлера–Маклорена</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Задача 1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Задача 2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Задача 3</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">Практические задачи</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a">Задача A</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">Литература и другие источники</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">Контрольные вопросы</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Кафедра вычислительной физики МФТИ
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

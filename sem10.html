@@ -62,6 +62,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'sem10';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Семинар 11. Численное интегрирование (продолжение)" href="sem11.html" />
     <link rel="prev" title="Семинар 9. Глобальная интерполяция (продолжение)" href="sem09.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -270,6 +271,14 @@
 
 
 
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem11.html">Семинар 11. Численное интегрирование (продолжение)</a></li>
+
+
+
+
+
 </ul>
 
     </div>
@@ -472,12 +481,21 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Задача 2</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Практические задачи</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Численное интегрирование</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Квадратурные формулы Ньютона—Котеса</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Формула прямоугольников</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Формула трапеций</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Формула Симпсона</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Правило 3/8</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">Задача 3</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">Практические задачи</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a">Задача A</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Литература и другие источники</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Контрольные вопросы</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">Литература и другие источники</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">Контрольные вопросы</a></li>
 </ul>
 
             </nav>
@@ -492,11 +510,11 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1>Семинар 10. Сплайны. Численное интегрирование<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
-<p><em>Внимание! Страница содержит первую часть семинара. Вторая часть (посвящённая численному интегрированию) будет опубликована позднее.</em></p>
 <p>Перед изучением материалов семинара рекомендуем посетить лекцию или посмотреть видеозапись лекции. Ссылки (YouTube): <a class="reference external" href="https://www.youtube.com/live/Kt2tcbBvudA?si=AzjMvzA-LbyRxWkN&amp;amp;t=101">лекция 11</a>.</p>
 <p>Предполагается, что читатель знает</p>
 <ul class="simple">
-<li><p>определение кривизны кривой.</p></li>
+<li><p>определение кривизны кривой,</p></li>
+<li><p>алгоритм определения порядка аппроксимации формул численного дифференцирования.</p></li>
 </ul>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="id2">
@@ -598,13 +616,14 @@ f(x_{k-1}, x_k, x_{k+1}) = \frac{f_{k+1} - 2f_k + f_{k-1}}{2h^2}
 <section id="id4">
 <h2>Задача 1<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
 <p>Построить кубический сплайн для функции, заданной в узлах интерполяции, предполагая, что сплайн имеет нулевую кривизну при <span class="math notranslate nohighlight">\(x= x_0\)</span>, <span class="math notranslate nohighlight">\(x= x_n\)</span>. Вычислить приближенное значение функции в точке <span class="math notranslate nohighlight">\(x=1.5\)</span>. Сравнить с точным значением.</p>
-<p>\begin{array}{|c|c|c|c|c|c|}
-\hline
-x &amp; 0 &amp; 1 &amp; 2 &amp; 3 &amp; 4 \
-\hline
-\cos\left(\frac{\pi x}{6}\right) &amp; 1.000 &amp; 0.866 &amp; 0.500 &amp; 0.000 &amp; -0.500 \
-\hline
-\end{array}</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{array}{|c|c|c|c|c|c|}
+    \hline
+    x &amp; 0 &amp; 1 &amp; 2 &amp; 3 &amp; 4 \\
+    \hline
+    \cos\left(\frac{\pi x}{6}\right) &amp; 1.000 &amp; 0.866 &amp; 0.500 &amp; 0.000 &amp; -0.500 \\
+    \hline
+  \end{array}\end{split}\]</div>
 <p><strong>Решение.</strong> По таблице определим <span class="math notranslate nohighlight">\(h = 1\)</span>, по условию <span class="math notranslate nohighlight">\(c_0 = c_4 = 0\)</span>. Запишем систему уравнений относиельно коэффициентов <span class="math notranslate nohighlight">\(c_k\)</span></p>
 <div class="math notranslate nohighlight">
 \[
@@ -667,13 +686,14 @@ S_3(1.5,1) = 0.866 - 0.239 \cdot \frac{1}{2} - 0.158 \cdot \frac{1}{4} + 0.031 \
 <h2>Задача 2<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p>Найти производную <span class="math notranslate nohighlight">\(f'(1.5)\)</span>, построив интерпояционный многочлен, проходящий через все точки таблицы.</p></li>
-<li><p>Найти производную <span class="math notranslate nohighlight">\(f'(1.5)\)</span>, построив свободный кубический сплайн дефекта 1.
-\begin{array}{c|cccc}
-x_i &amp; 0 &amp; 1 &amp; 2 &amp; 3 \
-\hline
-f_i &amp; 0 &amp; 1 &amp; 0 &amp; -1
-\end{array}</p></li>
+<li><p>Найти производную <span class="math notranslate nohighlight">\(f'(1.5)\)</span>, построив свободный кубический сплайн дефекта 1.</p></li>
 </ol>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{array}{c|cccc}
+    x_i &amp; 0 &amp; 1 &amp; 2 &amp; 3 \\
+    \hline
+    f_i &amp; 0 &amp; 1 &amp; 0 &amp; -1
+  \end{array}\end{split}\]</div>
 <p><strong>Решение.</strong></p>
 <ol class="arabic simple">
 <li><p>Построим таблицу разделённых разностей:</p></li>
@@ -780,7 +800,190 @@ S_3'(1.5,1) = -\frac{7}{6} = -1.17
 </section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="id6">
-<h1>Практические задачи<a class="headerlink" href="#id6" title="Link to this heading">#</a></h1>
+<h1>Численное интегрирование<a class="headerlink" href="#id6" title="Link to this heading">#</a></h1>
+<p>Во многих прикладных задачах возникает необходимость вычислять определённые интегралы вида</p>
+<div class="math notranslate nohighlight">
+\[I=\int\limits_a^b\mathop{dx}f(x).\]</div>
+<p>Здесь подынтегральная функция <span class="math notranslate nohighlight">\(f=f(x)\)</span>, являющаяся скалярной функцией скалярного аргумента, предполагается достаточно гладкой (по крайней мере непрерывной) на промежутке интегрирования <span class="math notranslate nohighlight">\((a,b)\)</span>, так что интеграл <span class="math notranslate nohighlight">\(I\)</span> существует и в смысле определения Лебега, и в смысле определения Римана. Пределы интегрирования <span class="math notranslate nohighlight">\(a\)</span> и <span class="math notranslate nohighlight">\(b\)</span>, вообще говоря, могут быть как конечными, так и бесконечными (если интеграл понимается в несобственном смысле, то предполагается, что он сходится абсолютно).</p>
+<p>В математическом анализе основной вычислительной формулой, применяемой для нахождения интеграла <span class="math notranslate nohighlight">\(I\)</span> (в случае конечных <span class="math notranslate nohighlight">\(a\)</span> и <span class="math notranslate nohighlight">\(b\)</span>), служит <strong>формула Ньютона—Лейбница</strong>, согласно которой</p>
+<div class="math notranslate nohighlight">
+\[I=F(b)-F(a),\]</div>
+<p>где <span class="math notranslate nohighlight">\(F=F(x)\)</span> — первообразная функции <span class="math notranslate nohighlight">\(f\)</span> на отрезке <span class="math notranslate nohighlight">\([a,b]\)</span>. Однако воспользоваться этой формулой можно лишь тогда, когда первообразную <span class="math notranslate nohighlight">\(F\)</span> удаётся выразить в элементарных функциях. К сожалению, на практике подобные случаи почти не встречаются: хорошо известно, что в современных научных задачах подынтегральные функции обычно оказываются настолько “сложными”, что соответствующие интегралы “не берутся”.</p>
+<p>Типичные примеры подобных задач легко найти в курсах обыкновенных дифференциальных уравнений и уравнений в частных производных. Решения многих из этих уравнений (за исключением простейших) <strong>выражаются</strong>, как принято говорить, <strong>в квадратурах</strong>, т.е. имеют вид интегралов от некоторых комбинаций конечного числа элементарных функций. После получения квадратуры обычно считается, что рассматриваемое уравнение решено (конечно, более правильно говорить о решении начальной, краевой или начально-краевой задачи, сформулированной для данного уравнения). Однако сама по себе квадратура, являясь решением уравнения с теоретической точки зрения, ещё не даёт решения в практическом смысле. Чтобы “что-то посчитать” с помощью найденной квадратуры в рамках решения поставленной предметной задачи, надо тем или иным способом вычислить интеграл, входящий в квадратуру. Чем “сложнее” дифференциальное уравнение, тем “сложнее” интеграл, и на практике для его нахождения часто приходится прибегать к численным методам.</p>
+<p>Наконец, некоторые дифференциальные уравнения не удаётся решить даже в квадратурах. В таких случаях решения находят приближённо с помощью численных методов, основанных, например, на конечно-разностной аппроксимации рассматриваемых уравнений (мы будем изучать соответствующие методы в следующем семестре). По сути, такой подход тоже представляет собой численное интегрирование: можно сказать, что предложенный способ решения дискретного аналога “настоящего” уравнения и есть способ численного интегрирования исходного уравнения, которое не удаётся проинтегрировать аналитически.</p>
+<p>Для численного интегрирования применяют различные подходы. Наиболее широкое распространение получили методы, основанные на замене интеграла <span class="math notranslate nohighlight">\(I\)</span> конечной суммой</p>
+<div class="math notranslate nohighlight">
+\[\widetilde{I}=\sum\limits_{i=0}^N c_i f(x_i),\]</div>
+<p>в которой <span class="math notranslate nohighlight">\(c_i\)</span> — некоторые числовые коэффициенты, <span class="math notranslate nohighlight">\(x_i\)</span> — точки, принадлежащие отрезку интегрирования <span class="math notranslate nohighlight">\([a,b]\)</span>, а <span class="math notranslate nohighlight">\(N\)</span> — целое число. Сумма <span class="math notranslate nohighlight">\(\widetilde{I}\)</span> называется <strong>квадратурной суммой</strong> (этим как бы подчёркивается, что она заменяет собой квадратуру, т.е. интеграл). Эта сумма строится так, чтобы выполнялось приближённое равенство <span class="math notranslate nohighlight">\(I\simeq\widetilde{I}\)</span>, называемое <strong>квадратурной формулой</strong>. Коэффициенты <span class="math notranslate nohighlight">\(c_i\)</span> называют <strong>весами квадратурной формулы</strong>, а точки <span class="math notranslate nohighlight">\(x_i\)</span> — её <strong>узлами</strong>.</p>
+<p>Квадратурные формулы можно строить различными способами, из которых мы рассмотрим два наиболее распространённых.</p>
+<p>Первый способ основан на следующей идее. Подынтегральная функция <span class="math notranslate nohighlight">\(f\)</span>  приближается на отрезке <span class="math notranslate nohighlight">\([a,b]\)</span> алгебраическим полиномом <span class="math notranslate nohighlight">\(P_n\)</span> :</p>
+<div class="math notranslate nohighlight">
+\[I=\int\limits_a^b\mathop{dx}f(x)\simeq\int\limits_a^b\mathop{dx}P_n(x)\equiv \widetilde{I}.\]</div>
+<p>Поскольку</p>
+<div class="math notranslate nohighlight">
+\[P_n(x)=\sum\limits_{i=0}^n f(x_i)\cdot\ell_i(x),\]</div>
+<p>можно написать:</p>
+<div class="math notranslate nohighlight">
+\[\widetilde{I}=\sum\limits_{i=0}^n c_if(x_i),\quad c_i=\int\limits_a^b\mathop{dx}\ell_i(x).\]</div>
+<p>Как видим, при замене функции <span class="math notranslate nohighlight">\(f\)</span> на полином <span class="math notranslate nohighlight">\(P_n\)</span> действительно получилась квадратурная формула. Ниже мы увидим, что в процедуру построения этой формулы следует внести одно небольшое усложнение, заключающееся в предварительном разбиении отрезка интегрирования на несколько подотрезков. Такие формулы называются <strong>квадратурными формулами интерполяционного типа</strong>, или <strong>квадратурными формулами Ньютона—Котеса</strong> (строго говоря, последнее название применимо в специальном случае равномерной сетки — см. ниже).</p>
+<p>Второй способ построения формул численного интегрирования заключается в специальном подборе весов <span class="math notranslate nohighlight">\(c_i\)</span> и узлов <span class="math notranslate nohighlight">\(x_i\)</span> с таким расчётом, чтобы приближённое равенство</p>
+<div class="math notranslate nohighlight">
+\[I=\int\limits_a^b\mathop{dx}f(x)\simeq \sum\limits_{i=0}^N c_i f(x_i)=\widetilde{I}\]</div>
+<p>становилось точным на полиномах как можно более высокой степени. Формулы, получающиеся на основе этого требования, называются <strong>квадратурными формулами Гаусса</strong> (или Гаусса—Кристоффеля).</p>
+<p>В настоящем семинаре мы сосредоточимся на рассмотрении квадратурных формул Ньютона—Котеса. Далее будем предполагать, что оба предела интегрирования <span class="math notranslate nohighlight">\(a\)</span> и <span class="math notranslate nohighlight">\(b\)</span> конечны, а подынтегральная функция не имеет особенностей на отрезке <span class="math notranslate nohighlight">\([a,b]\)</span> (интеграл рассматривается в собственном смысле).</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id7">
+<h1>Квадратурные формулы Ньютона—Котеса<a class="headerlink" href="#id7" title="Link to this heading">#</a></h1>
+<p>Как уже отмечалось, квадратурные формулы Ньютона—Котеса получаются при замене подыинтегральной функции интерполяционным полиномом. Выполним эту замену более подробно, чем это было сделано выше.</p>
+<p>Из определения остаточного члена интерполяции следует, что</p>
+<div class="math notranslate nohighlight">
+\[f(x)=P_n(x)+R_n(x),\quad x\in[a,b].\]</div>
+<p>Запишем интерполяционный полином в форме Лагранжа и выражение для остаточного члена, полученное на прошлом семинаре:</p>
+<div class="math notranslate nohighlight">
+\[f(x)=\sum\limits_{i=0}^nf(x_i)\cdot\ell_i(x)+\frac{f^{(n+1)}(\xi)}{(n+1)!}\cdot\omega_n(x),\quad \xi\in[a,b].\]</div>
+<p>Интегрирование этого равенства по отрезку <span class="math notranslate nohighlight">\([a,b]\)</span> даёт:</p>
+<div class="math notranslate nohighlight">
+\[I=\widetilde{I}+\frac{f^{(n+1)}(\xi)}{(n+1)!}\cdot\int\limits_a^b\mathop{dx}\omega_n(x),\quad \widetilde{I}=\sum\limits_{i=0}^nc_if(x_i),\quad c_i=\int\limits_a^b\mathop{dx}\ell_i(x).\]</div>
+<p>Отсюда следует оценка на ошибку квадратурной формулы (берём точные верхние грани по <span class="math notranslate nohighlight">\(x\)</span> и <span class="math notranslate nohighlight">\(\xi\)</span>):</p>
+<div class="math notranslate nohighlight">
+\[|I-\widetilde{I}|\leq \frac{M_{n+1}\cdot \big|\big|\omega_n(x)\big|\big|_C}{(n+1)!}\cdot\int\limits_a^b\mathop{dx}=\frac{M_{n+1}\cdot \big|\big|\omega_n(x)\big|\big|_C}{(n+1)!}\cdot (b-a).\]</div>
+<p>Здесь использованы те же обозначения, что и на прошлом семинаре:</p>
+<div class="math notranslate nohighlight">
+\[M_{n+1}=\sup\limits_{\xi\in[a,b]}\big|f^{(n+1)}(\xi)\big|,\quad \big|\big|\omega_n(x)\big|\big|_C=\sup_\limits{x\in[a,b]}\big|\omega_n(x)\big|.\]</div>
+<p>Обратим внимание на два обстоятельства. Во-первых, <strong>оценка получилась пропорциональной длине отрезка интегрирования</strong> <span class="math notranslate nohighlight">\((b-a)\)</span>. Во-вторых, в неё вошли величины <span class="math notranslate nohighlight">\(M_{n+1}\)</span> и <span class="math notranslate nohighlight">\(\big|\big|\omega_n(x)\big|\big|_C\)</span>, вычисленные как точные верхние грани, взятые <strong>по всему</strong> отрезку <span class="math notranslate nohighlight">\([a,b]\)</span>. Как известно,</p>
+<div class="math notranslate nohighlight">
+\[\sup\limits_{y\in[\alpha,\beta]}\big|g(y)\big|\geq \sup\limits_{y\in[\gamma,\rho]}\big|g(y)\big|,\quad\text{если}\quad[\gamma,\rho]\subset [\alpha,\beta],\]</div>
+<p>т.е. чем шире отрезок, тем больше точная верхняя грань. Эти два обстоятельства наводят на мысль разбить исходный отрезок интегрирования <span class="math notranslate nohighlight">\([a,b]\)</span> на подотрезки с целью уменьшения оценки погрешности. Выполним это разбиение.</p>
+<p>Введём на отрезке <span class="math notranslate nohighlight">\([a,b]\)</span> сетку (вообще говоря, неравномерную; эту сетку в дальнейшем будем называть <strong>основной</strong>):</p>
+<div class="math notranslate nohighlight">
+\[x_0=a,\quad x_1,\quad \dots, \quad x_N=b;\quad h_i=x_{i+1}-x_i,\quad\sum\limits_{i=0}^{N-1} h_i=b-a.\]</div>
+<p>Узлы сетки делят отрезок интегрирования <span class="math notranslate nohighlight">\([a,b]\)</span> на подотрезки (<strong>частичные отрезки интегрирования</strong>) <span class="math notranslate nohighlight">\([x_i,x_{i+1}]\)</span> (<span class="math notranslate nohighlight">\(0\leq i\leq N-1\)</span>). Пользуясь аддитивностью интеграла, можем написать:</p>
+<div class="math notranslate nohighlight">
+\[I=\int\limits_a^b\mathop{dx}f(x)=\sum\limits_{i=0}^{N-1}\int\limits_{x_i}^{x_{i+1}}\mathop{dx}f(x)\equiv \sum\limits_{i=0}^{N-1} I_i.\]</div>
+<p>Интеграл <span class="math notranslate nohighlight">\(I_i\)</span> приближаем квадратурной суммой</p>
+<div class="math notranslate nohighlight">
+\[\widetilde{I}_i=\sum\limits_{j=0}^nc_j^{(i)}f\big(x_j^{(i)}\big),\quad c_j^{(i)}=\int\limits_{x_i}^{x_{i+1}}\mathop{dx}\ell_j(x),\]</div>
+<p>построенной на <strong>подсетке</strong> (вообще говоря, тоже неравномерной)</p>
+<div class="math notranslate nohighlight">
+\[x_0^{(i)}=x_i,\quad x_1^{(i)},\quad\dots,\quad x_n^{(i)}=x_{i+1};\quad x_j^{(0)}\in[x_i,x_{i+1}],\quad 0\leq j\leq n.\]</div>
+<p>Понятно, что оценка погрешности этого приближения аналогична оценке, полученной выше на отрезке <span class="math notranslate nohighlight">\([a,b]\)</span> (при отсутствии разбиения):</p>
+<div class="math notranslate nohighlight">
+\[|I_i-\widetilde{I}_i|\leq \frac{M_{n+1}^{(i)}\cdot \big|\big|\omega_n(x)\big|\big|_C^{(i)}}{(n+1)!}\cdot h_i.\]</div>
+<p>Принципиальное отличие состоит в том, что <strong>точные верхние грани берутся по частичным отрезкам</strong>, а не по всему отрезку интегрирования:</p>
+<div class="math notranslate nohighlight">
+\[M_{n+1}^{(i)}=\sup\limits_{\xi\in[x_i,\,x_{i+1}]}\big|f^{(n+1)}(\xi)\big|,\quad \big|\big|\omega_n(x)\big|\big|_C^{(i)}=\sup_\limits{\xi\in[x_i,\,x_{i+1}]}\big|\omega_n(x)\big|.\]</div>
+<p>Погрешность вычисления всего интеграла <span class="math notranslate nohighlight">\(I\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[|I-\widetilde{I}|=\Bigg|\sum\limits_{i=0}^{N-1}(I_i-\widetilde{I}_i)\Bigg|\leq\sum\limits_{i=0}^{N-1}|I_i-\widetilde{I}_i|\leq \frac{1}{(n+1)!}\sum\limits_{i=0}^{N-1}M_{n+1}^{(i)}\cdot \big|\big|\omega_n(x)\big|\big|_C^{(i)}\cdot h_i.\]</div>
+<p>Ясно, что эта оценка не хуже полученной выше оценки. Это следует из неравенств</p>
+<div class="math notranslate nohighlight">
+\[M^{(i)}_{n+1}\leq M_{n+1},\quad \big|\big|\omega_n(x)\big|\big|_C^{(i)}\leq \big|\big|\omega_n(x)\big|\big|_C,\]</div>
+<p>справедливых при любом <span class="math notranslate nohighlight">\(i\)</span> в силу упоминавшегося выше свойства точной верхней грани.</p>
+<p>Квадратурные формулы интерполяционного типа (формулы Ньютона—Котеса), использующие разбиение отрезка интегрирования на частичные отрезки, называют <strong>составными формулами</strong>. Отметим, что термин “квадратурная формула Ньютона—Котеса” используется, вообще говоря, в том случае, когда <strong>сетка, на которой выполняется интерполяция</strong> (т.е. основная сетка в случае “обычной” формулы и подсетка в случае составной формулы), <strong>является равномерной</strong>. Впрочем, тот же термин иногда применяют как синоним более общего термина “квадратурная формула интерполяционного типа”.</p>
+<p>На практике чаще используют именно составные формулы, поскольку при прочих равных условиях они дают меньшую погрешность. Мы убедились в этом выше, выполнив грубую оценку погрешности: при переходе от составной формулы к “обычной” сумма</p>
+<div class="math notranslate nohighlight">
+\[\sum\limits_{i=0}^{N-1}M_{n+1}^{(i)}\cdot \big|\big|\omega_n(x)\big|\big|_C^{(i)}\cdot h_i\]</div>
+<p>заменяется величиной</p>
+<div class="math notranslate nohighlight">
+\[M_{n+1}\cdot \big|\big|\omega_n(x)\big|\big|_C\cdot (b-a),\]</div>
+<p>что, очевидно, только ухудшает оценку. Можно также показать, что <strong>составная формула менее чувствительна к ошибкам округления и входных данных</strong>, т.е. обнаруживает лучшую численную устойчивость. То есть не имеет смысла строить интерполяционный многолчен двадцатой степени на сетке из 21 узла, например, более надежно применить составную формулу, в построении которой задействован интерполянт-многочлен невысокой степени.</p>
+<p>Дальнейший анализ погрешностей квадратурных формул интерполяционного типа мы отложим до следующего семинара. В настоящем семинаре ограничимся только построением конкретных формул. Для простоты будем считать сетку, на которой осуществляется интерполяция, равномерной (т.е. рассматривать формулы Ньютона—Котеса “в узком смысле”).</p>
+<section id="id8">
+<h2>Формула прямоугольников<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<p>Положим <span class="math notranslate nohighlight">\(n=0\)</span>. Иначе говоря, приблизим функцию <span class="math notranslate nohighlight">\(f\)</span> на каждом частичном отрезке полиномом нулевой степени <span class="math notranslate nohighlight">\(P_0\)</span>, т.е. константой. В этом случае сетка для интерполяции (подсетка) состоит из единственного узла (вырождается). Напомним, что при единственном узле в сетке вспомогательный полином Лагранжа <span class="math notranslate nohighlight">\(\ell_0(x)\)</span> по определению полагается равным единице (см. восьмой семинар). Поэтому</p>
+<div class="math notranslate nohighlight">
+\[\widetilde{I}_i=c_0^{(i)}f\big(x_0^{(i)}\big),\quad c_0^{(i)}=\int\limits_{x_i}^{x_{i+1}}\mathop{dx}=x_{i+1}-x_i=h_i.\]</div>
+<p>Квадратурная сумма принимает следующий вид:</p>
+<div class="math notranslate nohighlight">
+\[\widetilde{I}=\sum\limits_{i=0}^{N-1}f\big(x_0^{(i)}\big)\cdot h_i.\]</div>
+<p>Соответствующая квадратурная формула называется <strong>формулой прямоугольников</strong>. Это название объясняется её геометрической интерпретацией. Если понимать вычисляемый интеграл как площадь под графиком кривой <span class="math notranslate nohighlight">\(y=f(x)\)</span>, то приближённое вычисление этой площади по найденной формуле сводится к разделению (“разрезанию”) её на прямоугольники и суммированию площадей этих прямоугольников.</p>
+<p>На следующем семинаре мы увидим, что <strong>формула прямоугольников имеет первый порядок аппроксимации</strong>. Это значит, что погрешность формулы прямоугольников определяется слагаемым, пропорциональным <span class="math notranslate nohighlight">\(h\)</span> (ср. с понятием порядка аппроксимации в случае формул численного дифференцирования). Последнее верно при любом <span class="math notranslate nohighlight">\(x_0^{(i)}\in[x_i,x_{i+1}]\)</span> (т.е. при любом выборе единственного узла подсетки на частичном отрезке интегрирования), за исключением одного специального случая. Оказывается, что если узел подсетки совпадает с серединой отрезка <span class="math notranslate nohighlight">\([x_i,x_{i+1}]\)</span>, то порядок аппроксимации формулы прямоугольников повышается до второго.</p>
+<p><strong>Явление повышения порядка аппроксимации на единицу</strong> (по сравнению с ожидаемым порядком <span class="math notranslate nohighlight">\(n+1\)</span>) <strong>является общим для всех симметричных формул Ньютона—Котеса</strong> (т.е. таких формул, в которых середина частичного отрезка интегрирования является узлом, а другие узлы выбраны симметрично относительно него).</p>
+</section>
+<section id="id9">
+<h2>Формула трапеций<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
+<p>При <span class="math notranslate nohighlight">\(n=1\)</span> функция <span class="math notranslate nohighlight">\(f\)</span> приближается на каждом частичном отрезке интегрирования полиномом первой степени <span class="math notranslate nohighlight">\(P_1\)</span>, а каждая подсетка состоит из двух узлов (совпадающих с граничными точками отрезка <span class="math notranslate nohighlight">\([x_i,x_{i+1}]\)</span>). Поэтому</p>
+<div class="math notranslate nohighlight">
+\[\widetilde{I}_i=c_0^{(i)}f\big(x_0^{(i)}\big)+c_1^{(i)}f\big(x_1^{(i)}\big).\]</div>
+<p>Вычисляем коэффициенты:</p>
+<div class="math notranslate nohighlight">
+\[c_0^{(i)}=\int\limits_{x_i}^{x_{i+1}}\mathop{dx}\ell_0(x)=\int\limits_{x_i}^{x_{i+1}}\mathop{dx}\frac{x-x_1^{(i)}}{x_0^{(i)}-x_1^{(i)}}=\frac{\Big[x_{i+1}-x_1^{(i)}\Big]^2-\Big[x_{i}-x_1^{(i)}\Big]^2}{(-2)\cdot h_i}=\frac{h_i}{2};\]</div>
+<div class="math notranslate nohighlight">
+\[c_1^{(i)}=\int\limits_{x_i}^{x_{i+1}}\mathop{dx}\ell_1(x)=\int\limits_{x_i}^{x_{i+1}}\mathop{dx}\frac{x-x_0^{(i)}}{x_1^{(i)}-x_0^{(i)}}=\frac{\Big[x_{i+1}-x_0^{(i)}\Big]^2-\Big[x_{i}-x_0^{(i)}\Big]^2}{2h_i}=\frac{h_i}{2}.\]</div>
+<p>Квадратурная сумма:</p>
+<div class="math notranslate nohighlight">
+\[\widetilde{I}=\sum\limits_{i=0}^{N-1}\frac{f\big(x_0^{(i)}\big)+f\big(x_1^{(i)}\big)}{2}\,h_i=\sum\limits_{i=0}^{N-1}\frac{f(x_i)+f(x_{i+1})}{2}\,h_i.\]</div>
+<p>Полученная формула численного интегрирования называется <strong>формулой трапеций</strong>. Она имеет <strong>второй порядок аппроксимации</strong>.</p>
+<p><strong>Упражнение.</strong> Дайте геометрическую интерпретацию этой формуле и объясните её название.</p>
+</section>
+<section id="id10">
+<h2>Формула Симпсона<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
+<p>На каждом элементарном отрезке функция заменяется на многочлен <span class="math notranslate nohighlight">\(P_2(x)\)</span> и получается формула
+$<span class="math notranslate nohighlight">\(
+I =\sum_{i=0}^{n-1} \frac{h_i}{6} (f(x_i) + 4f(x_i+h_i/2) + f(x_{i+1}))\equiv \sum_{i=0}^{n-1} \frac{h_i}{6} (f_i + 4f_{i+\frac{1}{2}} + f_{i+1})
+\)</span>$</p>
+<p>Можно преобразовать формулу так, чтобы в нее входили только целые узлы (в таком случае в сетке должно быть нечётное число точек):</p>
+<div class="math notranslate nohighlight">
+\[
+I = \sum_{i=0}^{n/2-1} \frac{h}{3} (f_{2i} + 4f_{2i+1} + f_{2i+2}).
+\]</div>
+<p>Формула Симпсона обладает четвертым порядком аппроксимации.</p>
+</section>
+<section id="id11">
+<h2>Правило 3/8<a class="headerlink" href="#id11" title="Link to this heading">#</a></h2>
+<p>На каждом элементарном отрезке функция заменяется на многочлен <span class="math notranslate nohighlight">\(P_3(x)\)</span> и получается формула</p>
+<div class="math notranslate nohighlight">
+\[
+I = \sum_{i=0}^{n-1} h_i \left( \frac{1}{8}f_i + \frac{3}{8}f_{i+\frac{1}{3}} + \frac{3}{8}f_{i+\frac{2}{3}} + \frac{1}{8}f_{i+1} \right).
+\]</div>
+<p>Эта формула также обладает четвертым порядком аппроксимации.</p>
+</section>
+<section id="id12">
+<h2>Задача 3<a class="headerlink" href="#id12" title="Link to this heading">#</a></h2>
+<p>Вычислите интеграл от таблично заданной функции при помощи метода трапеций. Чему равно значение интеграла от <span class="math notranslate nohighlight">\(f(x)\)</span>, вычисленного по формуле Симпсона?</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{array}{|c|c|c|c|c|c|c|c|c|c|}
+    \hline
+    x &amp; 0.00 &amp; 0.125 &amp; 0.250 &amp; 0.375 &amp; 0.500 &amp; 0.625 &amp; 0.750 &amp; 0.875 &amp; 1.000 \\ \hline
+    f(x) &amp; 1.000000 &amp; 0.984615 &amp; 0.941176 &amp; 0.876712 &amp; 0.800000 &amp; 0.719101 &amp; 0.640000 &amp; 0.566372 &amp; 0.500000 \\ \hline
+  \end{array}\end{split}\]</div>
+<p><strong>Решение.</strong></p>
+<p>Для удобства придадим таблице вид</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{array}{c|ccccccccc}
+x_i &amp; 0 &amp; \tfrac{1}{8} &amp; \tfrac{1}{4} &amp; \tfrac{3}{8} &amp; \tfrac{1}{2} &amp; \tfrac{5}{8} &amp; \tfrac{3}{4} &amp; \tfrac{7}{8} &amp; 1 \\
+\hline
+f_i &amp; f_0 &amp; f_1 &amp; f_2 &amp; f_3 &amp; f_4 &amp; f_5 &amp; f_6 &amp; f_7 &amp; f_8
+\end{array}
+\end{split}\]</div>
+<p>Шаг сетки постоянный, <span class="math notranslate nohighlight">\(h=1/8\)</span>. Вычислим интеграл по формуле трапеций с шагом <span class="math notranslate nohighlight">\(h\)</span>
+$<span class="math notranslate nohighlight">\(
+I_h^{\text{тр}} = \frac{h}{2} (f_0 + f_8 + 2(f_1 + f_2 + f_3 + f_4 + f_5 + f_6 + f_7))
+\)</span><span class="math notranslate nohighlight">\(
+\)</span><span class="math notranslate nohighlight">\(
+I_h^{\text{тр}} = 0.784747
+\)</span>$</p>
+<p>Вычислим интеграл по формуле трапеций с шагом <span class="math notranslate nohighlight">\(2h\)</span>
+$<span class="math notranslate nohighlight">\(
+I_{2h}^{\text{тр}} = \frac{2h}{2} (f_0 + f_8 + 2(f_2 + f_4 + f_6)) = 0.782794
+\)</span>$</p>
+<p>Вычислим интеграл по формуле Симпсона с целыми узлами
+$<span class="math notranslate nohighlight">\(
+I^c = \frac{h}{3} (f_0 + 4f_1 + f_2) + \frac{h}{3} (f_2 + 4f_3 + f_4) + \frac{h}{3} (f_4 + 4f_5 + f_6) + \frac{h}{3} (f_6 + 4f_7 + f_8)
+\)</span><span class="math notranslate nohighlight">\(
+\)</span><span class="math notranslate nohighlight">\(
+I^c = 0.785398
+\)</span>$</p>
+<p>В таблице были даны значения функции <span class="math notranslate nohighlight">\(f(x)=\dfrac{1}{1+x^2}\)</span>, интеграл может быть вычислен аналитически
+$<span class="math notranslate nohighlight">\(
+\int_0^1 \frac{1}{1+x^2}\,dx = \frac{\pi}{4} = 0.785398
+\)</span>$</p>
+<p>Мы получили, что формула Симпсона в применении к вычислению данного интеграла дала ответ с точностью до 6 знаков после запятой (в таблице как раз даны значения функции с этой же точностью).</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id13">
+<h1>Практические задачи<a class="headerlink" href="#id13" title="Link to this heading">#</a></h1>
 <section id="a">
 <h2>Задача A<a class="headerlink" href="#a" title="Link to this heading">#</a></h2>
 <ol class="arabic">
@@ -794,8 +997,8 @@ S_3'(1.5,1) = -\frac{7}{6} = -1.17
 </ol>
 </section>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="id7">
-<h1>Литература и другие источники<a class="headerlink" href="#id7" title="Link to this heading">#</a></h1>
+<section class="tex2jax_ignore mathjax_ignore" id="id14">
+<h1>Литература и другие источники<a class="headerlink" href="#id14" title="Link to this heading">#</a></h1>
 <p><strong>Видеозаписи:</strong></p>
 <ol class="arabic simple">
 <li><p>Вычислительная математика — лекция 11. Лектор — Е.Н. Аристова. <a class="reference external" href="https://www.youtube.com/live/Kt2tcbBvudA?si=AzjMvzA-LbyRxWkN&amp;amp;t=101">Ссылка</a> (YouTube).</p></li>
@@ -814,8 +1017,8 @@ S_3'(1.5,1) = -\frac{7}{6} = -1.17
 <li><p>Python Programming And Numerical Methods: A Guide For Engineers And Scientists. Прекрасный сайт, представляющий собой электронную версию одноимённой книги по научному программированию на Python. Исключительно подробное изложение с многочисленными примерами. <a class="reference external" href="https://pythonnumericalmethods.studentorg.berkeley.edu/notebooks/Index.html">Ссылка.</a></p></li>
 </ol>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="id8">
-<h1>Контрольные вопросы<a class="headerlink" href="#id8" title="Link to this heading">#</a></h1>
+<section class="tex2jax_ignore mathjax_ignore" id="id15">
+<h1>Контрольные вопросы<a class="headerlink" href="#id15" title="Link to this heading">#</a></h1>
 <ol class="arabic simple">
 <li><p>В чем преимущество интерполяции сплайнами перед глобальной интепроляцией?</p></li>
 <li><p>Что такое интерполяционный сплайн?</p></li>
@@ -824,6 +1027,11 @@ S_3'(1.5,1) = -\frac{7}{6} = -1.17
 <li><p>Какие есть варианты задания недостающих условий в кубическом сплайне дефекта 1?</p></li>
 <li><p>Какой сплайн называют свободным? Какова его физическая интерпретация?</p></li>
 <li><p>Каким методом эффективно решать СЛАУ для нахождения коэффициентов сплайна?</p></li>
+<li><p>Перечислите два основных подхода к построению квадратурных формул</p></li>
+<li><p>Запишите формулу прямоугольников. Какого она порядка аппроксимации?</p></li>
+<li><p>Запишите формулу трапеций. Какого она порядка аппроксимации?</p></li>
+<li><p>Запишите формулу Симпсона. Какого она порядка аппроксимации?</p></li>
+<li><p>Запишите правило 3/8. Какого порядка аппроксимации эта формула численного интегрирования?</p></li>
 </ol>
 </section>
 
@@ -866,6 +1074,15 @@ S_3'(1.5,1) = -\frac{7}{6} = -1.17
         <p class="prev-next-title">Семинар 9. Глобальная интерполяция (продолжение)</p>
       </div>
     </a>
+    <a class="right-next"
+       href="sem11.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Семинар 11. Численное интегрирование (продолжение)</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -889,12 +1106,21 @@ S_3'(1.5,1) = -\frac{7}{6} = -1.17
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Задача 2</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Практические задачи</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Численное интегрирование</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Квадратурные формулы Ньютона—Котеса</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Формула прямоугольников</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Формула трапеций</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Формула Симпсона</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Правило 3/8</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">Задача 3</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">Практические задачи</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a">Задача A</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Литература и другие источники</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Контрольные вопросы</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">Литература и другие источники</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">Контрольные вопросы</a></li>
 </ul>
 
   </nav></div>
