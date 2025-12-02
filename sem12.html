@@ -1,0 +1,1364 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Семинар 12. Численное интегрирование (окончание) &#8212; Вычислительная математика. ЛФИ МФТИ</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'sem12';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Семинар 13. Численное решение ОДУ" href="sem13.html" />
+    <link rel="prev" title="Семинар 11. Численное интегрирование (продолжение)" href="sem11.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Вычислительная математика. ЛФИ МФТИ - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Вычислительная математика. ЛФИ МФТИ - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Предисловие
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Осенний семестр</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="sem01.html">Семинар 1. Введение. Погрешности вычислений</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem02.html">Семинар 2. Численное дифференцирование</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem03.html">Семинар 3. Прикладная линейная алгебра. Введение</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem04.html">Семинар 4. Итерационные методы решения СЛАУ</a></li>
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem05.html">Семинар 5. Итерационные методы решения СЛАУ (продолжение). МНК</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem06.html">Семинар 6. Нелинейные уравнения</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem07.html">Семинар 7. Системы нелинейных уравнений</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem08.html">Семинар 8. Глобальная интерполяция</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem09.html">Семинар 9. Глобальная интерполяция (продолжение)</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem10.html">Семинар 10. Сплайны. Численное интегрирование</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem11.html">Семинар 11. Численное интегрирование (продолжение)</a></li>
+
+
+
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Семинар 12. Численное интегрирование (окончание)</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem13.html">Семинар 13. Численное решение ОДУ</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fsem12.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/sem12.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Семинар 12. Численное интегрирование (окончание)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Семинар 12. Численное интегрирование (окончание)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Введение</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Квадратурные формулы Гаусса</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Задача 1</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Квадратурные формулы Гаусса-Кристоффеля</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Задача 2</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Интеграл от быстро осциллирующей функции</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Несобственный интеграл</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Задача 3</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Задача 4</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Задача 5</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">Практические задачи</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a">Задача A</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">Литература и другие источники</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">Контрольные вопросы</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>Семинар 12. Численное интегрирование (окончание)<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>Перед изучением материалов семинара рекомендуем посетить лекцию или посмотреть видеозапись лекции. Ссылки (YouTube): <a class="reference external" href="https://www.youtube.com/live/5PYp67z7__c?si=2dXvBuFK06EwfIA5&amp;amp;t=26">лекция 13</a>. Желательно также предварительно изучить материалы десятого и одиннадцатого семинаров.</p>
+<p>Предполагается, что читатель знает</p>
+<ul class="simple">
+<li><p>отличия между несобственными интегралами I и II рода.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id2">
+<h1>Введение<a class="headerlink" href="#id2" title="Link to this heading">#</a></h1>
+<p>На прошлых двух семинарах мы уделили все время квадратурным формулам интерполяционного типа, обсудили сами квадратурные формулы, способы их уточнения, ошибку при вычислении по этим квадратурным формулам. На этом семинаре мы будем обсуждать второй класс методов численного интегрирования - квадратурные формулы Гаусса. Пусть необходимо вычислить интеграл</p>
+<div class="math notranslate nohighlight">
+\[
+I= \int \limits _a^b f(x) dx.
+\]</div>
+<p>Считаем, что оба предела интегрирования <span class="math notranslate nohighlight">\(a\)</span> и <span class="math notranslate nohighlight">\(b\)</span> конечны, а подынтегральная функция не имеет особенностей на отрезке <span class="math notranslate nohighlight">\([a,b]\)</span> (интеграл рассматривается в собственном смысле).</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id3">
+<h1>Квадратурные формулы Гаусса<a class="headerlink" href="#id3" title="Link to this heading">#</a></h1>
+<p>Для начала предложим способ приближенного вычисления интеграла на отрезке <span class="math notranslate nohighlight">\([-1;1]\)</span>. Напомним, что <span class="math notranslate nohighlight">\(x_i\)</span> - узлы квадратурной формулы, <span class="math notranslate nohighlight">\(c_i\)</span> - веса квадратурной формулы. Формула примет вид</p>
+<div class="math notranslate nohighlight">
+\[
+\int \limits _{-1}^{1} f(x) dx \approx \sum \limits _{i=1}^n c_i f(x_i).
+\]</div>
+<p>Веса <span class="math notranslate nohighlight">\(c_i\)</span> и узлы <span class="math notranslate nohighlight">\(x_i\)</span> выбираются так, чтобы квадратурная формула была точна для многочленов степени не выше <span class="math notranslate nohighlight">\(2n - 1\)</span>. Справедлива следующая теорема</p>
+<p><strong>Теорема.</strong> Если в качестве узлов квадратурной формулы взять нули
+полиномов Лежандра <span class="math notranslate nohighlight">\(q_n(x)\)</span>:<br />
+$<span class="math notranslate nohighlight">\( q_n(x_i)=0,\quad i=1,\ldots,n, \)</span><span class="math notranslate nohighlight">\(
+а в качестве весов — интегралы от базисных функций многочленов Лагранжа
+\)</span>l_i(x)<span class="math notranslate nohighlight">\( степени \)</span>n-1<span class="math notranslate nohighlight">\(:
+\)</span><span class="math notranslate nohighlight">\(
+c_i=\int_{-1}^{1}
+\frac{(x-x_1)(x-x_2)\cdots(x-x_{i-1})(x-x_{i+1})\cdots(x-x_n)}
+{(x_i-x_1)(x_i-x_2)\cdots(x_i-x_{i-1})(x_i-x_{i+1})\cdots(x_i-x_n)}
+\, dx,
+\)</span><span class="math notranslate nohighlight">\(
+то квадратурная формула будет точна при подстановке в неё вместо \)</span>f(x)<span class="math notranslate nohighlight">\( любого
+многочлена степени не выше \)</span>2n-1$.</p>
+<p>Остается вопрос, как пользоваться предложенной квадратурной формулой, если интеграл требуется вычислить на произвольном конечном отрезке <span class="math notranslate nohighlight">\([a;b]\)</span>. В таком случае</p>
+<div class="math notranslate nohighlight">
+\[
+\int \limits_{a}^{b} f(x)\,dx
+= \frac{b-a}{2} \sum_{i=1}^{n} c_i \,
+f\!\left( \frac{a+b}{2} + \frac{b-a}{2}\, t_i \right),
+\]</div>
+<p>где <span class="math notranslate nohighlight">\(c_i\)</span>, <span class="math notranslate nohighlight">\(t_i\)</span> — веса и узлы на <span class="math notranslate nohighlight">\([-1,1]\)</span>.</p>
+<p>Для оценки ошибки интегрирования по формулам Гаусса можно воспользоваться формулой</p>
+<div class="math notranslate nohighlight">
+\[
+\Delta_n
+= \frac{(b-a)^{2n+1}\,(n!)^4}{(2n+1)\,\bigl((2n)!\bigr)^3}\,
+f^{(2n)}(\xi), \qquad \xi \in [a,b].
+\]</div>
+<p>Узлы и веса квадратурной формулы Гаусса нет необходимости вычислять вручную, их можно найти в готовых таблицах. Мы приведем небольшую таблицу, которой будет достаточно в учебных целях</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{array}{c|c|c|c}
+n &amp; c_i\ - \text{веса на}\ [-1,1] &amp; t_i\ -  \text{узлы на}\ [-1,1] &amp; \Delta_n \\ \hline
+2 &amp; c_{1,2}=1 &amp;
+t_{1,2}=\pm\frac{\sqrt{3}}{3} &amp;
+\dfrac{(b-a)^5}{2^5}\cdot\dfrac{1}{135}\,\max|f^{(4)}| \\[6pt] \hline
+3 &amp;
+c_{1,3}=\frac{5}{9},\quad c_2=\frac{8}{9} &amp;
+t_{1,3}=\pm\sqrt{\frac{3}{5}},\quad t_2=0 &amp;
+\dfrac{(b-a)^7}{2^7}\cdot\dfrac{1}{15750}\,\max|f^{(6)}| \\[6pt] \hline
+4 &amp;
+c_{1,4}=0.347855,\quad c_{2,3}=0.652145 &amp;
+t_{1,4}=\pm 0.861136,\quad t_{2,3}=\pm 0.339981 &amp;
+\dfrac{(b-a)^9}{2^9}\cdot\dfrac{2}{3472875}\,\max|f^{(8)}|
+\end{array}
+\end{split}\]</div>
+<section id="id4">
+<h2>Задача 1<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<p>Вычислите интеграл по формулам Гаусса с точностью <span class="math notranslate nohighlight">\( \varepsilon = 10^{-3} \)</span></p>
+<div class="math notranslate nohighlight">
+\[
+I=\int \limits_{-1}^{1} \ln\!\left(1+\frac{x^{2}}{3}\right)\,dx
+\]</div>
+<p><strong>Решение.</strong> В первую очередь заметим, что подынтегральная функция является четной, тогда верно, что
+$<span class="math notranslate nohighlight">\(
+I = 2 \int_{0}^{1} \ln\!\left(1+\frac{x^{2}}{3}\right)\,dx.
+\)</span>$</p>
+<p>Начнем с определения числа узлов, которые необходимо задать для вычисления с заданной точностью. Для начала проверим вариант <span class="math notranslate nohighlight">\(n=2\)</span></p>
+<div class="math notranslate nohighlight">
+\[\Delta_{2} = \dfrac{(b-a)^5}{2^5}\cdot\dfrac{1}{135}\,\max|f^{(4)}|\]</div>
+<div class="math notranslate nohighlight">
+\[
+\Delta_{2} = \frac{1}{2^{5}}\cdot \frac{1}{135}\cdot \frac{4}{3} \approx 3\cdot 10^{-4} &lt; \frac{\varepsilon}{2}
+\;\Rightarrow\; \text{достаточно}
+\]</div>
+<p>Константа <span class="math notranslate nohighlight">\(M_4\)</span> может быть найдена различными способами, в прошлом семинаре мы получили формулу</p>
+<div class="math notranslate nohighlight">
+\[
+f(x)=\ln\!\left(1+\frac{x^2}{a^2}\right),\qquad
+\bigl|f^{(n)}(x)\bigr|\le \frac{2\,(n-1)!}{a^{\,n}},
+\]</div>
+<p>откуда <span class="math notranslate nohighlight">\(M_4=4/3\)</span></p>
+<p>Если бы вариант с двумя узлами не подошел, мы бы последовательно увеличивали бы <span class="math notranslate nohighlight">\(n\)</span>, пока не нашли бы подходящий вариант.</p>
+<p>Теперь осталось записать квадратурную формулу</p>
+<div class="math notranslate nohighlight">
+\[
+I \approx 2 \cdot \frac{b-a}{2}\,(c_{1} f(x_{1}) + c_{2} f(x_{2}))
+\]</div>
+<p>Узлы и веса берем из таблицы
+$<span class="math notranslate nohighlight">\(
+c_{1} = c_{2} = 1,\qquad
+t_{1,2} = \pm \frac{\sqrt{3}}{3}
+\)</span>$</p>
+<div class="math notranslate nohighlight">
+\[
+x_{1,2} = \frac12 + \frac12\, t_{1,2}
+       = \frac12 \pm \frac{\sqrt{3}}{6}
+\]</div>
+<p>В итоге получаем
+$$
+I = f(x_{1}) + f(x_{2})
+= \ln!\left(1+\frac{x_{1}^{2}}{3}\right)</p>
+<ul class="simple">
+<li><p>\ln!\left(1+\frac{x_{2}^{2}}{3}\right)
+= 0.2031928
+$<span class="math notranslate nohighlight">\(
+Точное значение интеграла
+\)</span><span class="math notranslate nohighlight">\(
+I^{*} = 0.2029629
+\)</span>$
+хорошо совпадает с полученным в результате вычислений по квадратурной формуле</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id5">
+<h1>Квадратурные формулы Гаусса-Кристоффеля<a class="headerlink" href="#id5" title="Link to this heading">#</a></h1>
+<p>Квадратурные формулы Гаусса-Кристоффеля позволяют вычислять интеграл с известной весовой функцией <span class="math notranslate nohighlight">\(p(x)\)</span> как на конечном отрезке <span class="math notranslate nohighlight">\([a,b]\)</span>, так и в пределах <span class="math notranslate nohighlight">\((-\infty; +\infty)\)</span>. Формула мало отличается от предложенной выше, ее узлы и веса выбираются по похожему принципу</p>
+<div class="math notranslate nohighlight">
+\[
+\int \limits_{a}^{b} f(x)\,p(x)\,dx \;=\; \sum_{i=1}^{n} c_{i}\, f(x_{i})
+\]</div>
+<p><strong>Теорема.</strong> Квадратурная формула точна для многочленов степени не выше <span class="math notranslate nohighlight">\(2n-1\)</span>, если её узлами <span class="math notranslate nohighlight">\(x_i\)</span> являются корни многочлена <span class="math notranslate nohighlight">\(Q_n(x)\)</span> из семейства многочленов, ортогональных на промежутке интегрирования <span class="math notranslate nohighlight">\((a,b)\)</span> с весом <span class="math notranslate nohighlight">\(p(x)\)</span>, а весовыми коэффициентами являются числа</p>
+<div class="math notranslate nohighlight">
+\[
+c_i = \int_{a}^{b} l_i(x)\, p(x)\, dx.
+\]</div>
+<section id="id6">
+<h2>Задача 2<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<p>Постройте формулу для вычисления интеграла по квадратурным формулам Гаусса-Кристоффеля с двумя узлами.</p>
+<div class="math notranslate nohighlight">
+\[
+I(f) = \int \limits _{-\infty}^{+\infty} f(x)\,\exp(-x^{2})\,dx
+\]</div>
+<p><strong>Решение.</strong> Так как в условии сказано использовать формулу с двумя узлами, то ответ ищем в виде</p>
+<div class="math notranslate nohighlight">
+\[
+I = c_1\,f(x_1) + c_2\,f(x_2)
+\]</div>
+<p>Формула должна быть точна для многочленов
+$<span class="math notranslate nohighlight">\(
+P_{0}(x),\, P_{1}(x),\, P_{2}(x),\, P_{3}(x)
+\)</span>$</p>
+<p>Выпишем эти условия. Сначала подставим многочлен нулевой степени</p>
+<div class="math notranslate nohighlight">
+\[
+P_{0}(x)=1,\qquad
+I=\int\limits_{-\infty}^{+\infty} 1\cdot e^{-x^{2}}\,dx=\sqrt{\pi},
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+I=c_{1}\cdot 1+c_{2}\cdot 1 \;\Longrightarrow\; c_{1}+c_{2}=\sqrt{\pi}.
+\]</div>
+<p>Далее многочлен первой степени
+$<span class="math notranslate nohighlight">\(
+P_{1}(x)=x,\qquad
+I=\int\limits_{-\infty}^{+\infty} x e^{-x^{2}}\,dx=0,
+\)</span><span class="math notranslate nohighlight">\(
+\)</span><span class="math notranslate nohighlight">\(
+I=c_{1}x_{1}+c_{2}x_{2} \;\Longrightarrow\; c_{1}x_{1}+c_{2}x_{2}=0.
+\)</span>$</p>
+<p>Далее многочлен второй степени
+$<span class="math notranslate nohighlight">\(
+P_{2}(x)=x^{2},\qquad
+I=\int\limits_{-\infty}^{+\infty} x^{2} e^{-x^{2}}\,dx=\frac{\sqrt{\pi}}{2},
+\)</span><span class="math notranslate nohighlight">\(
+\)</span><span class="math notranslate nohighlight">\(
+I=c_{1}x_{1}^{2}+c_{2}x_{2}^{2} \;\Longrightarrow\;
+c_{1}x_{1}^{2}+c_{2}x_{2}^{2}=\frac{\sqrt{\pi}}{2}.
+\)</span><span class="math notranslate nohighlight">\(
+И многочлен третьей степени
+\)</span><span class="math notranslate nohighlight">\(
+P_{3}(x)=x^{3},\qquad
+I=\int\limits_{-\infty}^{+\infty} x^{3} e^{-x^{2}}\,dx=0,
+\)</span><span class="math notranslate nohighlight">\(
+\)</span><span class="math notranslate nohighlight">\(
+I=c_{1}x_{1}^{3}+c_{2}x_{2}^{3} \;\Longrightarrow\;
+c_{1}x_{1}^{3}+c_{2}x_{2}^{3}=0.
+\)</span>$</p>
+<p>Записываем получившуюся СЛАУ и решаем</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{cases}
+c_{1}+c_{2}=\sqrt{\pi}, \\[6pt]
+c_{1}x_{1}+c_{2}x_{2}=0, \\[6pt]
+c_{1}x_{1}^{2}+c_{2}x_{2}^{2}=\dfrac{\sqrt{\pi}}{2}, \\[6pt]
+c_{1}x_{1}^{3}+c_{2}x_{2}^{3}=0
+\end{cases}
+\end{split}\]</div>
+<p>Воспользуемся соображениями симметрии, тогда положим</p>
+<div class="math notranslate nohighlight">
+\[c_1 = c_2 = c, \quad x_1 = -x_2 \]</div>
+<p>Из первого уравнения найдем
+$<span class="math notranslate nohighlight">\(c = \frac{\sqrt{\pi}}{2}\)</span><span class="math notranslate nohighlight">\(
+А из третьего
+\)</span><span class="math notranslate nohighlight">\(2 \cdot \frac{\sqrt{\pi}}{2} \, x_1^2 = \frac{\sqrt{\pi}}{2}
+\quad\Rightarrow\quad
+x_{1,2} = \pm \frac{1}{\sqrt{2}}\)</span>$</p>
+<p>В итоге получаем
+$<span class="math notranslate nohighlight">\(
+I(f) = \frac{\sqrt{\pi}}{2}\,\bigl(f(\tfrac{1}{\sqrt{2}}) + f(-\tfrac{1}{\sqrt{2}})\bigr)
+\)</span>$</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id7">
+<h1>Интеграл от быстро осциллирующей функции<a class="headerlink" href="#id7" title="Link to this heading">#</a></h1>
+<p>На практике можно столкнуться с интегралами, в которых подынтегральная функция совершает множество “осцилляций” на отрезке интегрирования. Это интегралы вида</p>
+<div class="math notranslate nohighlight">
+\[
+I = \int\limits_a^b f(x)\sin(\omega x)\,dx, \qquad \omega(b-a)\gg 1
+\]</div>
+<p>или</p>
+<div class="math notranslate nohighlight">
+\[
+I = \int\limits_a^b f(x)\cos(\omega x)\,dx, \qquad I = \int\limits_a^b f(x)\exp(i\omega x)\,dx,
+\]</div>
+<p>В таком случае вычисление по предложенным выше квадратурным формулам как интерполяционного типа, так и по квадратурным формулам Гаусса нецелесообразно. Поступим иначе. Построим <span class="math notranslate nohighlight">\(\tilde f(x)\)</span> - аппроксимацию <span class="math notranslate nohighlight">\( f(x)\)</span>, например сплайном. Тогда</p>
+<div class="math notranslate nohighlight">
+\[\int\limits_a^b \tilde f(x)e^{i\omega x}dx\]</div>
+<p>интегрируется аналитически. Ошибка интегрирования</p>
+<div class="math notranslate nohighlight">
+\[
+\Delta = \left| \int \limits_a^b (f(x) - \tilde f(x)) e^{i\omega x}\, dx \right|.
+\]</div>
+<p>Ошибка интегрирования на каждом отрезке</p>
+<div class="math notranslate nohighlight">
+\[
+\Delta_n = \left| \int_{x_n}^{x_{n+1}} f(x)e^{i\omega x}\,dx - \int_{x_n}^{x_{n+1}} \tilde S_3(x,n)e^{i\omega x}\,dx \right|
+\le
+\left| \int_{x_n}^{x_{n+1}} R_n(x)e^{i\omega x}\,dx \right|
+\le
+\int_{x_n}^{x_{n+1}} |R_n(x)|\,dx,
+\]</div>
+<p>где <span class="math notranslate nohighlight">\( R_n(x)\)</span> - остаточный член интерполяции.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id8">
+<h1>Несобственный интеграл<a class="headerlink" href="#id8" title="Link to this heading">#</a></h1>
+<p>Рассмотрим подходы, позволяюшие вычислить несобственные интегралы с заданной точностью. Конечно, задача имеет смысл, только если интеграл сходится абсолютно. Для начала рассмотрим несколько простых подходов на примере интеграла</p>
+<div class="math notranslate nohighlight">
+\[
+I = \int\limits_{0}^{1} \frac{\cos x}{\sqrt{x}}\,dx
+\]</div>
+<ol class="arabic simple">
+<li><p>Замена переменной</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+x = t^{2}, \qquad I = 2 \int\limits_{0}^{1} \cos(t^{2})\, dt.
+\]</div>
+<p>Полученный интеграл является собственным.</p>
+<ol class="arabic simple" start="2">
+<li><p>Интегрирование по частям</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+I = \int\limits_{0}^{1} \frac{\cos x}{\sqrt{x}}\, dx
+    = 2 \cos x\, \sqrt{x}\Big|_{0}^{1}
+    + 2 \int\limits_{0}^{1} \sqrt{x}\, \sin x\, dx
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+= 2\cos 1
+ + 2\sin x \cdot \frac{2}{3} x^{3/2}\Big|_{0}^{1}
+ - 2 \int\limits_{0}^{1} \cos x \cdot \frac{2}{3} x^{3/2}\, dx
+\]</div>
+<p>После первого интегрирования по частям полученный интеграл уже является собственным, однако вторая производная подынтегральной функции неограничена, поэтому интегрирование по частям выполняется еще раз.</p>
+<ol class="arabic simple" start="3">
+<li><p>Метод явного выделения особенности
+$<span class="math notranslate nohighlight">\(
+I=\int\limits_{0}^{1}\frac{\cos x}{\sqrt{x}}\,dx
+ =\int\limits_{0}^{\delta}\frac{\cos x}{\sqrt{x}}\,dx
+ +\int\limits_{\delta}^{1}\frac{\cos x}{\sqrt{x}}\,dx
+\)</span>$</p></li>
+</ol>
+<p>Первый интеграл <span class="math notranslate nohighlight">\(I_{1}\)</span> вычисляется приближённо аналитически, второй интеграл <span class="math notranslate nohighlight">\(I_{2}\)</span> — численно.</p>
+<ol class="arabic simple" start="4">
+<li><p>Метод Канторовича</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+\int\limits_{0}^{1}\frac{\cos x}{\sqrt{x}}\,dx
+=
+\int\limits_{0}^{1}\frac{\cos x - 1}{\sqrt{x}}\,dx
+    +\int\limits_{0}^{1}\frac{dx}{\sqrt{x}}
+\]</div>
+<p>Первый интеграл не содержит особенности и находится численно,<br />
+второй интеграл легко вычисляется аналитически.</p>
+<section id="id9">
+<h2>Задача 3<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
+<p>Предложить алгоритм, как пользуясь программой, реализующей метод трапеций для численного интегрирования регулярных функций с произвольным шагом, вычислить следующий интеграл с точностью <span class="math notranslate nohighlight">\(\varepsilon=10^{-3}\)</span> (использовать метод явного выделения особенности)</p>
+<div class="math notranslate nohighlight">
+\[
+I= \int\limits_{0}^{1}\frac{\cos x}{\sqrt{x}}\,dx\]</div>
+<p><strong>Решение.</strong></p>
+<div class="math notranslate nohighlight">
+\[
+I= \int\limits_{0}^{1}\frac{\cos x}{\sqrt{x}}\,dx
+=
+\underbrace{\int\limits_{0}^{\delta}\frac{\cos x}{\sqrt{x}}\,dx}_{I_{1}}
++
+\underbrace{\int\limits_{\delta}^{1}\frac{\cos x}{\sqrt{x}}\,dx}_{I_{2}}
+\]</div>
+<p>Интеграл <span class="math notranslate nohighlight">\(I_{1}\)</span> вычисляется приближённо аналитически с точностью <span class="math notranslate nohighlight">\(\varepsilon/2\)</span>. Интеграл <span class="math notranslate nohighlight">\(I_{2}\)</span> находится численно с точностью  <span class="math notranslate nohighlight">\(\varepsilon/2\)</span>.</p>
+<p><em>Вариант 1.</em></p>
+<ol class="arabic simple">
+<li><p>подсчёт <span class="math notranslate nohighlight">\(I_{1}\)</span>, <span class="math notranslate nohighlight">\(\delta = ?\)</span></p></li>
+</ol>
+<p>Пусть <span class="math notranslate nohighlight">\(\cos x \approx 1\)</span>, первое отброшенное слагаемое <span class="math notranslate nohighlight">\(\frac{x^{2}}{2}\)</span>. Интеграл <span class="math notranslate nohighlight">\(I_{1}\)</span> приближенно вычисляется следующим образом</p>
+<div class="math notranslate nohighlight">
+\[
+I_{1} = \int\limits_{0}^{\delta}\frac{1}{\sqrt{x}}\,dx = 2\sqrt{\delta}
+\]</div>
+<p>Оценим ошибку
+$<span class="math notranslate nohighlight">\(
+\Delta =
+\int\limits_{0}^{\delta} \frac{x^{2}}{2\sqrt{x}}\,dx
+= \frac12 \int\limits_{0}^{\delta} x^{3/2}\,dx
+= \frac{\delta^{5/2}}{5}
+\)</span>$</p>
+<p>Потребуем, чтобы ошибка не превышала <span class="math notranslate nohighlight">\(\frac{\varepsilon}{2}\)</span></p>
+<div class="math notranslate nohighlight">
+\[
+\Delta \le \frac{\varepsilon}{2}
+\]</div>
+<p>и найдем <span class="math notranslate nohighlight">\(\delta\)</span></p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\delta^{5/2}}{5} \le \frac{\varepsilon}{2}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\frac{\delta^{5/2}}{5} = \frac12\cdot 10^{-3}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\delta \le 9.1\cdot 10^{-2}
+\]</div>
+<ol class="arabic simple" start="2">
+<li><p>подсчёт <span class="math notranslate nohighlight">\(I_{2}\)</span>, <span class="math notranslate nohighlight">\(h = ?\)</span></p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+I_{2} = \int\limits_{\delta}^{1} \frac{\cos x}{\sqrt{x}} \, dx,
+\qquad
+\max |f''| = M_{2} = 299.
+\]</div>
+<p>Потребуем, чтобы погрешность вычисления интеграла по формуле трапеций не превышала  <span class="math notranslate nohighlight">\(\frac{\varepsilon}{2}\)</span>:
+$<span class="math notranslate nohighlight">\(
+\frac1{12} \max |f''(x)| (b-a)\, h^{2} \le \frac{\varepsilon}{2},
+\)</span><span class="math notranslate nohighlight">\(
+то есть
+\)</span><span class="math notranslate nohighlight">\(
+\frac1{12} \cdot 299 \cdot (1-\delta)\, h^{2} \le \frac12 \cdot 10^{-3},
+\)</span><span class="math notranslate nohighlight">\(
+откуда
+\)</span><span class="math notranslate nohighlight">\(
+h \le 4.45\cdot 10^{-3}.
+\)</span>$</p>
+<p>Найдем количество интервалов равномерной сетки</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{b-a}{h} = \frac{1-\delta}{4.45\cdot10^{-3}} \approx 220.2
+\quad\Rightarrow\quad
+N = 221,\qquad
+h = \frac{1-\delta}{221}.
+\]</div>
+<p>Итог:</p>
+<div class="math notranslate nohighlight">
+\[
+I = 2\sqrt{\delta} + I_{2}, \qquad
+\delta = 9.1\cdot10^{-2},
+\]</div>
+<p>в программу передаём</p>
+<div class="math notranslate nohighlight">
+\[
+f(x) = \frac{\cos x}{\sqrt{x}},\qquad
+a = 9.1\cdot10^{-2},\quad
+b = 1,\quad
+N = 221.
+\]</div>
+<p>Приближение <span class="math notranslate nohighlight">\(\cos x \approx 1\)</span> является довольно грубым, поэтому <span class="math notranslate nohighlight">\(\delta = 9.1\cdot10^{-2}\)</span> довольно мало, а также из-за малости <span class="math notranslate nohighlight">\(\delta\)</span> оказывается довольно большой константа <span class="math notranslate nohighlight">\(M_2\)</span>. Это в свою очередь приводит к сравнительному большому количеству точек <span class="math notranslate nohighlight">\(N+1 = 222\)</span>. Рассмотрим другой вариант вычисления интеграла <span class="math notranslate nohighlight">\(I_{1}\)</span>.</p>
+<p><em>Вариант 2.</em></p>
+<ol class="arabic simple">
+<li><p>подсчёт <span class="math notranslate nohighlight">\( I_{1},\ \delta - ?\)</span></p></li>
+</ol>
+<p>Теперь положим <span class="math notranslate nohighlight">\(\cos x \approx 1 - \frac{x^{2}}{2}\)</span>, первый отброшенный член <span class="math notranslate nohighlight">\(\frac{x^{4}}{4!}\)</span></p>
+<p>Приближенно вычислим интеграл</p>
+<div class="math notranslate nohighlight">
+\[
+I_{1} \approx \int\limits_{0}^{\delta} \frac{1 - \frac{x^{2}}{2}}{\sqrt{x}}\,dx
+= 2\sqrt{\delta} - \frac{\delta^{5/2}}{5}.
+\]</div>
+<p>Оценим ошибку и найдем <span class="math notranslate nohighlight">\(\delta\)</span></p>
+<div class="math notranslate nohighlight">
+\[
+\Delta = \int\limits_{0}^{\delta} \frac{x^{4}}{4!\sqrt{x}}\,dx
+= \frac{\delta^{9/2}}{108}, \qquad \Delta \le \frac{\varepsilon}{2}.
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\frac{\delta^{9/2}}{108} \le \frac{1}{2}\cdot10^{-3}
+\quad\Rightarrow\quad
+\delta \le 0.48.
+\]</div>
+<ol class="arabic simple" start="2">
+<li><p>подсчет <span class="math notranslate nohighlight">\(I_{2},\ h-?\)</span></p></li>
+</ol>
+<p>Оценим погрешность вычисления интеграла <span class="math notranslate nohighlight">\(I_{2}\)</span> по формуле трапеций и найдем ограничение на шаг сетки, <span class="math notranslate nohighlight">\(M_{2}=4.28,\)</span></p>
+<div class="math notranslate nohighlight">
+\[
+\frac{1}{12}\max|f''|\,(b-a)\,h^{2}\le\frac{\varepsilon}{2}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\frac{1}{12}\cdot4.28\cdot(1-0.48)\,h^{2}\le\frac{1}{2}\cdot10^{-3}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+h\le5.19\cdot10^{-2}
+\]</div>
+<p>Найдем количество интервалов равномерной сетки
+$<span class="math notranslate nohighlight">\(
+\frac{b-a}{h}=\frac{1-\delta}{h}=\frac{0.52}{5.19\cdot10^{-2}}\approx10.02
+\Rightarrow h=\frac{0.52}{11},\quad N=11.
+\)</span>$</p>
+<p>Итог:
+$<span class="math notranslate nohighlight">\(
+I=2\sqrt{\delta}-\frac{\delta^{5/2}}{5}+I_{2},\qquad \delta=0.48.
+\)</span>$</p>
+<p>Передаём в программу:
+$<span class="math notranslate nohighlight">\(
+f(x)=\frac{\cos x}{\sqrt{x}},\qquad a=0.48,\quad b=1,\quad N=11.
+\)</span>$</p>
+</section>
+<section id="id10">
+<h2>Задача 4<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
+<p>Предложить алгоритм, как пользуясь программой, реализующей метод трапеций для численного интегрирования регулярных функций с произвольным шагом, вычислить следующий интеграл с точностью <span class="math notranslate nohighlight">\(\varepsilon=0.5\cdot 10^{-3}\)</span></p>
+<div class="math notranslate nohighlight">
+\[
+I=\int\limits_{0}^{+\infty}\frac{dx}{1+x^{4}}\]</div>
+<p><strong>Решение.</strong>
+$<span class="math notranslate nohighlight">\(
+I=\underbrace{\int\limits_{0}^{M}\frac{dx}{1+x^{4}}}_{I_{1}}
++\underbrace{\int\limits_{M}^{+\infty}\frac{dx}{1+x^{4}}}_{I_{2}}
+\)</span>$</p>
+<p>Интеграл <span class="math notranslate nohighlight">\(I_{1}\)</span> находится численно с точностью <span class="math notranslate nohighlight">\(\varepsilon/2\)</span>,<br />
+Интеграл <span class="math notranslate nohighlight">\(I_{2}\)</span> вычисляется приближенно аналитически с точностью <span class="math notranslate nohighlight">\(\varepsilon/2\)</span>.</p>
+<p><em>Вариант 1.</em></p>
+<ol class="arabic simple">
+<li><p>подсчёт <span class="math notranslate nohighlight">\(I_2\)</span>, <span class="math notranslate nohighlight">\(M -?\)</span></p></li>
+</ol>
+<p>Выберем <span class="math notranslate nohighlight">\(M\)</span> таким образом, чтобы интеграл <span class="math notranslate nohighlight">\(I_2\)</span> не превышал по величине точности <span class="math notranslate nohighlight">\(\frac{\varepsilon}{2}\)</span>
+$<span class="math notranslate nohighlight">\(
+\left|\int\limits_{M}^{+\infty}\frac{dx}{1+x^{4}}\right|\le \frac{\varepsilon}{2}
+\)</span>$</p>
+<div class="math notranslate nohighlight">
+\[
+I_2=\int\limits_{M}^{+\infty}\frac{1}{1+x^{4}}\,dx
+    &lt;\int\limits_{M}^{+\infty}\frac{dx}{x^{4}}
+    =-\frac{1}{3x^{3}}\Big|_{M}^{+\infty}
+    =\frac{1}{3M^{3}}
+    &lt;\frac{\varepsilon}{2}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\frac{1}{3M^{3}}\le \frac12\cdot 10^{-3}
+\quad\Rightarrow\quad
+M\ge 11
+\]</div>
+<ol class="arabic simple" start="2">
+<li><p>подсчет <span class="math notranslate nohighlight">\(I_1\)</span>, <span class="math notranslate nohighlight">\(h-?\)</span></p></li>
+</ol>
+<p>Найдем ограничение на шаг сетки, воспользовавшись формулой для оценки ошибки метода по формуле трапеций, <span class="math notranslate nohighlight">\(M_2 = 2{,}5\)</span></p>
+<div class="math notranslate nohighlight">
+\[
+\frac{1}{12} M_2 (b-a) h^2 \le \frac{\varepsilon}{2}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\frac{1}{12} \cdot 2{,}5 \cdot (11-0) \, h^2 \le \frac{1}{4}\cdot 10^{-3}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+h \le 1{,}04 \cdot 10^{-2}
+\]</div>
+<p>Найдем количество интервалов равномерной сетки
+$<span class="math notranslate nohighlight">\(
+\frac{b-a}{h} = \frac{11}{h} = 1053{,}17 \;\Rightarrow\; N = 1054
+\)</span>$</p>
+<p>Итог:<br />
+$<span class="math notranslate nohighlight">\( I = I_1,  \)</span>$</p>
+<p>Передать в программу
+$<span class="math notranslate nohighlight">\( a = 0,\; b = 11,\; N = 1054, \qquad f(x)=\frac{1}{1+x^4}. \)</span>$</p>
+<p>Снова получилось довольно большое количество интервалов.</p>
+<p><em>Вариант 2.</em></p>
+<ol class="arabic simple">
+<li><p>подсчет <span class="math notranslate nohighlight">\(I_2\)</span>, <span class="math notranslate nohighlight">\(M\)</span></p></li>
+</ol>
+<p>Теперь вычислим интеграл  <span class="math notranslate nohighlight">\(I_2\)</span> приближенно</p>
+<div class="math notranslate nohighlight">
+\[
+\int_M^{+\infty} \frac{dx}{1+x^4}
+\le
+\int_M^{+\infty} \frac{dx}{x^4}
+=
+\frac{1}{3M^3}
+\]</div>
+<p>Оценим ошибку</p>
+<div class="math notranslate nohighlight">
+\[
+\Delta
+=
+\left|
+\int\limits_M^{+\infty} \frac{dx}{1+x^4}
+-
+\int\limits_M^{+\infty} \frac{dx}{x^4}
+\right|
+=
+\left|
+\int\limits_M^{+\infty} \frac{x^4 - x^4 + 1}{x^4(1+x^4)}\,dx
+\right|
+\le
+\int\limits_M^{+\infty} \frac{dx}{x^8}
+=
+\frac{1}{7M^7}
+\]</div>
+<p>Найдем величину <span class="math notranslate nohighlight">\(M\)</span> из требования</p>
+<div class="math notranslate nohighlight">
+\[
+\Delta \le \frac{\varepsilon}{2}, \qquad
+\frac{1}{7M^7} \le \frac{1}{4}\cdot 10^{-3}
+\quad\Rightarrow\quad
+M \ge 2{,}48.
+\]</div>
+<ol class="arabic simple" start="2">
+<li><p>подсчет <span class="math notranslate nohighlight">\(I_1\)</span>, <span class="math notranslate nohighlight">\(h\)</span></p></li>
+</ol>
+<p>Снова воспользуемся оценкой погрешности формулы трапеций для нахождения <span class="math notranslate nohighlight">\(h\)</span></p>
+<div class="math notranslate nohighlight">
+\[
+\frac{1}{12} M_2 (b-a) h^2 \le \frac{\varepsilon}{2},
+\qquad
+M_2 = 2{,}5.
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\frac{1}{12}\cdot 2{,}5 \,(2{,}48 - 0)\, h^2 \le \frac{1}{4}\cdot 10^{-3}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+h \le 2{,}2\cdot 10^{-2}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\frac{b-a}{h}
+=
+\frac{2{,}48}{2{,}2\cdot 10^{-2}}
+=
+112{,}7
+\;\Rightarrow\;
+N = 113
+\]</div>
+<p>Итог:</p>
+<div class="math notranslate nohighlight">
+\[
+I = \frac{1}{3M^3} + I_1,
+\qquad
+M = 2{,}48.
+\]</div>
+<p>передаем в программу:</p>
+<div class="math notranslate nohighlight">
+\[
+f(x)=\frac{1}{1+x^4},\qquad a=0,\qquad b=2{,}48,\qquad N=113.
+\]</div>
+</section>
+<section id="id11">
+<h2>Задача 5<a class="headerlink" href="#id11" title="Link to this heading">#</a></h2>
+<p>Предложить алгоритм, как пользуясь программой, реализующей метод трапеций для численного интегрирования регулярных функций с произвольным шагом, вычислить следующий интеграл с точностью <span class="math notranslate nohighlight">\(\varepsilon=10^{-3}\)</span></p>
+<div class="math notranslate nohighlight">
+\[I = \int \limits _{0}^{\pi/2} \ln(\sin x)\,dx\]</div>
+<p><strong>Решение.</strong></p>
+<p>Проведем следующие преобразования интеграла (воспользуемся методом Канторовича)</p>
+<div class="math notranslate nohighlight">
+\[
+I = \int \limits _{0}^{\pi/2} \ln(\sin x)\,dx
+= \int\limits_{0}^{\pi/2} \ln(\sin x)\,dx
+- \int\limits_{0}^{\pi/2} \ln x\,dx
++ \int\limits_{0}^{\pi/2} \ln x\,dx
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+= \int\limits_{0}^{\pi/2} \ln\!\left(\frac{\sin x}{x}\right)\!dx
++ \frac{\pi}{2}\left(\ln\frac{\pi}{2} - 1\right)
+\]</div>
+<p>Первый интеграл вычислим по методу трапеций (численно). Шаг найдем, воспользовавшись оценкой ошибки метода
+$<span class="math notranslate nohighlight">\(
+M_2 = 0.59
+\)</span>$</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{1}{12} M_2 (b-a) h^2 \le \varepsilon
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\frac{1}{12}\cdot 0.59 \cdot \left(\frac{\pi}{2}-0\right) h^2
+\le 10^{-3}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+h \le 0.0114
+\]</div>
+<p>Найдем число интервалов равномерной сетки</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{b-a}{h}=\frac{\pi/2}{0.0114} = 13.8 \;\Rightarrow\; N = 14
+\]</div>
+<p>Итог:</p>
+<div class="math notranslate nohighlight">
+\[
+f(x) = \ln\!\left(\frac{\sin x}{x}\right),
+\qquad
+a = 0,\quad b = \frac{\pi}{2},\quad N = 14.
+\]</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id12">
+<h1>Практические задачи<a class="headerlink" href="#id12" title="Link to this heading">#</a></h1>
+<section id="a">
+<h2>Задача A<a class="headerlink" href="#a" title="Link to this heading">#</a></h2>
+<p>Написать программу для приближённого вычисления интеграла</p>
+<div class="math notranslate nohighlight">
+\[I=\int\limits_a^b f(x)\mathop{dx}\]</div>
+<p>путём приближения подынтегральной функции <span class="math notranslate nohighlight">\(f=f(x)\)</span> кубическим интерполяционным сплайном (см. практическую задачу из семинара 10). С помощью написанной программы вычислить приближённо интегралы</p>
+<div class="math notranslate nohighlight">
+\[\int\limits_{0}^1 x^3 \mathop{dx},\quad\int\limits_{0}^\pi x^3 \sin(50x)\mathop{dx}.\]</div>
+<p>Вычислить те же интегралы по формуле Симпсона с помощью программы, написанной при решении практической задачи из предыдущего семинара. Сравнить результаты вычислений двумя способами между собой (сравнивать следует результаты, полученные на одной и той же сетке) и с точными значениями интегралов. При каком числе узлов сетки лучший результат даёт первый способ, а при каком — второй?</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id13">
+<h1>Литература и другие источники<a class="headerlink" href="#id13" title="Link to this heading">#</a></h1>
+<p><strong>Видеозаписи:</strong></p>
+<ol class="arabic simple">
+<li><p>Вычислительная математика — лекция 13. Лектор — Е.Н. Аристова. <a class="reference external" href="https://www.youtube.com/live/5PYp67z7__c?si=2dXvBuFK06EwfIA5&amp;amp;t=26">Ссылка</a> (YouTube).</p></li>
+<li><p>Вычислительная математика — лекция 10. Лектор — А.В. Чикиткин. <a class="reference external" href="https://youtu.be/7bcn_braq4g?si=OXLPB3sgyD88Gvue">Ссылка</a> (YouTube).</p></li>
+</ol>
+<p><strong>Рекомендуемая литература (с комментариями):</strong></p>
+<ol class="arabic simple">
+<li><p><em>А.А. Самарский, А.В. Гулин. Численные методы</em> — параграфы 3 главы 4 (стр. 180—186).</p></li>
+<li><p><em>В.И. Крылов, В.В. Бобков, П.И. Монастырный. Начала теории вычислительных методов. Интерполирование и интегрирование.</em></p></li>
+<li><p><em>В.И. Косарев. 12 лекций по вычислительной математике</em> — лекция 6, стр. 76—90.</p></li>
+</ol>
+<p><strong>Сайты и другие электронные ресурсы:</strong></p>
+<ol class="arabic simple">
+<li><p>Персональный сайт преподавателя МФТИ О.А. Пырковой. Содержит много полезных материалов по различным математическим курсам МФТИ. Страница с материалами осеннего семестра по вычислительной математике: <a class="reference external" href="https://www.pyrkovaoa-fizteh.ru/%D0%BA%D0%BE%D0%BD%D1%81%D1%83%D0%BB%D1%8C%D1%82%D0%B0%D1%86%D0%B8%D1%8F-%D0%B2%D1%8B%D1%87%D0%BC-5/">ссылка</a>.</p></li>
+<li><p>Scientific Python Lectures. Очень полезный ресурс, представляющий собой учебник по научному программированию на языке Python. Представлено много различных библиотек. Есть pdf-версия. Все материалы на английском языке. <a class="reference external" href="https://lectures.scientific-python.org/">Ссылка.</a></p></li>
+<li><p>Python Programming And Numerical Methods: A Guide For Engineers And Scientists. Прекрасный сайт, представляющий собой электронную версию одноимённой книги по научному программированию на Python. Исключительно подробное изложение с многочисленными примерами. <a class="reference external" href="https://pythonnumericalmethods.studentorg.berkeley.edu/notebooks/Index.html">Ссылка.</a></p></li>
+</ol>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id14">
+<h1>Контрольные вопросы<a class="headerlink" href="#id14" title="Link to this heading">#</a></h1>
+<ol class="arabic simple">
+<li><p>Из какого условия определяются узлы и веса квадратурных формул Гаусса и Гаусса–Кристоффеля?</p></li>
+<li><p>Приведите общий вид квадратурной формулы Гаусса на отрезке <span class="math notranslate nohighlight">\([-1,1]\)</span>.</p></li>
+<li><p>Приведите общий вид квадратурной формулы Гаусса на отрезке <span class="math notranslate nohighlight">\([a,b]\)</span>.</p></li>
+<li><p>Формула для оценки ошибки метода при численном интегрировании по формулам Гаусса.</p></li>
+<li><p>Приведите общий вид квадратурной формулы Гаусса–Кристоффеля на отрезке <span class="math notranslate nohighlight">\([-1,1]\)</span>.</p></li>
+<li><p>Как разумно вычислять интеграл от быстро осциллирующей функции?</p></li>
+<li><p>Какие методы используются для вычисления несобственных интегралов?</p></li>
+<li><p>В чём состоит метод явного выделения особенности?</p></li>
+<li><p>В чём состоит метод Канторовича?</p></li>
+</ol>
+<p><em>Версия от 02.12.2025</em></p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="sem11.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Семинар 11. Численное интегрирование (продолжение)</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="sem13.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Семинар 13. Численное решение ОДУ</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Семинар 12. Численное интегрирование (окончание)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Введение</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Квадратурные формулы Гаусса</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Задача 1</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Квадратурные формулы Гаусса-Кристоффеля</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Задача 2</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Интеграл от быстро осциллирующей функции</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Несобственный интеграл</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Задача 3</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Задача 4</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Задача 5</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">Практические задачи</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a">Задача A</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">Литература и другие источники</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">Контрольные вопросы</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Кафедра вычислительной физики МФТИ
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

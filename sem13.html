@@ -1,0 +1,1263 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Семинар 13. Численное решение ОДУ &#8212; Вычислительная математика. ЛФИ МФТИ</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'sem13';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Семинар 12. Численное интегрирование (окончание)" href="sem12.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Вычислительная математика. ЛФИ МФТИ - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Вычислительная математика. ЛФИ МФТИ - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Предисловие
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Осенний семестр</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="sem01.html">Семинар 1. Введение. Погрешности вычислений</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem02.html">Семинар 2. Численное дифференцирование</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem03.html">Семинар 3. Прикладная линейная алгебра. Введение</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem04.html">Семинар 4. Итерационные методы решения СЛАУ</a></li>
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem05.html">Семинар 5. Итерационные методы решения СЛАУ (продолжение). МНК</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem06.html">Семинар 6. Нелинейные уравнения</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem07.html">Семинар 7. Системы нелинейных уравнений</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem08.html">Семинар 8. Глобальная интерполяция</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem09.html">Семинар 9. Глобальная интерполяция (продолжение)</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem10.html">Семинар 10. Сплайны. Численное интегрирование</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem11.html">Семинар 11. Численное интегрирование (продолжение)</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="sem12.html">Семинар 12. Численное интегрирование (окончание)</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Семинар 13. Численное решение ОДУ</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fsem13.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/sem13.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Семинар 13. Численное решение ОДУ</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Семинар 13. Численное решение ОДУ</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Введение</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Сходимость, аппроксимация, устойчивость</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Простейшие разностные схемы для решения задачи Коши</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Общее решение разностного уравнения</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Задача 1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Задача 2</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Исследование аппроксимации</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Задача 3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Задача 4</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Исследование сходимости по определению</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">Задача 5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">Задача 6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">Литература и другие источники</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">Контрольные вопросы</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>Семинар 13. Численное решение ОДУ<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>Перед изучением материалов семинара рекомендуем посетить лекцию или посмотреть видеозапись лекции. Ссылки (YouTube): <a class="reference external" href="https://www.youtube.com/live/KLxIE50LLus?si=PC3nFHXfxvCaVMA3&amp;amp;t=138">лекция 14</a>.</p>
+<p>Предполагается, что читатель знает</p>
+<ul class="simple">
+<li><p>способы конечно-разностной аппроксимации производных,</p></li>
+<li><p>определение невязки (в контексте итерационных методов решения СЛАУ),</p></li>
+<li><p>постановку задач Коши для обыкновенных дифференциальных уравнений и систем таких уравнений,</p></li>
+<li><p>понятие характеристического уравнения (возникающего при решении линейных обыкновенных дифференциальных уравнений с постоянными коэффициентами).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id2">
+<h1>Введение<a class="headerlink" href="#id2" title="Link to this heading">#</a></h1>
+<p>Ещё на самом первом семинаре мы рассматривали триаду А.А. Самарского “модель - алгоритм - программа” и приводили в пример задачу о колебании маятника. Мы говорили, что модель явления предлагается предметной областью. Многие физические явления описываются с помощью обыкновенных дифференциальный уравнений или уравнений в частных производных. Как правило, задачи, представляющие научный интерес, не решаются аналитически, поэтому задачей вычислительной математики является создание алгоритма, который за конечное количество операций позволит решить задачу с заданной точностью. На следующем этапе алгоритм может быть реализован программно.</p>
+<p>В этом семинаре мы более подробно рассмотрим, какие алгоритмы предлагаются для численного решения обыкновенных дифференциальных уравнений. Это вводный семинар, из которого будут понятны основные принципы построения разностных схем, более подробно этот раздел вычислительной математики мы будем изучать уже в весеннем семестре</p>
+<p><img alt="image" src="_images/sem01_fig.png" /></p>
+<p><em>Триада “модель — алгоритм — программа” А.А. Самарского</em></p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id3">
+<h1>Сходимость, аппроксимация, устойчивость<a class="headerlink" href="#id3" title="Link to this heading">#</a></h1>
+<p>Вернемся еще раз к задаче Коши, с помощью которой описывается колебание математического маятника</p>
+<div class="math notranslate nohighlight">
+\[\ddot\varphi+k\sin\varphi=0,\quad \varphi(0)=\phi_0, \quad \dot\varphi(0)=\omega_0.\]</div>
+<p>Здесь <span class="math notranslate nohighlight">\(\varphi=\varphi(t)\)</span>  — угол отклонения маятника от вертикали, <span class="math notranslate nohighlight">\(t\)</span> — время, <span class="math notranslate nohighlight">\(k=g/l\)</span>, где <span class="math notranslate nohighlight">\(l\)</span> — длина маятника, а <span class="math notranslate nohighlight">\(g\)</span> — ускорение свободного падения.</p>
+<p>Перейдем от уравнения второго порядка к системе уравнений первого порядка, введем <span class="math notranslate nohighlight">\(v(t)=\dot\varphi(t)\)</span>, тогда система примет вид</p>
+<div class="math notranslate nohighlight">
+\[\dot v=-k\sin \varphi,\]</div>
+<div class="math notranslate nohighlight">
+\[\dot\varphi=v.\]</div>
+<p>Выпишем также начальные условия</p>
+<div class="math notranslate nohighlight">
+\[\varphi(0)=\phi_0,\quad v(0)=\omega_0.\]</div>
+<p>На втором семинаре мы рассматривали различные конечно-разностные аппроксимации производных.  Введем одномерную сетку <span class="math notranslate nohighlight">\(\{t_i\}_{i=0}^N\)</span> с шагами <span class="math notranslate nohighlight">\(\tau_i=t_{i+1}-t_i\)</span>, причём <span class="math notranslate nohighlight">\(t_0=0\)</span>, а <span class="math notranslate nohighlight">\(t_N=T\)</span>. Для простоты будем считать, что <span class="math notranslate nohighlight">\(\tau_0=...=\tau_{N-1}\equiv\tau\)</span> (равномерная сетка). Воспользуемся производной вперед и аппроксимируем уравнения системы</p>
+<div class="math notranslate nohighlight">
+\[\dfrac{v_{i+1}-v_{i}}{\tau}=-k\sin \varphi_i,\]</div>
+<div class="math notranslate nohighlight">
+\[\dfrac{\varphi_{i+1}-\varphi_{i}}{\tau}=v_i.\]</div>
+<p>Правые части взяты в точке <span class="math notranslate nohighlight">\(x_i\)</span>, мы также могли бы записать их в точке <span class="math notranslate nohighlight">\(x_{i+1}\)</span>. Теперь мы можем выполнить расчет по формулам при <span class="math notranslate nohighlight">\(i=1, ... , N-1\)</span></p>
+<div class="math notranslate nohighlight">
+\[\varphi_0=\phi_0,\quad v_0=\omega_0.\]</div>
+<div class="math notranslate nohighlight">
+\[v_{i+1}=v_{i}-\tau k\sin \varphi_i,\]</div>
+<div class="math notranslate nohighlight">
+\[\varphi_{i+1}=\varphi_{i}+\tau v_i.\]</div>
+<p>Тем самым мы сформулировали алгоритм, позволяющий за конечное количество количество операций найти приближенное решение задачи.</p>
+<p>Однако пока совершенно неясно, с какой точностью получено решение, да и выполняемые операции совсем не похожи на методы, применяемые для решения обыкновенных дифференциальных уравнений. Исходная задача является <strong>дифференциальной</strong>, а ее решение - достаточно <strong>гладкая функция</strong> <span class="math notranslate nohighlight">\(\varphi(t)\)</span>. Та задача, на которую мы ее заменили, является <strong>разностной</strong>, а ее решение - <strong>сеточная функция</strong>. Для того, чтобы сравнить решение этих двух задач, вводится определение сходимости, но чтобы это сделать, сначала введем некоторые обозначения. Пусть <span class="math notranslate nohighlight">\(u\)</span> - решение дифференциальной задачи</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L}u =\mathcal{f},
+\]</div>
+<p>а <span class="math notranslate nohighlight">\(y\)</span> - решение дифференциальной задачи</p>
+<div class="math notranslate nohighlight">
+\[
+L_s y = f_{s}.
+\]</div>
+<p>Введем также <span class="math notranslate nohighlight">\(u_h\)</span> -сеточную проекцию функции <span class="math notranslate nohighlight">\(u\)</span>.</p>
+<p><strong>Опр 1. Сходимость</strong> Будем говорить, что решение по разностной схеме <span class="math notranslate nohighlight">\(L_s y = f_{s}\)</span> сходится к решению дифференциальной задачи <span class="math notranslate nohighlight">\(\mathcal{L}u =\mathcal{f}\)</span>, если</p>
+<div class="math notranslate nohighlight">
+\[
+\lVert u_h - y \rVert \to 0,\quad h \to 0
+\]</div>
+<p>Если кроме того</p>
+<div class="math notranslate nohighlight">
+\[\lVert u_h - y \rVert \le Ch^{p},\]</div>
+<p>то имеет место сходимость порядка <span class="math notranslate nohighlight">\(p\)</span>.</p>
+<p><strong>Опр 2. Невязка</strong> Невязкой уравнения <span class="math notranslate nohighlight">\(L_s y = f_{s}\)</span> называется результат подстановки в разностное уравнение сеточной проекции точного решения дифференциальной задачи <span class="math notranslate nohighlight">\(\mathcal{L}u =\mathcal{f}\)</span></p>
+<div class="math notranslate nohighlight">
+\[
+r_h = L_s u_h - f_s
+\]</div>
+<p><strong>Опр 3. Аппроксимация</strong> Если <span class="math notranslate nohighlight">\(\lVert r_h \rVert \to 0,\; h \to 0\)</span>, то разностная схема аппроксимирует дифференциальную задачу.</p>
+<p>Если кроме того <span class="math notranslate nohighlight">\(\lVert r_h \rVert \le C_1 h^{k}\)</span>,
+то имеет место аппроксимация порядка <span class="math notranslate nohighlight">\(k\)</span>.</p>
+<p><strong>Опр 4. Устойчивость</strong> Говорят, что разностная схема устойчива, если для двух возмущенных задач справедливо</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+L_s y^{(1)} &amp;= f_s + \varepsilon^{(1)},\\
+L_s y^{(2)} &amp;= f_s + \varepsilon^{(2)},\\
+\|y^{(1)} - y^{(2)}\| &amp;\le C_2\bigl(\|\varepsilon^{(1)}\| + \|\varepsilon^{(2)}\|\bigr)
+\end{aligned}
+\end{split}\]</div>
+<p>Обычно исследовать сходимость по определению возможно только для узкого класса задач, поэтому обычно для исследования сходимости пользуются теоремой, которая ввиду своей особой значимости называется основной теоремой вычислительной математики.</p>
+<p><strong>Теорема.</strong> Основная теорема вычислительной математики (теорема Лакса – Рябенького – Филиппова)</p>
+<p>Пусть семейство разностных схем <span class="math notranslate nohighlight">\(L_s y = f_{s}\)</span> аппроксимирует дифференциальную задачу <span class="math notranslate nohighlight">\(\mathcal{L}u =\mathcal{f}\)</span> и устойчиво. Тогда решение разностной задачи сходится к решению дифференциальной, причем если аппроксимация имела порядок <span class="math notranslate nohighlight">\(p\)</span>, то и сходимость будет иметь порядок <span class="math notranslate nohighlight">\(p\)</span>.</p>
+<p><img alt="image" src="_images/sem13_portraits.jpg" /></p>
+<p><em>Слева направо: Питер Лакс, Виктор Соломонович Рябенький, Алексей Федорович Филиппов</em>. <a class="reference external" href="https://www.siam.org/publications/siam-news/articles/obituary-peter-david-lax/">Ссылка 1</a>, <a class="reference external" href="https://mipt.ru/news/viktor-solomonovich-ryabenkiy-">Ссылка 2</a> <a class="reference external" href="https://ru.wikipedia.org/wiki/%D0%A4%D0%B8%D0%BB%D0%B8%D0%BF%D0%BF%D0%BE%D0%B2,_%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B5%D0%B9_%D0%A4%D1%91%D0%B4%D0%BE%D1%80%D0%BE%D0%B2%D0%B8%D1%87_(%D0%BC%D0%B0%D1%82%D0%B5%D0%BC%D0%B0%D1%82%D0%B8%D0%BA)">Ссылка 3</a></p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id4">
+<h1>Простейшие разностные схемы для решения задачи Коши<a class="headerlink" href="#id4" title="Link to this heading">#</a></h1>
+<p>Мы отдельно будем рассматривать рассматривать методы решения задачи Коши, краевой задачи, задачи Шутрма-Лиувилля, но в рамках этого семинара сосредоточимся на задаче Коши. Приведем примеры простейших разностных схем для задачи Коши для уравнения первого порядка</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{cases}
+u' = f(x, u),\\
+u(0) = u_0.
+\end{cases}
+\end{split}\]</div>
+<p><strong>Явная схема Эйлера</strong></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{cases}
+\dfrac{y_{m+1} - y_m}{h} = f_m,\\[6pt]
+y_0 = u_0
+\end{cases}
+\end{split}\]</div>
+<p>Первое уравнение системы представляет собой разностное уравнение первого порядка. Схема называется явной, так как решение можно выписать явно, именну эту схему мы использовали в примере выше.</p>
+<p><strong>Неявная схема Эйлера</strong></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{cases}
+\dfrac{y_{m+1} - y_m}{h} = f_{m+1},\\[6pt]
+y_0 = u_0
+\end{cases}
+\end{split}\]</div>
+<p>Первое уравнение системы также представляет собой разностное уравнение первого порядка. Схема называется неявной, так как решение в новой точке не может быть выписано явно, для его нахождения требуется решить уравнение, которое может быть линейным или нелинейным в зависимости от вида функции правой части.</p>
+<p><strong>Схема с центральной разностью</strong></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{cases}
+\dfrac{y_{m+1} - y_{m-1}}{2h} = f_m,\\[6pt]
+y_0 = u_0,\\
+y_1 = v \;\text{ — надо корректно доопределить}
+\end{cases}
+\end{split}\]</div>
+<p>В первое уравнения входят уже три величины <span class="math notranslate nohighlight">\(y_{m-1}, \ y_{m}, \ y_{m+1}\)</span>, поэтому это разностное уравнение второго порядка. Для начала расчета требуется задать два начальных условия <span class="math notranslate nohighlight">\(y_0\)</span> и <span class="math notranslate nohighlight">\(y_1\)</span>.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id5">
+<h1>Общее решение разностного уравнения<a class="headerlink" href="#id5" title="Link to this heading">#</a></h1>
+<p>Проведем аналогию между способом решения линейных однородных дифференциальных уравнений с постоянными коэффициентами и способом решения линейных однородных разностных уравнений с постоянными коэффициентами. Рассмотрим простейший пример задачи Коши для дифференциального уравнения</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{cases}
+u' - a u = 0,\\
+u(0) = 1,
+\end{cases}
+\qquad a \in \mathbb{R}
+\end{split}\]</div>
+<p>Можно выписать характеристическое уравнение и решить его</p>
+<div class="math notranslate nohighlight">
+\[
+\lambda - a = 0 \;\Rightarrow\; \lambda = a
+\]</div>
+<p>Решение будет записываться в виде</p>
+<div class="math notranslate nohighlight">
+\[
+u = C e^{\lambda x}
+\]</div>
+<p>Если характеристическое уравнение имеет <span class="math notranslate nohighlight">\(l\)</span> различных действительных корней, то решение запишется в виде</p>
+<div class="math notranslate nohighlight">
+\[
+u = C_1 e^{\lambda_1 x} + C_2 e^{\lambda_2 x}+ ... + C_l e^{\lambda_l x}.
+\]</div>
+<p>Теперь рассмотрим простейшую задачу для разностного уравнения</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{cases}
+y_{m+1} - k\,y_m = 0,\\
+y_0 = 1,
+\end{cases}
+\qquad k \in \mathbb{R}
+\end{split}\]</div>
+<p>Решение легко выписать вручную</p>
+<div class="math notranslate nohighlight">
+\[
+y_1 = k y_0 = k,\qquad
+y_2 = k y_1 = k^2,\qquad
+y_3 = k y_2 = k^3,\;\dots
+\]</div>
+<p>и обнаружить закономерность. Оказывается, аналогично можно выписать и решить характеристическое уравнение</p>
+<div class="math notranslate nohighlight">
+\[
+\lambda - k = 0 \;\Rightarrow\; \lambda = k
+\]</div>
+<p>И получить решение в виде</p>
+<div class="math notranslate nohighlight">
+\[
+y_m = C\,\lambda^m.
+\]</div>
+<p>В более общем случае наличия <span class="math notranslate nohighlight">\(l\)</span> различных действительных корней решение записывается в виде</p>
+<div class="math notranslate nohighlight">
+\[
+y_m = C_1 \lambda_1^{\,m} + C_2 \lambda_2^{\,m} + ... + C_l \lambda_l^{\,m}.
+\]</div>
+<p>Конечно, сейчас мы рассмотрели только один пример, но аналогию можно распространить и на другие варианты (корни также могут быть кратными и не только действительными, но и комплексными). Об этом мы поговорим подробнее в следующем семестре.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id6">
+<h1>Задача 1<a class="headerlink" href="#id6" title="Link to this heading">#</a></h1>
+<p>Выписать общее решение разностного уравнения – явной схемы Эйлера</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{cases}
+u' = a u,\\
+u(0) = u_0
+\end{cases}
+\qquad
+\begin{cases}
+\dfrac{y_{m+1} - y_m}{h} = a y_m,\\[6pt]
+y_0 = u_0
+\end{cases}
+\end{split}\]</div>
+<p><strong>Решение.</strong> Выпишем характеристическое уравнение и найдем его решение</p>
+<div class="math notranslate nohighlight">
+\[
+y_{m+1} - y_m = a h\, y_m
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+y_{m+1} - (1 + a h)\, y_m = 0
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\lambda - (1 + a h) = 0 \;\Rightarrow\; \lambda = 1 + a h
+\]</div>
+<p>Запишем решение в виде</p>
+<div class="math notranslate nohighlight">
+\[
+y_m = C(1 + a h)^{m}
+\]</div>
+<p>Используем начальное условие <span class="math notranslate nohighlight">\( y_0 = u_0\)</span> для нахождение константы <span class="math notranslate nohighlight">\(C\)</span></p>
+<div class="math notranslate nohighlight">
+\[
+y_0 = C(1 + a h)^0 = C = u_0
+\]</div>
+<p>В итоге мы получили ответ
+$<span class="math notranslate nohighlight">\(
+y_m = u_0(1 + a h)^{m}
+\)</span>$</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id7">
+<h1>Задача 2<a class="headerlink" href="#id7" title="Link to this heading">#</a></h1>
+<p>Найти решение разностного уравнения, удовлетворяющее начальным условиям</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{cases}
+\dfrac{y_{m+1} - y_m}{h} = y_m - y_{m-1},\\[6pt]
+y_0 = 0,\quad y_1 = 1 - h
+\end{cases}
+\end{split}\]</div>
+<p><strong>Решение.</strong> Преобразуем уравнение</p>
+<div class="math notranslate nohighlight">
+\[
+y_{m+1} - y_m = h y_m - h y_{m-1}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+y_{m+1} - (1 + h)\,y_m + h\,y_{m-1} = 0
+\]</div>
+<p>Выпишем характеристическое уравнение и найдем его решение</p>
+<div class="math notranslate nohighlight">
+\[
+\lambda^{2} - (1 + h)\lambda + h = 0,\quad \lambda_1 = 1,\ \lambda_2 = h
+\]</div>
+<p>Общее решение однородного уравнения имеет вид
+$<span class="math notranslate nohighlight">\(
+y_m = C_1 + C_2 h^{m}
+\)</span>$</p>
+<p>Найдем константы <span class="math notranslate nohighlight">\(C_1\)</span> и <span class="math notranslate nohighlight">\(C_2\)</span> из начальных условий
+$<span class="math notranslate nohighlight">\(
+y_0 = 0,\quad y_1 = 1 - h
+\)</span>$</p>
+<p>Запишем систему уравнений
+$<span class="math notranslate nohighlight">\(
+C_1 + C_2 = 0
+\)</span>$</p>
+<div class="math notranslate nohighlight">
+\[
+C_1 + C_2 h = 1 - h
+\]</div>
+<p>и решим ее
+$<span class="math notranslate nohighlight">\(
+C_1 = 1,\qquad C_2 = -1
+\)</span>$</p>
+<p>Окончательно
+$<span class="math notranslate nohighlight">\(
+y_m = 1 - h^{m}
+\)</span>$</p>
+<section id="id8">
+<h2>Исследование аппроксимации<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<p>Исследование аппроксимации проводится по слеующему плану в соответствии с определением</p>
+<ol class="arabic">
+<li><p>выписать невязку;</p></li>
+<li><p>разложить все величины в ряд Тейлора вблизи одной точки;</p></li>
+<li><p>подставить всё в невязку и получить оценку</p>
+<div class="math notranslate nohighlight">
+\[\lVert r_h \rVert \le C h^{p},\]</div>
+<p>где <span class="math notranslate nohighlight">\(p\)</span> — порядок аппроксимации.</p>
+</li>
+</ol>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id9">
+<h1>Задача 3<a class="headerlink" href="#id9" title="Link to this heading">#</a></h1>
+<p>Исследовать явную схему Эйлера на аппроксимацию</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{cases}
+u' = f(x,u),\\
+u(0) = u_0
+\end{cases}
+\qquad
+\begin{cases}
+\dfrac{y_{m+1} - y_m}{h} = f_m,\\[6pt]
+y_0 = u_0
+\end{cases}
+\end{split}\]</div>
+<p><strong>Решение.</strong> Действуем по плану</p>
+<ol class="arabic simple">
+<li><p>Выписываем невязку</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[r_h = \dfrac{u_{m+1} - u_m}{h} - f_m\]</div>
+<ol class="arabic simple" start="2">
+<li><p>Раскладываем <span class="math notranslate nohighlight">\(u_{m+1}\)</span> в ряд Тейлора вблизи <span class="math notranslate nohighlight">\(x_m\)</span></p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[u_{m+1} = u_m + h\,u'_m + \dfrac{h^2}{2}\,u''_m + \dots\]</div>
+<ol class="arabic simple" start="3">
+<li><p>Подставляем разложение в невязку</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\quad
+r_h = \dfrac{u_m + h u'_m + \dfrac{h^2}{2}u''_m - u_m}{h} - f_m
+     = u'_m + \dfrac{h}{2}u''_m - f_m
+     = \dfrac{h}{2}u''_m
+\]</div>
+<p>и получаем треубуемую оценку</p>
+<div class="math notranslate nohighlight">
+\[
+\lVert r_h \rVert \le \dfrac{M_2}{2}\,h,\qquad M_2=\max |u''|
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+p = 1
+\]</div>
+<p>Схема имеет первый порядок <strong>аппроксимации</strong></p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id10">
+<h1>Задача 4<a class="headerlink" href="#id10" title="Link to this heading">#</a></h1>
+<p>Исследовать на аппроксимацию разностную схему. Определить, какую дифференциальную задачу она аппроксимирует.</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{y_m + y_{m+1} - 2y_{m+3}}{5h} = y_m + y_{m+1}
+\]</div>
+<p><strong>Решение.</strong> Выполняем те же три этапа исследования</p>
+<ol class="arabic simple">
+<li><p>Выписываем невязку</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+r_h = \frac{u_m + u_{m+1} - 2u_{m+3}}{5h} - u_m - u_{m+1}\]</div>
+<ol class="arabic simple" start="2">
+<li><p>Выписываем разложения в ряд Тейлора</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+u_{m+1} = u_m + h\,u'_m + \frac{h^2}{2}\,u''_m + \dots\]</div>
+<div class="math notranslate nohighlight">
+\[
+u_{m+3} = u_m + 3h\,u'_m + \frac{9h^2}{2}\,u''_m + \dots\]</div>
+<ol class="arabic simple" start="3">
+<li><p>Анализируем невязку</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+r_h = \frac{1}{5h}\Bigl(u_m + u_m + h u'_m + \frac{h^2}{2}u''_m
+      - 2\bigl(u_m + 3h u'_m + \frac{9h^2}{2}u''_m\bigr)\Bigr)
+      - u_m - (u_m + h u'_m + \tfrac{h^2}{2}u''_m)\]</div>
+<div class="math notranslate nohighlight">
+\[
+r_h = -u'_m - 1.7\,h\,u''_m - 2u_m + u'_m h
+\]</div>
+<p>Исходную дифференциальную задачу выпишем из условия равенства нулю суммы всех слагаемых невязки, в которые не входит шаг сетки <span class="math notranslate nohighlight">\(h\)</span></p>
+<div class="math notranslate nohighlight">
+\[
+-u' - 2u = 0
+\]</div>
+<p>В итоге получаем</p>
+<div class="math notranslate nohighlight">
+\[
+\|r_h\| \le C h,\qquad p = 1, \qquad C = 1.7 M_2 + M_1
+\]</div>
+<p>Схема обладает первым порядком <strong>аппроксимации</strong>.</p>
+<section id="id11">
+<h2>Исследование сходимости по определению<a class="headerlink" href="#id11" title="Link to this heading">#</a></h2>
+<p>Выпишем план исследования сходимости по определению</p>
+<ol class="arabic simple">
+<li><p>выписать решение дифференциального уравнения</p></li>
+<li><p>выписать решение разностного уравнения</p></li>
+<li><p>получить оценку <span class="math notranslate nohighlight">\(\lVert u_m - y_m \rVert \le C h^{p}\)</span>, где <span class="math notranslate nohighlight">\(p\)</span> — порядок сходимости.</p></li>
+</ol>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id12">
+<h1>Задача 5<a class="headerlink" href="#id12" title="Link to this heading">#</a></h1>
+<p>Доказать сходимость явной схемы Эйлера</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{cases}
+u' = a\,u,\\
+u(0) = u_0
+\end{cases}
+\qquad
+\begin{cases}
+\dfrac{y_{m+1} - y_m}{h} = a\,y_m,\\[6pt]
+y_0 = u_0
+\end{cases}
+\end{split}\]</div>
+<p><strong>Решение.</strong> Выполним исследование сходимости в соответствии с планом</p>
+<ol class="arabic simple">
+<li><p>Решение дифференциального уравнения мы уже получали выше</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[ u = u_0 e^{a x}\]</div>
+<ol class="arabic simple" start="2">
+<li><p>Решение разностного уравнения мы получали в задаче 1
+$<span class="math notranslate nohighlight">\(y = u_0(1 + a h)^{m}\)</span>$</p></li>
+<li><p>Предварительно преобразуем выражение</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[(1 + a h)^{m}
+= e^{\ln (1+ah)^{m}}
+= e^{m\ln(1+ah)}
+\]</div>
+<p>Воспользуемся разложением в ряд Маклорена</p>
+<div class="math notranslate nohighlight">
+\[
+\ln(1+ah) \approx a h - \frac{a^{2}h^{2}}{2}
+\]</div>
+<p>И далее преобразуем выражение</p>
+<div class="math notranslate nohighlight">
+\[
+(1+ah)^{m}
+= e^{m a h}\, e^{-\,m a^{2} h^{2}/2}
+= e^{a m h}\, e^{-\,a^{2} h (m h)/2}
+\]</div>
+<p>Без ограничения общности положим, что сетка выбрана так, что</p>
+<div class="math notranslate nohighlight">
+\[
+x_m = m h
+\]</div>
+<p>Тогда</p>
+<div class="math notranslate nohighlight">
+\[(1+ah)^{m} = e^{a x_m}\!\left(1 - \frac{a^{2}h\,x_m}{2}\right)\]</div>
+<p>Оценим норму разности сеточной проекции решения дифференциальной задачи и решения разностной задачи</p>
+<div class="math notranslate nohighlight">
+\[
+\lVert u_m - y_m \rVert
+= \left\lVert u_0 e^{a x_m} - u_0 e^{a x_m}\!\left(1 - \frac{a^{2}h\,x_m}{2}\right)\right\rVert
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+= \left\lVert u_0 e^{a x_m}\,\frac{a^{2}h\,x_m}{2} \right\rVert
+\le C h
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+C = \left\lvert u_0 \frac{a^{2}X}{2} \right\rvert \max\{e^{aX},1\},
+\qquad p = 1
+\]</div>
+<p>Схема первого порядка <strong>сходимости</strong>.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id13">
+<h1>Задача 6<a class="headerlink" href="#id13" title="Link to this heading">#</a></h1>
+<p>Исследовать сходимость разностной схемы для решения задачи Коши</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{cases}
+u' = 3u,\\
+u(0) = 1
+\end{cases}
+\qquad
+\begin{cases}
+\dfrac{2y_{m+1} - 3y_m + y_{m-1}}{h} = 6y_m - 3y_{m-1},\\[6pt]
+y_0 = 1 + 3h,\quad y_1 = 1 + \dfrac{9h}{2}
+\end{cases}
+\end{split}\]</div>
+<p><strong>Решение.</strong> Действуем по тому же алгоритму.</p>
+<ol class="arabic simple">
+<li><p>Найдем решение дифференциальной задачи</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[u = e^{3x}\]</div>
+<ol class="arabic simple" start="2">
+<li><p>Найдем решение разностной задачи. Преобразуем исходное уравнение</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+2y_{m+1} - 3y_m + y_{m-1} = 6h\,y_m - 3h\,y_{m-1},
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+2y_{m+1} - (3+6h)y_m + (1+3h)y_{m-1} = 0.
+\]</div>
+<p>Выпишем характеристическое уравнение</p>
+<div class="math notranslate nohighlight">
+\[
+2\lambda^{2} - (3+6h)\lambda + (1+3h) = 0,
+\]</div>
+<p>и найдем его решения</p>
+<div class="math notranslate nohighlight">
+\[
+\lambda_1 = \frac12,\qquad \lambda_2 = 1 + 3h.
+\]</div>
+<p>Общее решение однороного разностного уравнения запишется в виде</p>
+<div class="math notranslate nohighlight">
+\[
+y_m = C_1\left(\frac12\right)^m + C_2(1+3h)^m
+\]</div>
+<p>Воспользуемся начальными условиями и найдем недостающие константы</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{cases}
+y_0 = 1 + 3h,\\
+y_1 = 1 + \dfrac{9h}{2}
+\end{cases}
+\qquad
+\begin{cases}
+C_1 + C_2 = 1 + 3h,\\[4pt]
+\dfrac{C_1}{2} + C_2(1+3h) = 1 + \dfrac{9h}{2}
+\end{cases}
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[
+C_1 = 3h,\qquad C_2 = 1
+\]</div>
+<p>Окончательно решение разностного уранвения принимает вид</p>
+<div class="math notranslate nohighlight">
+\[
+y_m = 3h\left(\frac12\right)^m + (1+3h)^m
+\]</div>
+<ol class="arabic simple" start="3">
+<li><p>Оценим норму разности</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+\lVert u_m - y_m \rVert
+\]</div>
+<p>Воспользуемся формулой, полученной в прошлой задаче</p>
+<div class="math notranslate nohighlight">
+\[
+(1+3h)^m \approx e^{3x_m}\left(1 - \frac{9h}{2}x_m\right)
+\]</div>
+<p>И получим требуемую оценку</p>
+<div class="math notranslate nohighlight">
+\[
+\|u_m - y_m\|
+ = \left\| e^{3x_m} - e^{3x_m}\!\left(1 - \frac{9h}{2}x_m\right)
+      - 3h\left(\frac12\right)^m \right\|
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+= \left\| \frac{9h}{2}\,e^{3x_m} x_m - 3h\left(\frac12\right)^m \right\|
+  \le C\,h
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+C = 3 + \frac{9}{2} e^{3X}, \qquad p = 1
+\]</div>
+<p>Первый порядок <strong>сходимости</strong>.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id14">
+<h1>Литература и другие источники<a class="headerlink" href="#id14" title="Link to this heading">#</a></h1>
+<p><strong>Видеозаписи:</strong></p>
+<ol class="arabic simple">
+<li><p>Вычислительная математика — лекция 14. Лектор — Е.Н. Аристова. <a class="reference external" href="https://www.youtube.com/live/KLxIE50LLus?si=PC3nFHXfxvCaVMA3&amp;amp;t=138">Ссылка</a> (YouTube).</p></li>
+<li><p>Вычислительная математика — лекция 13. Лектор — А.В. Чикиткин. <a class="reference external" href="https://youtu.be/wBfdhLX1KI0?si=pOaYrztOLbIWRySS">Ссылка</a> (YouTube).</p></li>
+<li><p>Вычислительная математика — лекция 14. Лектор — А.В. Чикиткин. <a class="reference external" href="https://youtu.be/cvpWjdUOtgY?si=5fLJ1qj0pdoKOR-L">Ссылка</a> (YouTube).</p></li>
+</ol>
+<p><strong>Рекомендуемая литература (с комментариями):</strong></p>
+<ol class="arabic simple">
+<li><p><em>В.С. Рябенький. Введение в вычислительную математику</em> — глава 8, параграфы 1—3, исключая пункт 3 параграфа 3 (стр. 138—158).</p></li>
+<li><p><em>А.А. Самарский, А.В. Гулин. Численные методы</em> — глава 6, параграф 1 (стр. 214—218). Темы, изложенные в других параграфах этой главы, будут изучаться уже в весеннем семестре.</p></li>
+<li><p><em>В.И. Косарев. 12 лекций по вычислительной математике</em> — лекция 7, стр. 91—99. Дополнение к лекции пока может быть пропущено.</p></li>
+<li><p><em>Р.П. Федоренко. Введение в вычислительную физику</em> — параграфы 5, 6 (стр. 54—65).</p></li>
+<li><p><em>Л.И. Турчак. Основы численных методов</em> — глава 7, параграф 1 (стр. 205—213) и первая часть параграфа 2, исключая сведения про методы Рунге—Кутты (стр. 213—220). Удобно, что в этой книге перед изложением элементов теории разностных схем напоминаются все необходимые определения и утверждения из курса дифференциальных уравнений. С другой стороны, методы Рунге—Кутты изложены в этой книге не очень удачно (а сама эта тема относится ко второму семестру), поэтому вторую половину параграфа 2 лучше не читать.</p></li>
+</ol>
+<p>Дополнительная литература:</p>
+<ol class="arabic simple" start="6">
+<li><p><em>Р.С. Пастушков. Задачи и упражнения по вычислительной математике. V семестр. Решения, указания, ответы.</em> Напомним, что это пособие есть в библиотеке МФТИ. В электронном виде его легче всего скачать с сайта О.А. Пырковой (см. ниже).</p></li>
+<li><p><em>В.К. Романко. Курс разностных уравнений.</em> Неплохое учебное пособие по разностным уравнениям от автора известного учебника МФТИ по курсу дифференциальных уравнений. Теоретические сведения изложены в первой части. Вторая часть представляет собой задачник. Есть более старое пособие того же автора под похожим названием “Разностные уравнения”. По сравнению с ним “Курс разностных уравнений” переработан и дополнен, поэтому лучше пользоваться им.</p></li>
+</ol>
+<p><strong>Сайты и другие электронные ресурсы:</strong></p>
+<ol class="arabic simple">
+<li><p>Персональный сайт преподавателя МФТИ О.А. Пырковой. Содержит много полезных материалов по различным математическим курсам МФТИ. Страница с материалами осеннего семестра по вычислительной математике: <a class="reference external" href="https://www.pyrkovaoa-fizteh.ru/%D0%BA%D0%BE%D0%BD%D1%81%D1%83%D0%BB%D1%8C%D1%82%D0%B0%D1%86%D0%B8%D1%8F-%D0%B2%D1%8B%D1%87%D0%BC-5/">ссылка</a>.</p></li>
+<li><p>Scientific Python Lectures. Очень полезный ресурс, представляющий собой учебник по научному программированию на языке Python. Представлено много различных библиотек. Есть pdf-версия. Все материалы на английском языке. <a class="reference external" href="https://lectures.scientific-python.org/">Ссылка.</a></p></li>
+<li><p>Python Programming And Numerical Methods: A Guide For Engineers And Scientists. Прекрасный сайт, представляющий собой электронную версию одноимённой книги по научному программированию на Python. Исключительно подробное изложение с многочисленными примерами. <a class="reference external" href="https://pythonnumericalmethods.studentorg.berkeley.edu/notebooks/Index.html">Ссылка.</a></p></li>
+</ol>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id15">
+<h1>Контрольные вопросы<a class="headerlink" href="#id15" title="Link to this heading">#</a></h1>
+<ol class="arabic simple">
+<li><p>Триада Самарского А.А.</p></li>
+<li><p>Дайте определение сходимости.</p></li>
+<li><p>Дайте определение невязки.</p></li>
+<li><p>Дайте определение аппроксимации.</p></li>
+<li><p>Сформулируйте основную теорему вычислительной математики.</p></li>
+<li><p>В каком виде можно искать решение линейного однородного разностного уравнения с постоянными коэффициентами?</p></li>
+<li><p>Сформулируйте план исследования разностной схемы на аппроксимацию.</p></li>
+<li><p>Сформулируйте план исследования разностной схемы на сходимость.</p></li>
+</ol>
+<p><em>Версия от 02.12.2025</em></p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="sem12.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Семинар 12. Численное интегрирование (окончание)</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Семинар 13. Численное решение ОДУ</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Введение</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Сходимость, аппроксимация, устойчивость</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Простейшие разностные схемы для решения задачи Коши</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Общее решение разностного уравнения</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Задача 1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Задача 2</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Исследование аппроксимации</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Задача 3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Задача 4</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Исследование сходимости по определению</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">Задача 5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">Задача 6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">Литература и другие источники</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">Контрольные вопросы</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Кафедра вычислительной физики МФТИ
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

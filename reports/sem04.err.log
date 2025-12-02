@@ -44,9 +44,7 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-A = np.random.random((10**4, 10**4))
-A_sym = (A.T + A) / 2 # можно симметризовать так
-
-# A_sym = np.dot(A.T, A) # а можно так (но это долго - 40 секунд!)
+%%time
+np.max(sp.linalg.eigvalsh(A_sym)) # ВНИМАНИЕ! Код исполняется более двух минут
 -------------------
 
